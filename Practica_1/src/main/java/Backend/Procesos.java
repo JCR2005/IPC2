@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Backend;
 
 /**
@@ -10,4 +7,14 @@ package Backend;
  */
 public class Procesos {
     
+    Solicitud solicitud=new Solicitud();
+    
+    
+    public void Procesar_Solicitud(int ns, String f, String t, String n, double s, String d){
+    
+        solicitud.Obtener_Datos_Solicitud_Formulario(ns, f, t, n, s, d);
+        
+    
+    }
+           
 }

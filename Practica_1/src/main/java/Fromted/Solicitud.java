@@ -15,6 +15,8 @@ public class Solicitud extends javax.swing.JPanel {
     /**
      * Creates new form Solicitud
      */
+    
+    
     public Solicitud() {
         initComponents();
         jPanel1.setVisible(false);
@@ -301,7 +303,7 @@ public class Solicitud extends javax.swing.JPanel {
     }//GEN-LAST:event_boton_procesarMouseExited
 
     private void boton_procesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_procesarActionPerformed
-       
+        
     }//GEN-LAST:event_boton_procesarActionPerformed
 
     private void boton_cancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_cancelarMouseEntered

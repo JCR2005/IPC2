@@ -4,10 +4,10 @@
  */
 package Backend;
 
+import Conexion.Base_De_Datos;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
-import Conexion.Base_De_Datos.*;
 /**
  *
  * @author carlosrodriguez
@@ -16,27 +16,32 @@ public class Solicitud {
     
     
     private int numero_solicitud;
-    private int salario;
+    private double salario;
     private String nombre;
-    private String dirreccion;
+    private String direccion;
     private String fecha;
-    private String tipo_Cuneta;
+    private String tipo_Cuenta;
     
     
     
-    private void Obtener_Datos_Solicitud_Formulario(){
-    
-    
-    
-    
+    public void Obtener_Datos_Solicitud_Formulario(int ns,String f, String t, String n, double s, String d){
+        
+        numero_solicitud = ns;
+        fecha = f;
+        nombre = n;
+        tipo_Cuenta = t;
+        salario = s;
+        direccion = d;
+        
+        guardarSolicitud();
     }
     
-     public void guardarSolicitud(int numero_solicitud,String fecha, String tipo, String nombre, double salario, String direccion){
+     public void guardarSolicitud(){
        
-        
+             
         try{
-            String insert ="INSERT INTO estudiante (Numero_Solicitud, Fecha, Tipo, Nombre,Salario,Dirreccion) VALUES ('" +numero_solicitud+"','"+fecha+"','"+tipo+"','"+nombre+"','"+salario+"','"+direccion+"')"  ;
-            Statement statemenInsert= connection.createStatement();
+            String insert ="INSERT INTO solicitud (Numero_Solicitud, Fecha, Tipo, Nombre,Salario,Dirreccion) VALUES ('" +numero_solicitud+"','"+fecha+"','"+tipo_Cuenta+"','"+nombre+"','"+salario+"','"+direccion+"')"  ;
+            Statement statemenInsert= Base_De_Datos.getConnection().createStatement();
             int rowsAffected=statemenInsert.executeUpdate(insert);
         
         }catch(SQLException e){
