@@ -33,7 +33,6 @@ public class Solicitud extends javax.swing.JPanel {
         jTextField2 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         boton_ayuda = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -44,6 +43,7 @@ public class Solicitud extends javax.swing.JPanel {
         boton_procesar = new javax.swing.JButton();
         boton_cancelar = new javax.swing.JButton();
         jTextField7 = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
         boton_formulario = new javax.swing.JButton();
         boton_archivo_entrada = new javax.swing.JButton();
 
@@ -100,15 +100,6 @@ public class Solicitud extends javax.swing.JPanel {
         jPanel1.add(boton_ayuda);
         boton_ayuda.setBounds(530, 460, 200, 30);
 
-        jTextField3.setBackground(new java.awt.Color(158, 144, 100));
-        jTextField3.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setToolTipText("");
-        jTextField3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jTextField3);
-        jTextField3.setBounds(420, 50, 280, 30);
-
         jTextField5.setBackground(new java.awt.Color(158, 144, 100));
         jTextField5.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
         jTextField5.setForeground(new java.awt.Color(255, 255, 255));
@@ -116,7 +107,7 @@ public class Solicitud extends javax.swing.JPanel {
         jTextField5.setToolTipText("");
         jTextField5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(jTextField5);
-        jTextField5.setBounds(420, 140, 280, 30);
+        jTextField5.setBounds(420, 50, 280, 30);
 
         jTextField6.setBackground(new java.awt.Color(158, 144, 100));
         jTextField6.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
@@ -139,9 +130,9 @@ public class Solicitud extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 49, 74));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("No. Tarjeta:");
+        jLabel2.setText("No. Solicitud:");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(320, 60, 110, 20);
+        jLabel2.setBounds(310, 60, 110, 20);
 
         jLabel3.setBackground(new java.awt.Color(20, 12, 77));
         jLabel3.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
@@ -225,6 +216,15 @@ public class Solicitud extends javax.swing.JPanel {
         jTextField7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(jTextField7);
         jTextField7.setBounds(110, 50, 180, 30);
+
+        jTextField8.setBackground(new java.awt.Color(158, 144, 100));
+        jTextField8.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
+        jTextField8.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField8.setToolTipText("");
+        jTextField8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.add(jTextField8);
+        jTextField8.setBounds(420, 140, 280, 30);
 
         add(jPanel1);
         jPanel1.setBounds(0, 0, 730, 490);
@@ -322,7 +322,7 @@ public class Solicitud extends javax.swing.JPanel {
 
     void reiniciar_formulario(){
         jTextField2.setText("");
-        jTextField3.setText("");
+        jTextField8.setText("");
         jTextField7.setText("");
         jTextField5.setText("");
         jTextField6.setText("");
@@ -346,9 +346,9 @@ public class Solicitud extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
     // End of variables declaration//GEN-END:variables
 }

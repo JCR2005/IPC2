@@ -4,6 +4,7 @@
  */
 package Fromted;
 
+import Backend.Imagenes;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JButton;
