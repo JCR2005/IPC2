@@ -4,6 +4,7 @@
  */
 package Fromted;
 
+import Backend.Procesos;
 import java.awt.Color;
 
 /**
@@ -16,6 +17,7 @@ public class Solicitud extends javax.swing.JPanel {
      * Creates new form Solicitud
      */
     
+    Procesos proceso=new Procesos();
     
     public Solicitud() {
         initComponents();
@@ -32,11 +34,11 @@ public class Solicitud extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        direccion = new javax.swing.JTextField();
+        tipoCuenta = new javax.swing.JComboBox<>();
         boton_ayuda = new javax.swing.JButton();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        numero_solicitud = new javax.swing.JTextField();
+        salario = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -44,8 +46,8 @@ public class Solicitud extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         boton_procesar = new javax.swing.JButton();
         boton_cancelar = new javax.swing.JButton();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        fecha = new javax.swing.JTextField();
+        nombre = new javax.swing.JTextField();
         boton_formulario = new javax.swing.JButton();
         boton_archivo_entrada = new javax.swing.JButton();
 
@@ -56,26 +58,26 @@ public class Solicitud extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(228, 207, 154));
         jPanel1.setLayout(null);
 
-        jTextField2.setBackground(new java.awt.Color(158, 144, 100));
-        jTextField2.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField2.setToolTipText("");
-        jTextField2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jTextField2);
-        jTextField2.setBounds(420, 230, 280, 30);
+        direccion.setBackground(new java.awt.Color(158, 144, 100));
+        direccion.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
+        direccion.setForeground(new java.awt.Color(255, 255, 255));
+        direccion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        direccion.setToolTipText("");
+        direccion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.add(direccion);
+        direccion.setBounds(420, 230, 280, 30);
 
-        jComboBox1.setBackground(new java.awt.Color(158, 144, 100));
-        jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de Cuenta ...", "Nacional", "Regional", "Internacional" }));
-        jComboBox1.setToolTipText("");
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        tipoCuenta.setBackground(new java.awt.Color(158, 144, 100));
+        tipoCuenta.setForeground(new java.awt.Color(255, 255, 255));
+        tipoCuenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de Cuenta ...", "NACIONAL", "REGIONAL", "INTERNACIONAL" }));
+        tipoCuenta.setToolTipText("");
+        tipoCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                tipoCuentaActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox1);
-        jComboBox1.setBounds(110, 140, 180, 32);
+        jPanel1.add(tipoCuenta);
+        tipoCuenta.setBounds(110, 140, 180, 32);
 
         boton_ayuda.setBackground(new java.awt.Color(44, 68, 85));
         boton_ayuda.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
@@ -102,23 +104,23 @@ public class Solicitud extends javax.swing.JPanel {
         jPanel1.add(boton_ayuda);
         boton_ayuda.setBounds(530, 460, 200, 30);
 
-        jTextField5.setBackground(new java.awt.Color(158, 144, 100));
-        jTextField5.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField5.setToolTipText("");
-        jTextField5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jTextField5);
-        jTextField5.setBounds(420, 50, 280, 30);
+        numero_solicitud.setBackground(new java.awt.Color(158, 144, 100));
+        numero_solicitud.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
+        numero_solicitud.setForeground(new java.awt.Color(255, 255, 255));
+        numero_solicitud.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        numero_solicitud.setToolTipText("");
+        numero_solicitud.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.add(numero_solicitud);
+        numero_solicitud.setBounds(420, 50, 280, 30);
 
-        jTextField6.setBackground(new java.awt.Color(158, 144, 100));
-        jTextField6.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setToolTipText("");
-        jTextField6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jTextField6);
-        jTextField6.setBounds(110, 230, 180, 30);
+        salario.setBackground(new java.awt.Color(158, 144, 100));
+        salario.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
+        salario.setForeground(new java.awt.Color(255, 255, 255));
+        salario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        salario.setToolTipText("");
+        salario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.add(salario);
+        salario.setBounds(110, 230, 180, 30);
 
         jLabel1.setBackground(new java.awt.Color(20, 12, 77));
         jLabel1.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
@@ -210,23 +212,25 @@ public class Solicitud extends javax.swing.JPanel {
         jPanel1.add(boton_cancelar);
         boton_cancelar.setBounds(0, 420, 200, 30);
 
-        jTextField7.setBackground(new java.awt.Color(158, 144, 100));
-        jTextField7.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
-        jTextField7.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField7.setToolTipText("");
-        jTextField7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jTextField7);
-        jTextField7.setBounds(110, 50, 180, 30);
+        fecha.setBackground(new java.awt.Color(158, 144, 100));
+        fecha.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
+        fecha.setForeground(new java.awt.Color(255, 255, 255));
+        fecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        fecha.setToolTipText("");
+        fecha.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        fecha.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        fecha.setEnabled(false);
+        jPanel1.add(fecha);
+        fecha.setBounds(110, 50, 180, 30);
 
-        jTextField8.setBackground(new java.awt.Color(158, 144, 100));
-        jTextField8.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
-        jTextField8.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField8.setToolTipText("");
-        jTextField8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jTextField8);
-        jTextField8.setBounds(420, 140, 280, 30);
+        nombre.setBackground(new java.awt.Color(158, 144, 100));
+        nombre.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
+        nombre.setForeground(new java.awt.Color(255, 255, 255));
+        nombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        nombre.setToolTipText("");
+        nombre.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.add(nombre);
+        nombre.setBounds(420, 140, 280, 30);
 
         add(jPanel1);
         jPanel1.setBounds(0, 0, 730, 490);
@@ -272,6 +276,7 @@ public class Solicitud extends javax.swing.JPanel {
 
     private void boton_formularioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_formularioActionPerformed
         jPanel1.setVisible(true);
+        fecha.setText(proceso.fechaActual());
         boton_archivo_entrada.setVisible(false);
         boton_formulario.setVisible(false);
     }//GEN-LAST:event_boton_formularioActionPerformed
@@ -280,9 +285,9 @@ public class Solicitud extends javax.swing.JPanel {
         
     }//GEN-LAST:event_boton_ayudaActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void tipoCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoCuentaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_tipoCuentaActionPerformed
 
     private void boton_ayudaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_ayudaMouseEntered
             boton_ayuda.setBackground(Color.white);
@@ -303,7 +308,13 @@ public class Solicitud extends javax.swing.JPanel {
     }//GEN-LAST:event_boton_procesarMouseExited
 
     private void boton_procesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_procesarActionPerformed
-        
+      
+        String tipo=(String) tipoCuenta.getSelectedItem();
+        proceso.Procesar_Solicitud(Integer.parseInt(numero_solicitud.getText()), fecha.getText(),tipo, nombre.getText(),Double.valueOf(salario.getText()), direccion.getText());
+        jPanel1.setVisible(false);
+        boton_archivo_entrada.setVisible(true);
+        boton_formulario.setVisible(true);
+        reiniciar_formulario();
     }//GEN-LAST:event_boton_procesarActionPerformed
 
     private void boton_cancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_cancelarMouseEntered
@@ -323,11 +334,11 @@ public class Solicitud extends javax.swing.JPanel {
     }//GEN-LAST:event_boton_cancelarActionPerformed
 
     void reiniciar_formulario(){
-        jTextField2.setText("");
-        jTextField8.setText("");
-        jTextField7.setText("");
-        jTextField5.setText("");
-        jTextField6.setText("");
+        direccion.setText("");
+        nombre.setText("");
+        fecha.setText("");
+        numero_solicitud.setText("");
+        salario.setText("");
     
     }
     
@@ -340,17 +351,17 @@ public class Solicitud extends javax.swing.JPanel {
     private javax.swing.JButton boton_cancelar;
     private javax.swing.JButton boton_formulario;
     private javax.swing.JButton boton_procesar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JTextField direccion;
+    private javax.swing.JTextField fecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField nombre;
+    private javax.swing.JTextField numero_solicitud;
+    private javax.swing.JTextField salario;
+    private javax.swing.JComboBox<String> tipoCuenta;
     // End of variables declaration//GEN-END:variables
 }

@@ -33,14 +33,18 @@ public class Solicitud {
         salario = s;
         direccion = d;
         
-        guardarSolicitud();
+        if (numero_solicitud<=0 ) {
+            
+        }
     }
+    
+ 
     
      public void guardarSolicitud(){
        
              
         try{
-            String insert ="INSERT INTO solicitud (Numero_Solicitud, Fecha, Tipo, Nombre,Salario,Dirreccion) VALUES ('" +numero_solicitud+"','"+fecha+"','"+tipo_Cuenta+"','"+nombre+"','"+salario+"','"+direccion+"')"  ;
+            String insert ="INSERT INTO solicitud (Numero_Solicitud, Fecha, Tipo, Nombre,Salario,Direccion,Estado) VALUES ('" +numero_solicitud+"','"+fecha+"','"+tipo_Cuenta+"','"+nombre+"','"+salario+"','"+direccion+"','EN PROCESO')"  ;
             Statement statemenInsert= Base_De_Datos.getConnection().createStatement();
             int rowsAffected=statemenInsert.executeUpdate(insert);
         

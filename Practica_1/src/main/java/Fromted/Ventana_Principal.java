@@ -5,6 +5,7 @@
 package Fromted;
 
 import Backend.Imagenes;
+import Backend.Procesos;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JButton;
@@ -25,6 +26,7 @@ public class Ventana_Principal extends javax.swing.JFrame {
     static Consulta ct=new Consulta();
     static Autorizacion at=new Autorizacion();
     static Cancelacion cat=new Cancelacion();
+    Procesos proceso=new Procesos();
     
     public Ventana_Principal() {
         initComponents();
@@ -345,8 +347,10 @@ public class Ventana_Principal extends javax.swing.JFrame {
 
     private void boton_movimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_movimientoActionPerformed
         cambiar_estado_botones( boton_movimiento,botones);
+        
         ocultar_paneles();
         jPanel4.add(mt);
+   
         mt.setVisible(true);
         jPanel4.revalidate();
         jPanel4.repaint();

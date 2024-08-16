@@ -1,10 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package Fromted;
 
+import Backend.Procesos;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,6 +14,8 @@ public class Autorizacion extends javax.swing.JPanel {
     /**
      * Creates new form Solicitud
      */
+    
+    Procesos proceso=new Procesos();
     public Autorizacion() {
         initComponents();
         jPanel1.setVisible(false);
@@ -31,7 +32,7 @@ public class Autorizacion extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         boton_ayuda = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        numero_solicitud = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         boton_procesar = new javax.swing.JButton();
         boton_cancelar = new javax.swing.JButton();
@@ -70,22 +71,22 @@ public class Autorizacion extends javax.swing.JPanel {
         jPanel1.add(boton_ayuda);
         boton_ayuda.setBounds(530, 460, 200, 30);
 
-        jTextField3.setBackground(new java.awt.Color(158, 144, 100));
-        jTextField3.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setToolTipText("");
-        jTextField3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jTextField3);
-        jTextField3.setBounds(230, 180, 300, 30);
+        numero_solicitud.setBackground(new java.awt.Color(158, 144, 100));
+        numero_solicitud.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
+        numero_solicitud.setForeground(new java.awt.Color(255, 255, 255));
+        numero_solicitud.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        numero_solicitud.setToolTipText("");
+        numero_solicitud.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.add(numero_solicitud);
+        numero_solicitud.setBounds(230, 180, 300, 30);
 
         jLabel2.setBackground(new java.awt.Color(20, 12, 77));
         jLabel2.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 49, 74));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("No. Tarjeta:");
+        jLabel2.setText("No. Solicitud:");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(120, 190, 130, 20);
+        jLabel2.setBounds(110, 190, 130, 20);
 
         boton_procesar.setBackground(new java.awt.Color(44, 68, 85));
         boton_procesar.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
@@ -208,7 +209,28 @@ public class Autorizacion extends javax.swing.JPanel {
     }//GEN-LAST:event_boton_procesarMouseExited
 
     private void boton_procesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_procesarActionPerformed
+       
+        proceso.Procesar_Autorizacion(Integer.parseInt(numero_solicitud.getText()));
+        if (!proceso.isExiteSolicitud()) {
+            
+            JOptionPane.showMessageDialog(null, "La solicitud indicada no existe", "Error", JOptionPane.ERROR_MESSAGE);
 
+        }else{
+
+            if (proceso.isAceptadaSolicitud()) {
+                JOptionPane.showMessageDialog(null, "Solicitud aceptada.", "Información", JOptionPane.INFORMATION_MESSAGE);
+
+            }else{
+
+                JOptionPane.showMessageDialog(null, "Solicitud rechazas", "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+        
+        
+        }
+      
+        
+        
     }//GEN-LAST:event_boton_procesarActionPerformed
 
     private void boton_cancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_cancelarMouseEntered
@@ -230,7 +252,7 @@ public class Autorizacion extends javax.swing.JPanel {
     
     void reiniciar_formulario(){
        
-        jTextField3.setText("");
+        numero_solicitud.setText("");
      
     
     }
@@ -242,6 +264,6 @@ public class Autorizacion extends javax.swing.JPanel {
     private javax.swing.JButton boton_procesar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField numero_solicitud;
     // End of variables declaration//GEN-END:variables
 }

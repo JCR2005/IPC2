@@ -11,6 +11,7 @@ Fromted/Cancelacion$2.class
 Conexion/Base_De_Datos.class
 Fromted/Autorizacion.class
 Fromted/Movimientos$6.class
+Backend/Procesos.class
 Fromted/Consulta$5.class
 Backend/Principal_Main.class
 Fromted/Solicitud$6.class
@@ -58,6 +59,7 @@ Fromted/Solicitud$9.class
 Fromted/Ventana_Principal$3.class
 Fromted/Autorizacion$4.class
 Backend/Imagenes.class
+Backend/Cancelacion.class
 Fromted/Movimientos$7.class
 Fromted/Cancelacion$7.class
 Fromted/Cancelacion$1.class

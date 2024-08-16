@@ -4,6 +4,7 @@
  */
 package Fromted;
 
+import Backend.Procesos;
 import java.awt.Color;
 
 /**
@@ -15,6 +16,9 @@ public class Cancelacion extends javax.swing.JPanel {
     /**
      * Creates new form Solicitud
      */
+    
+    Procesos proceso=new Procesos();
+    
     public Cancelacion() {
         initComponents();
         jPanel1.setVisible(false);
@@ -31,7 +35,7 @@ public class Cancelacion extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         boton_ayuda = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        No_tarjeta = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         boton_procesar = new javax.swing.JButton();
         boton_cancelar = new javax.swing.JButton();
@@ -70,14 +74,14 @@ public class Cancelacion extends javax.swing.JPanel {
         jPanel1.add(boton_ayuda);
         boton_ayuda.setBounds(530, 460, 200, 30);
 
-        jTextField3.setBackground(new java.awt.Color(158, 144, 100));
-        jTextField3.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setToolTipText("");
-        jTextField3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jTextField3);
-        jTextField3.setBounds(230, 70, 300, 30);
+        No_tarjeta.setBackground(new java.awt.Color(158, 144, 100));
+        No_tarjeta.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
+        No_tarjeta.setForeground(new java.awt.Color(255, 255, 255));
+        No_tarjeta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        No_tarjeta.setToolTipText("");
+        No_tarjeta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.add(No_tarjeta);
+        No_tarjeta.setBounds(230, 70, 300, 30);
 
         jLabel2.setBackground(new java.awt.Color(20, 12, 77));
         jLabel2.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
@@ -208,7 +212,7 @@ public class Cancelacion extends javax.swing.JPanel {
     }//GEN-LAST:event_boton_procesarMouseExited
 
     private void boton_procesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_procesarActionPerformed
-
+        proceso.Procesar_Cancelacion(No_tarjeta.getText());
     }//GEN-LAST:event_boton_procesarActionPerformed
 
     private void boton_cancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_cancelarMouseEntered
@@ -230,11 +234,12 @@ public class Cancelacion extends javax.swing.JPanel {
     
     void reiniciar_formulario(){
        
-        jTextField3.setText("");
+        No_tarjeta.setText("");
      
     
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField No_tarjeta;
     private javax.swing.JButton boton_archivo_entrada;
     private javax.swing.JButton boton_ayuda;
     private javax.swing.JButton boton_cancelar;
@@ -242,6 +247,5 @@ public class Cancelacion extends javax.swing.JPanel {
     private javax.swing.JButton boton_procesar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

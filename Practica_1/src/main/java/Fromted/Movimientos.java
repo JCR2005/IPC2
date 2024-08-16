@@ -4,7 +4,9 @@
  */
 package Fromted;
 
+import Backend.Procesos;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,6 +17,8 @@ public class Movimientos extends javax.swing.JPanel {
     /**
      * Creates new form Solicitud
      */
+    Procesos proceso = new Procesos();
+
     public Movimientos() {
         initComponents();
         jPanel1.setVisible(false);
@@ -29,13 +33,14 @@ public class Movimientos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        establecimiento = new javax.swing.JTextField();
+        tipomovimiento = new javax.swing.JComboBox<>();
         boton_ayuda = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        No_tarjeta = new javax.swing.JTextField();
+        monto = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -43,9 +48,15 @@ public class Movimientos extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         boton_procesar = new javax.swing.JButton();
         boton_cancelar = new javax.swing.JButton();
-        jTextField7 = new javax.swing.JTextField();
+        fecha = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        descripcion = new javax.swing.JTextArea();
         boton_formulario = new javax.swing.JButton();
         boton_archivo_entrada = new javax.swing.JButton();
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
 
         setBackground(new java.awt.Color(228, 207, 154));
         setPreferredSize(new java.awt.Dimension(730, 490));
@@ -54,26 +65,26 @@ public class Movimientos extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(228, 207, 154));
         jPanel1.setLayout(null);
 
-        jTextField2.setBackground(new java.awt.Color(158, 144, 100));
-        jTextField2.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField2.setToolTipText("");
-        jTextField2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jTextField2);
-        jTextField2.setBounds(420, 230, 300, 30);
+        establecimiento.setBackground(new java.awt.Color(158, 144, 100));
+        establecimiento.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
+        establecimiento.setForeground(new java.awt.Color(255, 255, 255));
+        establecimiento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        establecimiento.setToolTipText("");
+        establecimiento.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.add(establecimiento);
+        establecimiento.setBounds(420, 230, 300, 30);
 
-        jComboBox1.setBackground(new java.awt.Color(158, 144, 100));
-        jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de Movimiento ...", "Cargo ", "Abono" }));
-        jComboBox1.setToolTipText("");
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        tipomovimiento.setBackground(new java.awt.Color(158, 144, 100));
+        tipomovimiento.setForeground(new java.awt.Color(255, 255, 255));
+        tipomovimiento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de Movimiento ...", "Cargo ", "Abono" }));
+        tipomovimiento.setToolTipText("");
+        tipomovimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                tipomovimientoActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox1);
-        jComboBox1.setBounds(110, 140, 150, 32);
+        jPanel1.add(tipomovimiento);
+        tipomovimiento.setBounds(110, 140, 150, 32);
 
         boton_ayuda.setBackground(new java.awt.Color(44, 68, 85));
         boton_ayuda.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
@@ -100,32 +111,23 @@ public class Movimientos extends javax.swing.JPanel {
         jPanel1.add(boton_ayuda);
         boton_ayuda.setBounds(530, 460, 200, 30);
 
-        jTextField3.setBackground(new java.awt.Color(158, 144, 100));
-        jTextField3.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setToolTipText("");
-        jTextField3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jTextField3);
-        jTextField3.setBounds(420, 50, 300, 30);
+        No_tarjeta.setBackground(new java.awt.Color(158, 144, 100));
+        No_tarjeta.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
+        No_tarjeta.setForeground(new java.awt.Color(255, 255, 255));
+        No_tarjeta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        No_tarjeta.setToolTipText("");
+        No_tarjeta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.add(No_tarjeta);
+        No_tarjeta.setBounds(420, 50, 300, 30);
 
-        jTextField5.setBackground(new java.awt.Color(158, 144, 100));
-        jTextField5.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField5.setToolTipText("");
-        jTextField5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jTextField5);
-        jTextField5.setBounds(420, 140, 300, 30);
-
-        jTextField6.setBackground(new java.awt.Color(158, 144, 100));
-        jTextField6.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setToolTipText("");
-        jTextField6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jTextField6);
-        jTextField6.setBounds(110, 230, 150, 30);
+        monto.setBackground(new java.awt.Color(158, 144, 100));
+        monto.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
+        monto.setForeground(new java.awt.Color(255, 255, 255));
+        monto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        monto.setToolTipText("");
+        monto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.add(monto);
+        monto.setBounds(110, 230, 150, 30);
 
         jLabel1.setBackground(new java.awt.Color(20, 12, 77));
         jLabel1.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
@@ -217,14 +219,29 @@ public class Movimientos extends javax.swing.JPanel {
         jPanel1.add(boton_cancelar);
         boton_cancelar.setBounds(0, 420, 200, 30);
 
-        jTextField7.setBackground(new java.awt.Color(158, 144, 100));
-        jTextField7.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
-        jTextField7.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField7.setToolTipText("");
-        jTextField7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jTextField7);
-        jTextField7.setBounds(110, 50, 150, 30);
+        fecha.setBackground(new java.awt.Color(158, 144, 100));
+        fecha.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
+        fecha.setForeground(new java.awt.Color(255, 255, 255));
+        fecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        fecha.setToolTipText("");
+        fecha.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        fecha.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        fecha.setEnabled(false);
+        jPanel1.add(fecha);
+        fecha.setBounds(110, 50, 150, 30);
+
+        descripcion.setBackground(new java.awt.Color(158, 144, 100));
+        descripcion.setColumns(20);
+        descripcion.setForeground(new java.awt.Color(255, 255, 255));
+        descripcion.setLineWrap(true);
+        descripcion.setRows(5);
+        descripcion.setTabSize(0);
+        descripcion.setAutoscrolls(false);
+        descripcion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jScrollPane2.setViewportView(descripcion);
+
+        jPanel1.add(jScrollPane2);
+        jScrollPane2.setBounds(420, 110, 300, 96);
 
         add(jPanel1);
         jPanel1.setBounds(0, 0, 730, 490);
@@ -270,13 +287,14 @@ public class Movimientos extends javax.swing.JPanel {
 
     private void boton_formularioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_formularioActionPerformed
         jPanel1.setVisible(true);
+        fecha.setText(proceso.fechaActual());
         boton_archivo_entrada.setVisible(false);
         boton_formulario.setVisible(false);
     }//GEN-LAST:event_boton_formularioActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void tipomovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipomovimientoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_tipomovimientoActionPerformed
 
     private void boton_ayudaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_ayudaMouseEntered
         boton_ayuda.setBackground(Color.white);
@@ -301,6 +319,18 @@ public class Movimientos extends javax.swing.JPanel {
     }//GEN-LAST:event_boton_procesarMouseExited
 
     private void boton_procesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_procesarActionPerformed
+        String tipo = (String) tipomovimiento.getSelectedItem();
+        if (verificar_campos_Vacios(No_tarjeta.getText(), fecha.getText(), establecimiento.getText(), descripcion.getText(), monto.getText(), tipo)==false) {
+
+           JOptionPane.showMessageDialog(null, "Llene todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+               proceso.Procesar_Movimiento(No_tarjeta.getText(), fecha.getText(), establecimiento.getText(), descripcion.getText(), Double.valueOf(monto.getText()), tipo);
+     
+            } catch (NumberFormatException e) {
+                 JOptionPane.showMessageDialog(null, "Monto no legible.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+               }
 
     }//GEN-LAST:event_boton_procesarActionPerformed
 
@@ -320,32 +350,49 @@ public class Movimientos extends javax.swing.JPanel {
         reiniciar_formulario();
     }//GEN-LAST:event_boton_cancelarActionPerformed
 
+    private boolean verificar_campos_Vacios(String nt, String f, String e, String d, String m, String tm){
     
-    void reiniciar_formulario(){
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField7.setText("");
-        jTextField5.setText("");
-        jTextField6.setText("");
+        boolean verificacion;
+        if (nt.isEmpty() || f.isEmpty() || e.isEmpty() || d.isEmpty() || m.isEmpty() || tm.isEmpty()) {
+            verificacion=false;
+        }else{
+            verificacion=true;
+        }
+        
+    
+        return verificacion;
+    
     
     }
+    
+    void reiniciar_formulario() {
+        establecimiento.setText("");
+        No_tarjeta.setText("");
+        fecha.setText("");
+        descripcion.setText("");
+        monto.setText("");
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField No_tarjeta;
     private javax.swing.JButton boton_archivo_entrada;
     private javax.swing.JButton boton_ayuda;
     private javax.swing.JButton boton_cancelar;
     private javax.swing.JButton boton_formulario;
     private javax.swing.JButton boton_procesar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JTextArea descripcion;
+    private javax.swing.JTextField establecimiento;
+    private javax.swing.JTextField fecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField monto;
+    private javax.swing.JComboBox<String> tipomovimiento;
     // End of variables declaration//GEN-END:variables
 }
