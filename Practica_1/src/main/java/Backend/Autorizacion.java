@@ -43,7 +43,7 @@ public class Autorizacion {
         return bandera;
     }
 
-    public boolean Aceptacion(int numero_Solicitud) {
+    public boolean aceptacion(int numero_Solicitud) {
 
         bandera = false;
         try {

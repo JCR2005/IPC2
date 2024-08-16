@@ -24,7 +24,7 @@ public class Solicitud {
     
     
     
-    public void Obtener_Datos_Solicitud_Formulario(int ns,String f, String t, String n, double s, String d){
+    public void obtenerDatosSolicitudFormulario(int ns,String f, String t, String n, double s, String d){
         
         numero_solicitud = ns;
         fecha = f;

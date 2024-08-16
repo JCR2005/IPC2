@@ -210,8 +210,8 @@ public class Autorizacion extends javax.swing.JPanel {
 
     private void boton_procesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_procesarActionPerformed
        
-        proceso.Procesar_Autorizacion(Integer.parseInt(numero_solicitud.getText()));
-        if (!proceso.isExiteSolicitud()) {
+        proceso.procesarAutorizacion(Integer.parseInt(numero_solicitud.getText()));
+        if (!proceso.isExisteSolicitud()) {
             
             JOptionPane.showMessageDialog(null, "La solicitud indicada no existe", "Error", JOptionPane.ERROR_MESSAGE);
 

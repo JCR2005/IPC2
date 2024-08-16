@@ -310,7 +310,7 @@ public class Solicitud extends javax.swing.JPanel {
     private void boton_procesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_procesarActionPerformed
       
         String tipo=(String) tipoCuenta.getSelectedItem();
-        proceso.Procesar_Solicitud(Integer.parseInt(numero_solicitud.getText()), fecha.getText(),tipo, nombre.getText(),Double.valueOf(salario.getText()), direccion.getText());
+        proceso.procesarSolicitud(Integer.parseInt(numero_solicitud.getText()), fecha.getText(),tipo, nombre.getText(),Double.valueOf(salario.getText()), direccion.getText());
         jPanel1.setVisible(false);
         boton_archivo_entrada.setVisible(true);
         boton_formulario.setVisible(true);

@@ -13,6 +13,7 @@ Fromted/Autorizacion.class
 Fromted/Movimientos$6.class
 Backend/Procesos.class
 Fromted/Consulta$5.class
+Fromted/Listado_De_Tarjetas$5.class
 Backend/Principal_Main.class
 Fromted/Solicitud$6.class
 Fromted/Ventana_Principal$10.class
@@ -21,6 +22,7 @@ Fromted/Consulta$1.class
 Fromted/Ventana_Principal$8.class
 Fromted/Solicitud$4.class
 Fromted/Movimientos$9.class
+Fromted/Listado_De_Tarjetas$2.class
 Fromted/Cancelacion$5.class
 Fromted/Consulta$8.class
 Fromted/Consulta.class
@@ -29,6 +31,7 @@ Fromted/Ventana_Principal$12.class
 Fromted/Ventana_Principal$5.class
 Fromted/Autorizacion$5.class
 Fromted/Consulta$4.class
+Fromted/Listado_De_Tarjetas$6.class
 Fromted/Ventana_Principal.class
 Fromted/Solicitud.class
 Fromted/Solicitud$7.class
@@ -37,6 +40,7 @@ Backend/Autorizacion.class
 Fromted/Autorizacion$2.class
 Fromted/Ventana_Principal$2.class
 Backend/Solicitud.class
+Fromted/Listado_De_Tarjetas$3.class
 Fromted/Consulta$7.class
 Fromted/Autorizacion$3.class
 Fromted/Cancelacion.class
@@ -46,8 +50,10 @@ Fromted/Movimientos$5.class
 Fromted/Ventana_Principal$9.class
 Fromted/Movimientos$1.class
 Fromted/Cancelacion$8.class
+Fromted/Listado_De_Tarjetas.class
 Fromted/Autorizacion$6.class
 Fromted/Consulta$3.class
+Backend/Listado_De_Tarjetas.class
 Fromted/Movimientos$8.class
 Backend/Movimiento.class
 Fromted/Ventana_Principal$6.class
@@ -59,6 +65,7 @@ Fromted/Solicitud$9.class
 Fromted/Ventana_Principal$3.class
 Fromted/Autorizacion$4.class
 Backend/Imagenes.class
+Fromted/Listado_De_Tarjetas$4.class
 Backend/Cancelacion.class
 Fromted/Movimientos$7.class
 Fromted/Cancelacion$7.class
@@ -68,3 +75,4 @@ Fromted/Solicitud$5.class
 Fromted/Solicitud$2.class
 Fromted/Ventana_Principal$7.class
 Fromted/Cancelacion$4.class
+Fromted/Listado_De_Tarjetas$1.class

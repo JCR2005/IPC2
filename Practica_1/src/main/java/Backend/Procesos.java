@@ -4,76 +4,120 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- *
+ * La clase Procesos gestiona el procesamiento de solicitudes, autorizaciones, movimientos y cancelaciones de tarjetas.
+ * Utiliza instancias de otras clases para llevar a cabo estas tareas.
+ * 
  * @author carlosrodriguez
  */
 public class Procesos {
 
-    Solicitud solicitud = new Solicitud();
-    Autorizacion autorizacion = new Autorizacion();
-    Movimiento movimiento = new Movimiento();
-    Cancelacion cancelacion = new Cancelacion();
-    Consulta consulta=new Consulta();
-    private boolean exiteSolicitud;
+    // Instancias de clases para manejar solicitudes, autorizaciones, movimientos y cancelaciones
+    private Solicitud solicitud = new Solicitud();
+    private Autorizacion autorizacion = new Autorizacion();
+    private Movimiento movimiento = new Movimiento();
+    private Cancelacion cancelacion = new Cancelacion();
+    private Consulta consulta = new Consulta();
+
+    // Variables para almacenar el estado de la solicitud
+    private boolean existeSolicitud;
     private boolean aceptadaSolicitud;
 
-    public void Procesar_Solicitud(int ns, String f, String t, String n, double s, String d) {
-
-        solicitud.Obtener_Datos_Solicitud_Formulario(ns, f, t, n, s, d);
+    /**
+     * Procesa una solicitud de tarjeta.
+     * 
+     * @param ns El número de solicitud
+     * @param f La fecha de la solicitud
+     * @param t El tipo de tarjeta
+     * @param n El nombre del solicitante
+     * @param s El límite de la tarjeta
+     * @param d La dirección del solicitante
+     */
+    public void procesarSolicitud(int ns, String f, String t, String n, double s, String d) {
+        solicitud.obtenerDatosSolicitudFormulario(ns, f, t, n, s, d);
         solicitud.guardarSolicitud();
-
     }
 
-    public void Procesar_Autorizacion(int ns) {
-
-        exiteSolicitud = false;
+    /**
+     * Procesa la autorización de una solicitud.
+     * 
+     * @param ns El número de solicitud
+     */
+    public void procesarAutorizacion(int ns) {
+        existeSolicitud = false;
         aceptadaSolicitud = false;
 
-        exiteSolicitud = autorizacion.consulta(ns);
+        // Verifica si existe una solicitud
+        existeSolicitud = autorizacion.consulta(ns);
 
-        if (exiteSolicitud) {
-            aceptadaSolicitud = autorizacion.Aceptacion(ns);
+        // Si existe, verifica si la solicitud fue aceptada
+        if (existeSolicitud) {
+            aceptadaSolicitud = autorizacion.aceptacion(ns);
         }
-
     }
 
-    public boolean isExiteSolicitud() {
-        return exiteSolicitud;
+    /**
+     * Verifica si existe una solicitud.
+     * 
+     * @return true si existe una solicitud, false en caso contrario
+     */
+    public boolean isExisteSolicitud() {
+        return existeSolicitud;
     }
 
+    /**
+     * Verifica si una solicitud fue aceptada.
+     * 
+     * @return true si la solicitud fue aceptada, false en caso contrario
+     */
     public boolean isAceptadaSolicitud() {
         return aceptadaSolicitud;
     }
 
+    /**
+     * Obtiene la fecha actual en formato yyyy-MM-dd.
+     * 
+     * @return La fecha actual formateada como una cadena
+     */
     public String fechaActual() {
         LocalDate fechaActual = LocalDate.now();
 
         // Formatear la fecha en formato yyyy-MM-dd
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String fechaFormateada = fechaActual.format(formatter);
-
-        return fechaFormateada;
-
+        return fechaActual.format(formatter);
     }
 
-    public void Procesar_Movimiento(String nt, String f, String e, String d, double m, String tm) {
-
-        movimiento.Obtener_Datos_Movimiento_Formulario(nt, f, e, d, m, tm);
-        movimiento.guardarMovimeito();
+    /**
+     * Procesa un movimiento de tarjeta.
+     * 
+     * @param nt El número de tarjeta
+     * @param f La fecha del movimiento
+     * @param e El establecimiento donde se realizó el movimiento
+     * @param d La descripción del movimiento
+     * @param m El monto del movimiento
+     * @param tm El tipo de movimiento
+     */
+    public void procesarMovimiento(String nt, String f, String e, String d, double m, String tm) {
+        movimiento.obtenerDatosMovimientoFormulario(nt, f, e, d, m, tm);
+        movimiento.guardarMovimiento();
     }
 
-    public void Procesar_Cancelacion(String nt) {
+    /**
+     * Procesa la cancelación de una tarjeta.
+     * 
+     * @param nt El número de tarjeta
+     */
+    public void procesarCancelacion(String nt) {
         cancelacion.recibirDatos(nt);
-        cancelacion.desactivar_tarjeta();
+        cancelacion.desactivarTarjeta();
     }
-    
-    
-    public void consulta(String nt){
-        
-        consulta.ObtenerNumeroDeTarjeta(nt);
-        consulta.validar_tarjeta();
-        
-        
 
+    /**
+     * Realiza una consulta sobre una tarjeta.
+     * 
+     * @param nt El número de tarjeta
+     */
+    public void consulta(String nt) {
+        consulta.obtenerNumeroDeTarjeta(nt);
+        consulta.validarTarjeta();
     }
 }

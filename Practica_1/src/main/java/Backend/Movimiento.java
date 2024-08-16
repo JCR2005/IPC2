@@ -19,7 +19,7 @@ public class Movimiento {
     private String Establecimiento;
     private String tipo_De_Movimiento;
 
-    public void Obtener_Datos_Movimiento_Formulario(String nt, String f, String e, String d, double m, String tm) {
+    public void obtenerDatosMovimientoFormulario(String nt, String f, String e, String d, double m, String tm) {
 
         numero_tarjeta = nt;
         fecha = f;
@@ -30,7 +30,7 @@ public class Movimiento {
 
     }
 
-    public void guardarMovimeito() {
+    public void guardarMovimiento() {
         ResultSet result;
 
         if (tipo_De_Movimiento.length() > 6) {

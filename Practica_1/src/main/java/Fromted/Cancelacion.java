@@ -212,7 +212,7 @@ public class Cancelacion extends javax.swing.JPanel {
     }//GEN-LAST:event_boton_procesarMouseExited
 
     private void boton_procesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_procesarActionPerformed
-        proceso.Procesar_Cancelacion(No_tarjeta.getText());
+        proceso.procesarCancelacion(No_tarjeta.getText());
     }//GEN-LAST:event_boton_procesarActionPerformed
 
     private void boton_cancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_cancelarMouseEntered

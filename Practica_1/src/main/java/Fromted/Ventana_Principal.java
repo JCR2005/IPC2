@@ -26,6 +26,8 @@ public class Ventana_Principal extends javax.swing.JFrame {
     static Consulta ct=new Consulta();
     static Autorizacion at=new Autorizacion();
     static Cancelacion cat=new Cancelacion();
+    static Listado_De_Tarjetas ldt=new Listado_De_Tarjetas();
+    
     Procesos proceso=new Procesos();
     
     public Ventana_Principal() {
@@ -391,6 +393,11 @@ public class Ventana_Principal extends javax.swing.JFrame {
 
     private void boton_listado_tarjetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_listado_tarjetasActionPerformed
        cambiar_estado_botones( boton_listado_tarjetas,botones);
+        ocultar_paneles();
+        jPanel4.add(ldt);
+        ldt.setVisible(true);
+        jPanel4.revalidate();
+        jPanel4.repaint();
     }//GEN-LAST:event_boton_listado_tarjetasActionPerformed
 
     private void boton_reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_reportesActionPerformed
@@ -455,6 +462,7 @@ public class Ventana_Principal extends javax.swing.JFrame {
         ct.setVisible(false);
         at.setVisible(false);
         cat.setVisible(false);
+        ldt.setVisible(false);
     }
    
     // Variables declaration - do not modify//GEN-BEGIN:variables

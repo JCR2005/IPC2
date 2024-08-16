@@ -20,13 +20,13 @@ public class Consulta {
 
     private String numero_tarjeta;
 
-    public void ObtenerNumeroDeTarjeta(String nt) {
+    public void obtenerNumeroDeTarjeta(String nt) {
 
         numero_tarjeta = nt;
 
     }
 
-    public void validar_tarjeta() {
+    public void validarTarjeta() {
 
         try {
             ResultSet result;

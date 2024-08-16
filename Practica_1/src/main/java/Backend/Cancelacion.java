@@ -20,7 +20,7 @@ public class Cancelacion {
 
     }
 
-    public void desactivar_tarjeta() {
+    public void desactivarTarjeta() {
 
         try {
             ResultSet result;

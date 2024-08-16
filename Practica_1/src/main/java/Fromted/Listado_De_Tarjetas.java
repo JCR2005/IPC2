@@ -2,24 +2,53 @@
 package Fromted;
 
 import Backend.Procesos;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author carlosrodriguez
  */
-public class Autorizacion extends javax.swing.JPanel {
+    public class Listado_De_Tarjetas extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Solicitud
-     */
-    
-    Procesos proceso=new Procesos();
-    public Autorizacion() {
-        initComponents();
-        jPanel1.setVisible(false);
-    }
+        /**
+         * Creates new form Solicitud
+         */
+
+        Procesos proceso=new Procesos();
+        public Listado_De_Tarjetas() {
+            initComponents();
+             // Columnas de la tabla
+            String[] columnas = {"NÚMERO TARJETA", "TIPO", "LÍMITE", "NOMBRE", "DIRECCIÓN", "FECHA", "ESTADO"};
+
+            // Datos de ejemplo
+            Object[][] datos = {
+                {"1234567890123456", "Visa", 5000, "Juan Pérez", "Calle 123", "2024-08-15", "Activa"},
+                {"9876543210987654", "MasterCard", 10000, "María López", "Avenida 456", "2024-08-14", "Inactiva"},
+                // Puedes agregar más filas de datos aquí
+            };
+
+            // Modelo de la tabla
+            DefaultTableModel model = new DefaultTableModel(datos, columnas);
+            JTable table = new JTable(model);
+
+            // Colocar la tabla en un JScrollPane
+            JScrollPane scrollPane = new JScrollPane(table);
+            
+        scrollPane.setBounds(5, 5, 720, 375); // Ajusta estos valores según sea necesario
+
+        // Agregar el JScrollPane al JPanel
+        add(scrollPane);
+
+        // Asegurarse de que el panel se dibuje correctamente
+        revalidate();
+        repaint();
+
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,21 +59,25 @@ public class Autorizacion extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         boton_ayuda = new javax.swing.JButton();
-        numero_solicitud = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         boton_procesar = new javax.swing.JButton();
-        boton_cancelar = new javax.swing.JButton();
-        boton_formulario = new javax.swing.JButton();
-        boton_archivo_entrada = new javax.swing.JButton();
+        borrar_filtros = new javax.swing.JButton();
+        Tipo = new javax.swing.JComboBox<>();
+        monto = new javax.swing.JTextField();
+        Nombre = new javax.swing.JCheckBox();
+        despues_de = new javax.swing.JTextField();
+        antes_de = new javax.swing.JTextField();
+        nombre = new javax.swing.JTextField();
+        fecha = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        Monto = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(228, 207, 154));
         setPreferredSize(new java.awt.Dimension(730, 490));
         setLayout(null);
-
-        jPanel1.setBackground(new java.awt.Color(228, 207, 154));
-        jPanel1.setLayout(null);
 
         boton_ayuda.setBackground(new java.awt.Color(44, 68, 85));
         boton_ayuda.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
@@ -68,30 +101,13 @@ public class Autorizacion extends javax.swing.JPanel {
                 boton_ayudaActionPerformed(evt);
             }
         });
-        jPanel1.add(boton_ayuda);
-        boton_ayuda.setBounds(530, 460, 200, 30);
-
-        numero_solicitud.setBackground(new java.awt.Color(158, 144, 100));
-        numero_solicitud.setFont(new java.awt.Font("Comic Sans MS", 3, 15)); // NOI18N
-        numero_solicitud.setForeground(new java.awt.Color(255, 255, 255));
-        numero_solicitud.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        numero_solicitud.setToolTipText("");
-        numero_solicitud.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(numero_solicitud);
-        numero_solicitud.setBounds(230, 180, 300, 30);
-
-        jLabel2.setBackground(new java.awt.Color(20, 12, 77));
-        jLabel2.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 49, 74));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("No. Solicitud:");
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(110, 190, 130, 20);
+        add(boton_ayuda);
+        boton_ayuda.setBounds(0, 460, 60, 30);
 
         boton_procesar.setBackground(new java.awt.Color(44, 68, 85));
         boton_procesar.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
         boton_procesar.setForeground(new java.awt.Color(255, 255, 255));
-        boton_procesar.setText("Procesar Autorizacion");
+        boton_procesar.setText("Procesar Busqueda");
         boton_procesar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         boton_procesar.setEnabled(true
         );
@@ -110,81 +126,79 @@ public class Autorizacion extends javax.swing.JPanel {
                 boton_procesarActionPerformed(evt);
             }
         });
-        jPanel1.add(boton_procesar);
-        boton_procesar.setBounds(270, 440, 200, 30);
+        add(boton_procesar);
+        boton_procesar.setBounds(0, 380, 150, 30);
 
-        boton_cancelar.setBackground(new java.awt.Color(44, 68, 85));
-        boton_cancelar.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
-        boton_cancelar.setForeground(new java.awt.Color(255, 255, 255));
-        boton_cancelar.setText("Cancelar");
-        boton_cancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        boton_cancelar.setEnabled(true
+        borrar_filtros.setBackground(new java.awt.Color(44, 68, 85));
+        borrar_filtros.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
+        borrar_filtros.setForeground(new java.awt.Color(255, 255, 255));
+        borrar_filtros.setText("Borrar Filtros");
+        borrar_filtros.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        borrar_filtros.setEnabled(true
         );
-        boton_cancelar.setFocusCycleRoot(true);
-        boton_cancelar.setFocusTraversalPolicyProvider(true);
-        boton_cancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+        borrar_filtros.setFocusCycleRoot(true);
+        borrar_filtros.setFocusTraversalPolicyProvider(true);
+        borrar_filtros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                boton_cancelarMouseEntered(evt);
+                borrar_filtrosMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                boton_cancelarMouseExited(evt);
+                borrar_filtrosMouseExited(evt);
             }
         });
-        boton_cancelar.addActionListener(new java.awt.event.ActionListener() {
+        borrar_filtros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton_cancelarActionPerformed(evt);
+                borrar_filtrosActionPerformed(evt);
             }
         });
-        jPanel1.add(boton_cancelar);
-        boton_cancelar.setBounds(0, 420, 200, 30);
+        add(borrar_filtros);
+        borrar_filtros.setBounds(0, 420, 120, 30);
 
-        add(jPanel1);
-        jPanel1.setBounds(0, 0, 730, 490);
+        Tipo.setBackground(new java.awt.Color(158, 144, 100));
+        Tipo.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
+        Tipo.setForeground(new java.awt.Color(255, 255, 255));
+        Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo", "NACIONAL", "REGIONAL", "INTERNACIONAL" }));
+        add(Tipo);
+        Tipo.setBounds(540, 460, 180, 26);
+        add(monto);
+        monto.setBounds(540, 430, 180, 24);
 
-        boton_formulario.setBackground(new java.awt.Color(44, 68, 85));
-        boton_formulario.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
-        boton_formulario.setForeground(new java.awt.Color(255, 255, 255));
-        boton_formulario.setText("formulario");
-        boton_formulario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        boton_formulario.setEnabled(true
-        );
-        boton_formulario.setFocusCycleRoot(true);
-        boton_formulario.setFocusTraversalPolicyProvider(true);
-        boton_formulario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton_formularioActionPerformed(evt);
-            }
-        });
-        add(boton_formulario);
-        boton_formulario.setBounds(215, 170, 300, 25);
+        Nombre.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
+        Nombre.setForeground(new java.awt.Color(0, 51, 102));
+        Nombre.setText("Nombre");
+        add(Nombre);
+        Nombre.setBounds(452, 400, 80, 24);
+        add(despues_de);
+        despues_de.setBounds(280, 430, 140, 24);
+        add(antes_de);
+        antes_de.setBounds(280, 400, 140, 24);
+        add(nombre);
+        nombre.setBounds(540, 400, 180, 24);
 
-        boton_archivo_entrada.setBackground(new java.awt.Color(44, 68, 85));
-        boton_archivo_entrada.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
-        boton_archivo_entrada.setForeground(new java.awt.Color(255, 255, 255));
-        boton_archivo_entrada.setText("Archivo de entrada");
-        boton_archivo_entrada.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        boton_archivo_entrada.setEnabled(true
-        );
-        boton_archivo_entrada.setFocusCycleRoot(true);
-        boton_archivo_entrada.setFocusTraversalPolicyProvider(true);
-        boton_archivo_entrada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton_archivo_entradaActionPerformed(evt);
-            }
-        });
-        add(boton_archivo_entrada);
-        boton_archivo_entrada.setBounds(215, 280, 300, 25);
+        fecha.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
+        fecha.setForeground(new java.awt.Color(0, 51, 102));
+        fecha.setText("Fecha");
+        add(fecha);
+        fecha.setBounds(200, 410, 70, 24);
+
+        jLabel1.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 102));
+        jLabel1.setText("Antes de...");
+        add(jLabel1);
+        jLabel1.setBounds(320, 380, 80, 18);
+
+        jLabel2.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 51, 102));
+        jLabel2.setText("Depues de...");
+        add(jLabel2);
+        jLabel2.setBounds(310, 460, 90, 20);
+
+        Monto.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
+        Monto.setForeground(new java.awt.Color(0, 51, 102));
+        Monto.setText("Monto");
+        add(Monto);
+        Monto.setBounds(452, 430, 70, 24);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void boton_archivo_entradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_archivo_entradaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_boton_archivo_entradaActionPerformed
-
-    private void boton_formularioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_formularioActionPerformed
-        jPanel1.setVisible(true);
-        boton_archivo_entrada.setVisible(false);
-        boton_formulario.setVisible(false);
-    }//GEN-LAST:event_boton_formularioActionPerformed
 
     private void boton_ayudaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_ayudaMouseEntered
         boton_ayuda.setBackground(Color.white);
@@ -210,60 +224,45 @@ public class Autorizacion extends javax.swing.JPanel {
 
     private void boton_procesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_procesarActionPerformed
        
-        proceso.Procesar_Autorizacion(Integer.parseInt(numero_solicitud.getText()));
-        if (!proceso.isExiteSolicitud()) {
-            
-            JOptionPane.showMessageDialog(null, "La solicitud indicada no existe", "Error", JOptionPane.ERROR_MESSAGE);
-
-        }else{
-
-            if (proceso.isAceptadaSolicitud()) {
-                JOptionPane.showMessageDialog(null, "Solicitud aceptada.", "Información", JOptionPane.INFORMATION_MESSAGE);
-
-            }else{
-
-                JOptionPane.showMessageDialog(null, "Solicitud rechazas", "Error", JOptionPane.ERROR_MESSAGE);
-
-            }
-        
-        
-        }
-      
         
         
     }//GEN-LAST:event_boton_procesarActionPerformed
 
-    private void boton_cancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_cancelarMouseEntered
+    private void borrar_filtrosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrar_filtrosMouseEntered
 
-        boton_cancelar.setBackground(Color.red);
-    }//GEN-LAST:event_boton_cancelarMouseEntered
+        borrar_filtros.setBackground(Color.red);
+    }//GEN-LAST:event_borrar_filtrosMouseEntered
 
-    private void boton_cancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_cancelarMouseExited
-        boton_cancelar.setBackground(new java.awt.Color(44, 68, 85));
-    }//GEN-LAST:event_boton_cancelarMouseExited
+    private void borrar_filtrosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrar_filtrosMouseExited
+        borrar_filtros.setBackground(new java.awt.Color(44, 68, 85));
+    }//GEN-LAST:event_borrar_filtrosMouseExited
 
-    private void boton_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cancelarActionPerformed
-        jPanel1.setVisible(false);
-        boton_archivo_entrada.setVisible(true);
-        boton_formulario.setVisible(true);
+    private void borrar_filtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrar_filtrosActionPerformed
+        
         reiniciar_formulario();
-    }//GEN-LAST:event_boton_cancelarActionPerformed
+    }//GEN-LAST:event_borrar_filtrosActionPerformed
 
-    
+   
     void reiniciar_formulario(){
        
-        numero_solicitud.setText("");
-     
+        
     
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton boton_archivo_entrada;
+    private javax.swing.JCheckBox Monto;
+    private javax.swing.JCheckBox Nombre;
+    private javax.swing.JComboBox<String> Tipo;
+    private javax.swing.JTextField antes_de;
+    private javax.swing.JButton borrar_filtros;
     private javax.swing.JButton boton_ayuda;
-    private javax.swing.JButton boton_cancelar;
-    private javax.swing.JButton boton_formulario;
     private javax.swing.JButton boton_procesar;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JTextField despues_de;
+    private javax.swing.JCheckBox fecha;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField numero_solicitud;
+    private javax.swing.JTextField monto;
+    private javax.swing.JTextField nombre;
     // End of variables declaration//GEN-END:variables
 }

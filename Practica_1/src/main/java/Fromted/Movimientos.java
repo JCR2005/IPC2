@@ -325,7 +325,7 @@ public class Movimientos extends javax.swing.JPanel {
            JOptionPane.showMessageDialog(null, "Llene todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
-               proceso.Procesar_Movimiento(No_tarjeta.getText(), fecha.getText(), establecimiento.getText(), descripcion.getText(), Double.valueOf(monto.getText()), tipo);
+               proceso.procesarMovimiento(No_tarjeta.getText(), fecha.getText(), establecimiento.getText(), descripcion.getText(), Double.valueOf(monto.getText()), tipo);
      
             } catch (NumberFormatException e) {
                  JOptionPane.showMessageDialog(null, "Monto no legible.", "Error", JOptionPane.ERROR_MESSAGE);
