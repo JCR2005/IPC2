@@ -165,7 +165,7 @@ public class Autorizacion {
 
             } while (bandera);
 
-        } catch (SQLException e) {
+        } catch (SQLException e)    {
             System.out.println("errore");
         }
 
