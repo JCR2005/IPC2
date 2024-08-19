@@ -7,53 +7,58 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author carlosrodriguez
+ * La clase Cancelacion maneja la desactivación de tarjetas de crédito.
+ * Permite recibir un número de tarjeta y actualizar su estado a inactivo
+ * en la base de datos si está activa.
+ * 
+ * Autor: Carlos Rodriguez
  */
 public class Cancelacion {
 
-    private String numero_tarjeta;
+    private String numeroTarjeta;
 
-    public void recibirDatos(String nt) {
-
-        numero_tarjeta = nt;
-
+    /**
+     * Recibe el número de tarjeta para su desactivación.
+     * 
+     * @param numeroTarjeta El número de tarjeta a cancelar.
+     */
+    public void recibirDatos(String numeroTarjeta) {
+        this.numeroTarjeta = numeroTarjeta;
     }
 
+    /**
+     * Desactiva la tarjeta en la base de datos si está activa.
+     * Muestra un mensaje de información si la tarjeta ya está cancelada
+     * o si el número de tarjeta no existe.
+     */
     public void desactivarTarjeta() {
+        if (numeroTarjeta == null || numeroTarjeta.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Número de tarjeta no proporcionado", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        try {
-            ResultSet result;
-            Statement statemenInsert = Base_De_Datos.getConnection().createStatement();
+        String selectQuery = "SELECT Estado FROM Datos_Tarjeta WHERE Numero_Tarjeta = '" + numeroTarjeta + "'";
+        String updateQuery = "UPDATE Datos_Tarjeta SET Estado = 'CANCELADA' WHERE Numero_Tarjeta = '" + numeroTarjeta + "'";
 
-            String select = "select * from Datos_Tarjeta where Numero_Tarjeta=" + numero_tarjeta;
-            result = statemenInsert.executeQuery(select);
-            System.out.println(numero_tarjeta);
-            // Mover el cursor al primer resultado
-            if (result.next()) {
-                String resultado = result.getString("Estado");
-                if (resultado.equals("ACTIVA")) {
-                    String insert = "UPDATE Datos_Tarjeta SET Estado = 'INACTIVA' where Numero_Tarjeta =" + numero_tarjeta;
-                    Statement statemenInser = Base_De_Datos.getConnection().createStatement();
-                    int rowsAffected = statemenInser.executeUpdate(insert);
-                    
-                    JOptionPane.showMessageDialog(null, "La tarjeta No."+numero_tarjeta+" ha sido cancelada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+        try (Statement statement = Base_De_Datos.getConnection().createStatement();
+             ResultSet resultSet = statement.executeQuery(selectQuery)) {
+
+            if (resultSet.next()) {
+                String estado = resultSet.getString("Estado");
+                if ("AUTORIZADA".equals(estado)) {
+                    try (Statement updateStatement = Base_De_Datos.getConnection().createStatement()) {
+                        int rowsAffected = updateStatement.executeUpdate(updateQuery);
+                        JOptionPane.showMessageDialog(null, "La tarjeta No." + numeroTarjeta + " ha sido cancelada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 } else {
-
-                    JOptionPane.showMessageDialog(null, "Esta tarjeta No."+numero_tarjeta+" ya ha sido cancelada anteriormente", "Información", JOptionPane.INFORMATION_MESSAGE);
-
+                    JOptionPane.showMessageDialog(null, "Esta tarjeta No." + numeroTarjeta + " ya ha sido cancelada anteriormente", "Información", JOptionPane.INFORMATION_MESSAGE);
                 }
-
             } else {
-
-                JOptionPane.showMessageDialog(null, "Este numero de tarjeta no existe", "Error", JOptionPane.ERROR_MESSAGE);
-
+                JOptionPane.showMessageDialog(null, "Este número de tarjeta no existe", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Este numero de tarjeta es invalido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al cancelar la tarjeta: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
-
 }

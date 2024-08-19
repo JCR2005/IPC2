@@ -410,7 +410,7 @@ public class Listado_De_Estados_De_Cuenta extends javax.swing.JPanel {
         List<Date> fecha = Listado_De_Estado_Cuenta.getFecha();
         List<String> tipoMovimiento = Listado_De_Estado_Cuenta.getTipoMovimiento();
         List<String> descripcion = Listado_De_Estado_Cuenta.getDescripcion();
-        List<String> establecimieto = Listado_De_Estado_Cuenta.getEstablecimieto();
+        List<String> establecimieto = Listado_De_Estado_Cuenta.getEstablecimiento();
         List<String> montos = Listado_De_Estado_Cuenta.getMontos();
 
         Object[][] datosTabla = new Object[fecha.size()][5];

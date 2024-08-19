@@ -244,15 +244,15 @@ public class Listado_De_Tarjeta extends javax.swing.JPanel {
     }
 
     // Crear el arreglo de datos utilizando solo `numeroTarjeta`
-    Object[][] datos = new Object[Listado_De_Tarjetas.numeroTarjeta.size()][7];
-    for (int i = 0; i < Listado_De_Tarjetas.numeroTarjeta.size(); i++) {
-        datos[i][0] = Listado_De_Tarjetas.numeroTarjeta.get(i);
-        datos[i][1] = Listado_De_Tarjetas.tipoTarjeta.get(i);
-        datos[i][2] = Listado_De_Tarjetas.limite.get(i);
-        datos[i][3] = Listado_De_Tarjetas.nombreCliente.get(i);
-        datos[i][4] = Listado_De_Tarjetas.direccion.get(i);
-        datos[i][5] = Listado_De_Tarjetas.estadoTarjeta.get(i);
-        datos[i][6] = Listado_De_Tarjetas.fecha.get(i);
+    Object[][] datos = new Object[Listado_De_Tarjetas.getNumeroTarjeta().size()][7];
+    for (int i = 0; i < Listado_De_Tarjetas.getNumeroTarjeta().size(); i++) {
+        datos[i][0] = Listado_De_Tarjetas.getNumeroTarjeta().get(i);
+        datos[i][1] = Listado_De_Tarjetas.getTipoTarjeta().get(i);
+        datos[i][2] = Listado_De_Tarjetas.getLimite().get(i);
+        datos[i][3] = Listado_De_Tarjetas.getNombreCliente().get(i);
+        datos[i][4] = Listado_De_Tarjetas.getDireccion().get(i);
+        datos[i][5] = Listado_De_Tarjetas.getEstadoTarjeta().get(i);
+        datos[i][6] = Listado_De_Tarjetas.getFecha().get(i);
     }
 
     // Columnas de la tabla

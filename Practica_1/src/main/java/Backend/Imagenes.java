@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Backend;
 
 import java.awt.Image;
@@ -10,25 +6,42 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
- *
- * @author carlosrodriguez
+ * La clase Imagenes maneja la carga y ajuste de imágenes para etiquetas JLabel.
+ * 
+ * Autor: Carlos Rodriguez
  */
 public class Imagenes {
     
-    // Ruta de la imagen del fondo 1
-    private static final String logo = "Imagenes/logo.png";
+    // Ruta de la imagen del logo
+    private static final String LOGO_PATH = "Imagenes/logo.png";
     
-    public static void logo(JLabel label) {
+    /**
+     * Establece la imagen del logo en el JLabel proporcionado.
+     * 
+     * @param label El JLabel en el que se mostrará la imagen del logo.
+     */
+    public static void setLogo(JLabel label) {
         try {
-            URL imageUrl = Imagenes.class.getClassLoader().getResource(logo);
+            // Obtener la URL de la imagen del logo
+            URL imageUrl = Imagenes.class.getClassLoader().getResource(LOGO_PATH);
 
-                ImageIcon imagen = new ImageIcon(imageUrl);
-                Image imagenEscalada = imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH); // Cambia Image.SCALE_DEFAULT por Image.SCALE_SMOOTH para obtener una mejor calidad
-                ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
-                label.setIcon(iconoEscalado);
+            // Verificar si la URL de la imagen es nula
+            if (imageUrl == null) {
+                throw new IllegalArgumentException("No se encontró la imagen en la ruta: " + LOGO_PATH);
+            }
+
+            // Crear un ImageIcon a partir de la URL
+            ImageIcon imageIcon = new ImageIcon(imageUrl);
+            // Escalar la imagen para que se ajuste al tamaño del JLabel
+            Image scaledImage = imageIcon.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
+            // Crear un nuevo ImageIcon con la imagen escalada
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            // Establecer el icono escalado en el JLabel
+            label.setIcon(scaledIcon);
 
         } catch (Exception e) {
-            System.out.println("Error al cargar la imagen: " + e.getMessage());
+            // Mostrar un mensaje de error en caso de excepción
+            System.err.println("Error al cargar la imagen: " + e.getMessage());
             e.printStackTrace();
         }
     }

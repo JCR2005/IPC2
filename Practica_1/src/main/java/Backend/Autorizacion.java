@@ -1,162 +1,230 @@
-
 package Backend;
 
 import Conexion.Base_De_Datos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author carlosrodriguez
+ * La clase Autorizacion maneja la autorización y creación de tarjetas de crédito
+ * basadas en el número de solicitud proporcionado. Realiza consultas a la base de datos
+ * para validar y aprobar solicitudes de tarjetas, y crea nuevas entradas de tarjetas de crédito.
+ * 
+ * Autor: Carlos Rodriguez
  */
 public class Autorizacion {
 
-    private boolean bandera = false;
+    private static final double LIMITE_NACIONAL = 5000;
+    private static final double LIMITE_REGIONAL = 10000;
+    private static final double LIMITE_INTERNACIONAL = 20000;
 
-    public boolean consulta(int numero_Solicitud) {
+    private static final String FORMATO_NACIONAL = "42563102654";
+    private static final String FORMATO_REGIONAL = "42563102655";
+    private static final String FORMATO_INTERNACIONAL = "42563102656";
 
-        bandera = false;
-        String select = "select * from solicitud where Numero_Solicitud='" + numero_Solicitud + "'";
+    /**
+     * Verifica si existe una solicitud con el número dado en la base de datos.
+     * 
+     * @param numeroSolicitud El número de solicitud a verificar.
+     * @return true si la solicitud existe, false en caso contrario.
+     */
+    public boolean consulta(int numeroSolicitud) {
+        String query = "SELECT 1 FROM solicitud WHERE Numero_Solicitud = " + numeroSolicitud;
+        
+        try (Statement statement = Base_De_Datos.getConnection().createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
 
-        Statement statemenInsert;
-        try {
-            statemenInsert = Base_De_Datos.getConnection().createStatement();
-            ResultSet result = statemenInsert.executeQuery(select);
+            return resultSet.next();
 
-            if (result.next()) {
-                bandera = true;
-            }
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, "Este numero de tarjeta es invalido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Número de solicitud inválido", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
-
-        return bandera;
     }
 
-    public boolean aceptacion(int numero_Solicitud) {
+    /**
+     * Acepta o rechaza una solicitud basándose en el número proporcionado y actualiza
+     * el estado de la solicitud en la base de datos. Crea una nueva tarjeta si es aceptada.
+     * 
+     * @param numeroSolicitud El número de solicitud a procesar.
+     * @return true si la solicitud es aceptada, false si es rechazada.
+     */
+    public boolean aceptacion(int numeroSolicitud) {
+        String query = "SELECT Salario, Tipo, Nombre, Direccion FROM solicitud WHERE Numero_Solicitud = " + numeroSolicitud;
 
-        bandera = false;
-        try {
-            String select = "select * from solicitud where Numero_Solicitud=" + numero_Solicitud;
+        try (Statement statement = Base_De_Datos.getConnection().createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
 
-            Statement statemenInsert = Base_De_Datos.getConnection().createStatement();
+            if (resultSet.next()) {
+                double salario = resultSet.getDouble("Salario");
+                String tipo = resultSet.getString("Tipo");
+                String nombre = resultSet.getString("Nombre");
+                String direccion = resultSet.getString("Direccion");
 
-            ResultSet result = statemenInsert.executeQuery(select);
+                double limite = calcularLimite(tipo, salario);
 
-            // Mover el cursor al primer resultado
-            if (result.next()) {
+                boolean aprobada = verificarLimite(tipo, limite);
+                actualizarEstadoSolicitud(numeroSolicitud, aprobada);
+                creacionTarjeta(tipo, nombre, direccion);
 
-                double salario = result.getDouble("Salario");
-                String tipo = result.getString("Tipo");
-                String nombre = result.getString("Nombre");
-                String direccion = result.getString("Direccion");
-                double limite = salario * 0.6;
-
-                if (tipo.equals("NACIONAL")) {
-
-                    if (limite >= 5000) {
-                        System.out.println(" aprobada");
-                        bandera = true;
-                    }
-
-                } else if (tipo.equals("REGIONAL")) {
-                    if (limite >= 10000) {
-                        System.out.println(" aprobada");
-                        bandera = true;
-                    }
-
-                } else if (tipo.equals("INTERNACIONAL")) {
-                    if (limite >= 20000) {
-                        System.out.println(" aprobada");
-                        bandera = true;
-                    }
-                }
-
-                if (!bandera) {
-                    System.out.println("rechazada");
-                    String insert = "UPDATE solicitud SET Estado = 'RECHAZADA' where Numero_Solicitud = '" + numero_Solicitud + "'";
-                    Statement statemenInser = Base_De_Datos.getConnection().createStatement();
-                    int rowsAffected = statemenInser.executeUpdate(insert);
-                    creacion_tarjeta(tipo, nombre, direccion);
-                } else {
-                    String insert = "UPDATE solicitud SET Estado = 'ACEPTADA' where Numero_Solicitud = '" + numero_Solicitud + "'";
-                    Statement statemenInser = Base_De_Datos.getConnection().createStatement();
-                    int rowsAffected = statemenInser.executeUpdate(insert);
-                    creacion_tarjeta(tipo, nombre, direccion);
-                }
-
+                return aprobada;
             }
 
         } catch (SQLException e) {
-            System.out.println("errore");
+            System.out.println("Error en la aceptación: " + e.getMessage());
         }
 
-        return bandera;
-
+        return false;
     }
 
-    public void creacion_tarjeta(String tipo_Tarjeta, String nombre, String direccion) {
-        String Formato = "";
-        int limite = 0;
-        if (tipo_Tarjeta.equals("NACIONAL")) {
-            limite = 5000;
-            Formato = "42563102654";
-        } else if (tipo_Tarjeta.equals("REGIONAL")) {
-            limite = 10000;
-            Formato = "42563102655";
-        } else if (tipo_Tarjeta.equals("INTERNACIONAL")) {
-            limite = 20000;
-            Formato = "42563102656";
+    /**
+     * Calcula el límite basado en el tipo de tarjeta y el salario.
+     * 
+     * @param tipo El tipo de tarjeta.
+     * @param salario El salario del solicitante.
+     * @return El límite calculado.
+     */
+    private double calcularLimite(String tipo, double salario) {
+        return salario * 0.6;
+    }
+
+    /**
+     * Verifica si el límite cumple con los requisitos para el tipo de tarjeta.
+     * 
+     * @param tipo El tipo de tarjeta.
+     * @param limite El límite calculado.
+     * @return true si el límite cumple con los requisitos, false en caso contrario.
+     */
+    private boolean verificarLimite(String tipo, double limite) {
+        switch (tipo) {
+            case "NACIONAL":
+                return limite >= LIMITE_NACIONAL;
+            case "REGIONAL":
+                return limite >= LIMITE_REGIONAL;
+            case "INTERNACIONAL":
+                return limite >= LIMITE_INTERNACIONAL;
+            default:
+                return false;
         }
+    }
 
-        try {
+    /**
+     * Actualiza el estado de la solicitud en la base de datos.
+     * 
+     * @param numeroSolicitud El número de solicitud a actualizar.
+     * @param aprobada true si la solicitud fue aprobada, false si fue rechazada.
+     */
+    private void actualizarEstadoSolicitud(int numeroSolicitud, boolean aprobada) {
+        String estado = aprobada ? "ACEPTADA" : "RECHAZADA";
+        String query = "UPDATE solicitud SET Estado = '" + estado + "' WHERE Numero_Solicitud = " + numeroSolicitud;
 
-            boolean bandera = false;
+        try (Statement statement = Base_De_Datos.getConnection().createStatement()) {
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar el estado de la solicitud: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Crea una nueva entrada de tarjeta en la base de datos.
+     * 
+     * @param tipoTarjeta El tipo de la tarjeta (NACIONAL, REGIONAL, INTERNACIONAL).
+     * @param nombre El nombre asociado con la tarjeta.
+     * @param direccion La dirección asociada con la tarjeta.
+     */
+    private void creacionTarjeta(String tipoTarjeta, String nombre, String direccion) {
+        String formato = obtenerFormato(tipoTarjeta);
+        int limite = obtenerLimite(tipoTarjeta);
+
+        try (Statement statement = Base_De_Datos.getConnection().createStatement()) {
+            boolean tarjetaGenerada = false;
             int contador = 0;
-            int inicio = 0;
-            ResultSet result;
-            Statement statemenInsert = Base_De_Datos.getConnection().createStatement();
-            do {
 
-                String Extension = String.format("%05d", inicio + contador);
+            while (!tarjetaGenerada) {
+                String extension = String.format("%05d", contador);
+                String numeroTarjeta = formato + extension;
 
-                String numeroTarjeta = Formato + Extension;
-                System.out.println(numeroTarjeta);
-
-                String select = "select * from Datos_Tarjeta where Numero_Tarjeta=" + numeroTarjeta;
-                result = statemenInsert.executeQuery(select);
-
-                // Mover el cursor al primer resultado
-                if (result.next()) {
-                    String resultado = result.getString("Numero_Tarjeta");
-                    if (resultado.endsWith(String.valueOf(numeroTarjeta))) {
-                        System.out.println("Se encontró nut");
-                        bandera = true;
-                        contador += 1;
-                    }
+                if (!existeNumeroTarjeta(statement, numeroTarjeta)) {
+                    insertarTarjeta(statement, numeroTarjeta, tipoTarjeta, limite, nombre, direccion);
+                    tarjetaGenerada = true;
                 } else {
-                    System.out.println("No se encontró y");
-                    try {
-                        String insert = "INSERT INTO Datos_Tarjeta (Numero_Tarjeta, Tipo, Limite,Nombre,Direccion,Estado) VALUES ('" + numeroTarjeta + "','" + tipo_Tarjeta + "','" + limite + "','" + nombre + "','" + direccion + "','ACTIVA')";
-                        Statement statemenInser = Base_De_Datos.getConnection().createStatement();
-                        int rowsAffected = statemenInser.executeUpdate(insert);
-
-                    } catch (SQLException e) {
-                        System.out.println("error");
-                    }
-                    bandera = false;
-                    break;
+                    contador++;
                 }
-
-            } while (bandera);
+            }
 
         } catch (SQLException e) {
-            System.out.println("errore");
+            System.out.println("Error en la creación de la tarjeta: " + e.getMessage());
         }
-
     }
 
+    /**
+     * Obtiene el formato de número de tarjeta basado en el tipo.
+     * 
+     * @param tipo El tipo de tarjeta.
+     * @return El formato de número de tarjeta.
+     */
+    private String obtenerFormato(String tipo) {
+        switch (tipo) {
+            case "NACIONAL":
+                return FORMATO_NACIONAL;
+            case "REGIONAL":
+                return FORMATO_REGIONAL;
+            case "INTERNACIONAL":
+                return FORMATO_INTERNACIONAL;
+            default:
+                throw new IllegalArgumentException("Tipo de tarjeta desconocido: " + tipo);
+        }
+    }
+
+    /**
+     * Obtiene el límite de tarjeta basado en el tipo.
+     * 
+     * @param tipo El tipo de tarjeta.
+     * @return El límite de la tarjeta.
+     */
+    private int obtenerLimite(String tipo) {
+        switch (tipo) {
+            case "NACIONAL":
+                return (int) LIMITE_NACIONAL;
+            case "REGIONAL":
+                return (int) LIMITE_REGIONAL;
+            case "INTERNACIONAL":
+                return (int) LIMITE_INTERNACIONAL;
+            default:
+                throw new IllegalArgumentException("Tipo de tarjeta desconocido: " + tipo);
+        }
+    }
+
+    /**
+     * Verifica si el número de tarjeta ya existe en la base de datos.
+     * 
+     * @param statement El statement para ejecutar la consulta.
+     * @param numeroTarjeta El número de tarjeta a verificar.
+     * @return true si el número de tarjeta ya existe, false en caso contrario.
+     * @throws SQLException Si ocurre un error durante la consulta.
+     */
+    private boolean existeNumeroTarjeta(Statement statement, String numeroTarjeta) throws SQLException {
+        String query = "SELECT 1 FROM Datos_Tarjeta WHERE Numero_Tarjeta = '" + numeroTarjeta + "'";
+        try (ResultSet resultSet = statement.executeQuery(query)) {
+            return resultSet.next();
+        }
+    }
+
+    /**
+     * Inserta una nueva tarjeta en la base de datos.
+     * 
+     * @param statement El statement para ejecutar la consulta.
+     * @param numeroTarjeta El número de tarjeta a insertar.
+     * @param tipoTarjeta El tipo de la tarjeta.
+     * @param limite El límite de la tarjeta.
+     * @param nombre El nombre asociado con la tarjeta.
+     * @param direccion La dirección asociada con la tarjeta.
+     * @throws SQLException Si ocurre un error durante la inserción.
+     */
+    private void insertarTarjeta(Statement statement, String numeroTarjeta, String tipoTarjeta, int limite, String nombre, String direccion) throws SQLException {
+        String query = "INSERT INTO Datos_Tarjeta (Numero_Tarjeta, Tipo, Limite, Nombre, Direccion, Estado) " +
+                       "VALUES ('" + numeroTarjeta + "','" + tipoTarjeta + "','" + limite + "','" + nombre + "','" + direccion + "','ACTIVA')";
+        statement.executeUpdate(query);
+    }
 }

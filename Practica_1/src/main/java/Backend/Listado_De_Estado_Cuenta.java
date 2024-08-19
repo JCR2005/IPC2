@@ -30,42 +30,86 @@ public class Listado_De_Estado_Cuenta {
     private static final ArrayList<Date> fecha = new ArrayList<>();
     private static final ArrayList<String> numeroTarjetas = new ArrayList<>();
     private static final ArrayList<String> datos = new ArrayList<>();
-    // Métodos para acceder a las listas encapsuladas
 
+    /**
+     * Obtiene la lista de tipos de tarjetas.
+     *
+     * @return Una copia de la lista de tipos de tarjetas.
+     */
     public static ArrayList<String> getTipoTarjetas() {
-        return tipoTarjetas;
+        return new ArrayList<>(tipoTarjetas); // Devuelve una copia para evitar modificaciones externas
     }
 
+    /**
+     * Obtiene la lista de descripciones de movimientos.
+     *
+     * @return Una copia de la lista de descripciones.
+     */
     public static ArrayList<String> getDescripcion() {
-        return descripcion;
+        return new ArrayList<>(descripcion); // Devuelve una copia para evitar modificaciones externas
     }
 
-    public static ArrayList<String> getEstablecimieto() {
-        return establecimieto;
+    /**
+     * Obtiene la lista de establecimientos de los movimientos.
+     *
+     * @return Una copia de la lista de establecimientos.
+     */
+    public static ArrayList<String> getEstablecimiento() {
+        return new ArrayList<>(establecimieto); // Devuelve una copia para evitar modificaciones externas
     }
 
+    /**
+     * Obtiene la lista de montos de los movimientos.
+     *
+     * @return Una copia de la lista de montos.
+     */
     public static ArrayList<String> getMontos() {
-        return montos;
+        return new ArrayList<>(montos); // Devuelve una copia para evitar modificaciones externas
     }
 
+    /**
+     * Obtiene la lista de datos numéricos asociados con los movimientos.
+     *
+     * @return Una copia de la lista de datos numéricos.
+     */
     public static ArrayList<String> getDatosNumericos() {
-        return datosNumericos;
+        return new ArrayList<>(datosNumericos); // Devuelve una copia para evitar modificaciones externas
     }
 
+    /**
+     * Obtiene la lista de tipos de movimientos.
+     *
+     * @return Una copia de la lista de tipos de movimientos.
+     */
     public static ArrayList<String> getTipoMovimiento() {
-        return tipoMovimiento;
+        return new ArrayList<>(tipoMovimiento); // Devuelve una copia para evitar modificaciones externas
     }
 
+    /**
+     * Obtiene la lista de fechas de los movimientos.
+     *
+     * @return Una copia de la lista de fechas.
+     */
     public static ArrayList<Date> getFecha() {
-        return fecha;
+        return new ArrayList<>(fecha); // Devuelve una copia para evitar modificaciones externas
     }
 
+    /**
+     * Obtiene la lista de números de tarjeta.
+     *
+     * @return Una copia de la lista de números de tarjeta.
+     */
     public static ArrayList<String> getNumeroTarjetas() {
-        return numeroTarjetas;
+        return new ArrayList<>(numeroTarjetas); // Devuelve una copia para evitar modificaciones externas
     }
 
+    /**
+     * Obtiene la lista de datos generales de las tarjetas.
+     *
+     * @return Una copia de la lista de datos generales.
+     */
     public static ArrayList<String> getDatos() {
-        return datos;
+        return new ArrayList<>(datos); // Devuelve una copia para evitar modificaciones externas
     }
 
     // Variables para almacenar información específica de la tarjeta
@@ -75,7 +119,6 @@ public class Listado_De_Estado_Cuenta {
     private double saldo;
     private String instruccion;
     private String instruccion_1;
-    private int limite;
 
     private static final Logger LOGGER = Logger.getLogger(Listado_De_Estado_Cuenta.class.getName());
 

@@ -9,13 +9,14 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- * Clase que maneja las solicitudes de cuentas, validando y guardando la información
- * en la base de datos.
+ * La clase {@code Solicitud} maneja las solicitudes de cuentas, validando y guardando
+ * la información en la base de datos.
  * 
  * @author carlosrodriguez
  */
 public class Solicitud {
 
+    // Atributos para almacenar los datos de la solicitud
     private int numero_solicitud;
     private double salario;
     private String nombre;
@@ -36,14 +37,14 @@ public class Solicitud {
     public void obtenerDatosSolicitudFormulario(String ns, String f, String t, String n, String s, String d) {
         try {
             numero_solicitud = Integer.parseInt(ns);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Número de solicitud no legible.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
             salario = Double.parseDouble(s);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Salario no legible.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -88,9 +89,9 @@ public class Solicitud {
                          direccion.replace("\n", "").replace("\r", "") + "','EN PROCESO')";
 
         try {
-            Statement statemenInsert = Base_De_Datos.getConnection().createStatement();
+            Statement statementInsert = Base_De_Datos.getConnection().createStatement();
             System.out.println(insert);
-            int rowsAffected = statemenInsert.executeUpdate(insert);
+            int rowsAffected = statementInsert.executeUpdate(insert);
 
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, "Solicitud exitosa", "Información", JOptionPane.INFORMATION_MESSAGE);

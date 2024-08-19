@@ -234,15 +234,15 @@ public class Listado_De_Solicitud extends javax.swing.JPanel {
     }
 
     // Crear el arreglo de datos utilizando solo `numeroTarjeta`
-    Object[][] datos = new Object[Listado_De_Solicitudes.numero_solicitud.size()][7];
-    for (int i = 0; i < Listado_De_Solicitudes.numero_solicitud.size(); i++) {
-        datos[i][0] = Listado_De_Solicitudes.numero_solicitud.get(i);
-        datos[i][1] = Listado_De_Solicitudes.fecha.get(i);
-        datos[i][2] = Listado_De_Solicitudes.tipoTarjeta.get(i);
-        datos[i][3] = Listado_De_Solicitudes.nombreCliente.get(i);
-        datos[i][4] = Listado_De_Solicitudes.salarios.get(i);
-        datos[i][5] = Listado_De_Solicitudes.direccion.get(i);
-        datos[i][6] = Listado_De_Solicitudes.estadoTarjeta.get(i);
+    Object[][] datos = new Object[Listado_De_Solicitudes.getNumero_solicitud().size()][7];
+    for (int i = 0; i < Listado_De_Solicitudes.getNumero_solicitud().size(); i++) {
+        datos[i][0] = Listado_De_Solicitudes.getNumero_solicitud().get(i);
+        datos[i][1] = Listado_De_Solicitudes.getFecha().get(i);
+        datos[i][2] = Listado_De_Solicitudes.getTipoTarjeta().get(i);
+        datos[i][3] = Listado_De_Solicitudes.getNombreCliente().get(i);
+        datos[i][4] = Listado_De_Solicitudes.getSalarios().get(i);
+        datos[i][5] = Listado_De_Solicitudes.getDireccion().get(i);
+        datos[i][6] = Listado_De_Solicitudes.getEstadoTarjeta().get(i);
     }
 
     // Columnas de la tabla

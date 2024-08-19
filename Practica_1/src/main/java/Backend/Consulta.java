@@ -13,55 +13,69 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author carlosrodriguez
+ * La clase Consulta maneja la obtención y validación de información de tarjetas
+ * de crédito desde la base de datos y la generación de un archivo HTML con
+ * los detalles de la tarjeta.
+ * 
+ * Autor: Carlos Rodriguez
  */
 public class Consulta {
 
-    private String numero_tarjeta;
+    private String numeroTarjeta;
 
-    public void obtenerNumeroDeTarjeta(String nt) {
-
-        numero_tarjeta = nt;
-
+    /**
+     * Recibe el número de tarjeta para su validación.
+     * 
+     * @param numeroTarjeta El número de tarjeta a validar.
+     */
+    public void obtenerNumeroDeTarjeta(String numeroTarjeta) {
+        this.numeroTarjeta = numeroTarjeta;
     }
 
+    /**
+     * Valida la tarjeta consultando su existencia en la base de datos y
+     * genera un archivo HTML con los detalles de la tarjeta si es válida.
+     */
     public void validarTarjeta() {
+        if (numeroTarjeta == null || numeroTarjeta.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Número de tarjeta no proporcionado", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        try {
-            ResultSet result;
-            Statement statemenInsert = Base_De_Datos.getConnection().createStatement();
+        String selectQuery = "SELECT * FROM Datos_Tarjeta WHERE Numero_Tarjeta = '" + numeroTarjeta + "'";
 
-            String select = "select * from Datos_Tarjeta where Numero_Tarjeta=" + numero_tarjeta;
-            result = statemenInsert.executeQuery(select);
-            System.out.println(numero_tarjeta);
-            // Mover el cursor al primer resultado
-            if (result.next()) {
-               String nt = result.getString("Numero_Tarjeta");
-               String tt = result.getString("Tipo");
-               int l = result.getInt("Limite");
-               String n = result.getString("Nombre");
-               String d = result.getString("Direccion");
-               String e = result.getString("Estado");
-               
-                crearArchivohtml(nt,tt,l,n,d,e);
+        try (Statement statement = Base_De_Datos.getConnection().createStatement();
+             ResultSet resultSet = statement.executeQuery(selectQuery)) {
+
+            if (resultSet.next()) {
+                String nt = resultSet.getString("Numero_Tarjeta");
+                String tt = resultSet.getString("Tipo");
+                int l = resultSet.getInt("Limite");
+                String n = resultSet.getString("Nombre");
+                String d = resultSet.getString("Direccion");
+                String e = resultSet.getString("Estado");
+
+                crearArchivoHtml(nt, tt, l, n, d, e);
             } else {
-
-                JOptionPane.showMessageDialog(null, "Este numero de tarjeta no existe", "Error", JOptionPane.ERROR_MESSAGE);
-
+                JOptionPane.showMessageDialog(null, "Este número de tarjeta no existe", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Este numero de tarjeta es invalido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al validar la tarjeta: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
-    
-    
-    
-    
-    public void crearArchivohtml(String nt, String tt, int l, String n, String d, String e) {
-        FileWriter escritor = null;
+
+    /**
+     * Crea un archivo HTML con los detalles de la tarjeta.
+     * 
+     * @param nt El número de tarjeta.
+     * @param tt El tipo de tarjeta.
+     * @param l El límite de la tarjeta.
+     * @param n El nombre del titular de la tarjeta.
+     * @param d La dirección del titular de la tarjeta.
+     * @param e El estado de la tarjeta.
+     */
+    public void crearArchivoHtml(String nt, String tt, int l, String n, String d, String e) {
         JFileChooser fileChooser = new JFileChooser();
         File archivo = null;
 
@@ -80,76 +94,58 @@ public class Consulta {
             return;
         }
 
-        try {
-            String contenido = "<!DOCTYPE html>\n" +
-                    "<html lang=\"es\">\n" +
-                    "<head>\n" +
-                    "    <meta charset=\"UTF-8\">\n" +
-                    "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-                    "    <title>Información de Tarjeta</title>\n" +
-                    "    <style>\n" +
-                    "        table {\n" +
-                    "            width: 100%;\n" +
-                    "            border-collapse: collapse;\n" +
-                    "        }\n" +
-                    "        table, th, td {\n" +
-                    "            border: 1px solid black;\n" +
-                    "        }\n" +
-                    "        th, td {\n" +
-                    "            padding: 8px;\n" +
-                    "            text-align: left;\n" +
-                    "        }\n" +
-                    "    </style>\n" +
-                    "</head>\n" +
-                    "<body>\n" +
-                    "\n" +
-                    "    <h1>Detalles de la Tarjeta</h1>\n" +
-                    "\n" +
-                    "    <table>\n" +
-                    "        <thead>\n" +
-                    "            <tr>\n" +
-                    "                <th>No. Tarjeta</th>\n" +
-                    "                <th>Tipo Tarjeta</th>\n" +
-                    "                <th>Límite</th>\n" +
-                    "                <th>Nombre</th>\n" +
-                    "                <th>Dirección</th>\n" +
-                    "                <th>Estado de Tarjeta</th>\n" +
-                    "            </tr>\n" +
-                    "        </thead>\n" +
-                    "        <tbody>\n" +
-                    "            <tr>\n" +
-                    "                <td>"+nt+"</td>\n" +
-                    "                <td>"+tt+"</td>\n" +
-                    "                <td>$"+l+"</td>\n" +
-                    "                <td>"+n+"</td>\n" +
-                    "                <td>"+d+"</td>\n" +
-                    "                <td>"+e+"</td>\n" +
-                    "            </tr>\n" +
-                    "        </tbody>\n" +
-                    "    </table>\n" +
-                    "\n" +
-                    "</body>\n" +
-                    "</html>";
+        String contenido = "<!DOCTYPE html>\n" +
+                "<html lang=\"es\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    <title>Información de Tarjeta</title>\n" +
+                "    <style>\n" +
+                "        table {\n" +
+                "            width: 100%;\n" +
+                "            border-collapse: collapse;\n" +
+                "        }\n" +
+                "        table, th, td {\n" +
+                "            border: 1px solid black;\n" +
+                "        }\n" +
+                "        th, td {\n" +
+                "            padding: 8px;\n" +
+                "            text-align: left;\n" +
+                "        }\n" +
+                "    </style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <h1>Detalles de la Tarjeta</h1>\n" +
+                "    <table>\n" +
+                "        <thead>\n" +
+                "            <tr>\n" +
+                "                <th>No. Tarjeta</th>\n" +
+                "                <th>Tipo Tarjeta</th>\n" +
+                "                <th>Límite</th>\n" +
+                "                <th>Nombre</th>\n" +
+                "                <th>Dirección</th>\n" +
+                "                <th>Estado de Tarjeta</th>\n" +
+                "            </tr>\n" +
+                "        </thead>\n" +
+                "        <tbody>\n" +
+                "            <tr>\n" +
+                "                <td>" + nt + "</td>\n" +
+                "                <td>" + tt + "</td>\n" +
+                "                <td>$" + l + "</td>\n" +
+                "                <td>" + n + "</td>\n" +
+                "                <td>" + d + "</td>\n" +
+                "                <td>" + e + "</td>\n" +
+                "            </tr>\n" +
+                "        </tbody>\n" +
+                "    </table>\n" +
+                "</body>\n" +
+                "</html>";
 
-            // Crear un FileWriter con el archivo seleccionado
-            escritor = new FileWriter(archivo);
-            // Escribir el contenido en el archivo
+        try (FileWriter escritor = new FileWriter(archivo)) {
             escritor.write(contenido);
-            // Cerrar el FileWriter para guardar los datos
-            escritor.close();
             System.out.println("Archivo guardado con éxito en: " + archivo.getAbsolutePath());
         } catch (IOException ex) {
-            Logger.getLogger(Consulta.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (escritor != null) {
-                    escritor.close();
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(Consulta.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Logger.getLogger(Consulta.class.getName()).log(Level.SEVERE, "Error al guardar el archivo", ex);
         }
     }
-
-
 }

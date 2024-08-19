@@ -45,7 +45,7 @@ public class Ventana_Principal extends javax.swing.JFrame {
         botones[6] = boton_listado_tarjetas;
         botones[7] = boton_listado_solicitudes;
         botones[8] = Boton_Archivo;
-        Imagenes.logo(jLabel1);
+        Imagenes.setLogo(jLabel1);
 
     }
 
