@@ -6,6 +6,7 @@ package Fromted;
 
 import Backend.Procesos;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Solicitud extends javax.swing.JPanel {
     
     public Solicitud() {
         initComponents();
-        jPanel1.setVisible(false);
+        jPanel1.setVisible(true);
     }
 
     /**
@@ -48,8 +49,6 @@ public class Solicitud extends javax.swing.JPanel {
         boton_cancelar = new javax.swing.JButton();
         fecha = new javax.swing.JTextField();
         nombre = new javax.swing.JTextField();
-        boton_formulario = new javax.swing.JButton();
-        boton_archivo_entrada = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(228, 207, 154));
         setPreferredSize(new java.awt.Dimension(730, 490));
@@ -219,7 +218,6 @@ public class Solicitud extends javax.swing.JPanel {
         fecha.setToolTipText("");
         fecha.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         fecha.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        fecha.setEnabled(false);
         jPanel1.add(fecha);
         fecha.setBounds(110, 50, 180, 30);
 
@@ -234,52 +232,7 @@ public class Solicitud extends javax.swing.JPanel {
 
         add(jPanel1);
         jPanel1.setBounds(0, 0, 730, 490);
-
-        boton_formulario.setBackground(new java.awt.Color(44, 68, 85));
-        boton_formulario.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
-        boton_formulario.setForeground(new java.awt.Color(255, 255, 255));
-        boton_formulario.setText("formulario");
-        boton_formulario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        boton_formulario.setEnabled(true
-        );
-        boton_formulario.setFocusCycleRoot(true);
-        boton_formulario.setFocusTraversalPolicyProvider(true);
-        boton_formulario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton_formularioActionPerformed(evt);
-            }
-        });
-        add(boton_formulario);
-        boton_formulario.setBounds(215, 170, 300, 25);
-
-        boton_archivo_entrada.setBackground(new java.awt.Color(44, 68, 85));
-        boton_archivo_entrada.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
-        boton_archivo_entrada.setForeground(new java.awt.Color(255, 255, 255));
-        boton_archivo_entrada.setText("Archivo de entrada");
-        boton_archivo_entrada.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        boton_archivo_entrada.setEnabled(true
-        );
-        boton_archivo_entrada.setFocusCycleRoot(true);
-        boton_archivo_entrada.setFocusTraversalPolicyProvider(true);
-        boton_archivo_entrada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton_archivo_entradaActionPerformed(evt);
-            }
-        });
-        add(boton_archivo_entrada);
-        boton_archivo_entrada.setBounds(215, 280, 300, 25);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void boton_archivo_entradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_archivo_entradaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_boton_archivo_entradaActionPerformed
-
-    private void boton_formularioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_formularioActionPerformed
-        jPanel1.setVisible(true);
-        fecha.setText(proceso.fechaActual());
-        boton_archivo_entrada.setVisible(false);
-        boton_formulario.setVisible(false);
-    }//GEN-LAST:event_boton_formularioActionPerformed
 
     private void boton_ayudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_ayudaActionPerformed
         
@@ -310,11 +263,11 @@ public class Solicitud extends javax.swing.JPanel {
     private void boton_procesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_procesarActionPerformed
       
         String tipo=(String) tipoCuenta.getSelectedItem();
-        proceso.procesarSolicitud(Integer.parseInt(numero_solicitud.getText()), fecha.getText(),tipo, nombre.getText(),Double.valueOf(salario.getText()), direccion.getText());
-        jPanel1.setVisible(false);
-        boton_archivo_entrada.setVisible(true);
-        boton_formulario.setVisible(true);
-        reiniciar_formulario();
+         
+             proceso.procesarSolicitud(numero_solicitud.getText(), fecha.getText(),tipo, nombre.getText(),salario.getText(), direccion.getText());
+       
+       
+       
     }//GEN-LAST:event_boton_procesarActionPerformed
 
     private void boton_cancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_cancelarMouseEntered
@@ -327,9 +280,8 @@ public class Solicitud extends javax.swing.JPanel {
     }//GEN-LAST:event_boton_cancelarMouseExited
 
     private void boton_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cancelarActionPerformed
-        jPanel1.setVisible(false);
-        boton_archivo_entrada.setVisible(true);
-        boton_formulario.setVisible(true);
+      
+       
         reiniciar_formulario();
     }//GEN-LAST:event_boton_cancelarActionPerformed
 
@@ -346,10 +298,8 @@ public class Solicitud extends javax.swing.JPanel {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton boton_archivo_entrada;
     private javax.swing.JButton boton_ayuda;
     private javax.swing.JButton boton_cancelar;
-    private javax.swing.JButton boton_formulario;
     private javax.swing.JButton boton_procesar;
     private javax.swing.JTextField direccion;
     private javax.swing.JTextField fecha;
@@ -358,7 +308,7 @@ public class Solicitud extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel1;
     private javax.swing.JTextField nombre;
     private javax.swing.JTextField numero_solicitud;
     private javax.swing.JTextField salario;

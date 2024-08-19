@@ -1,9 +1,11 @@
-
 package Fromted;
 
 import Backend.Procesos;
+import Backend.Listado_De_Solicitudes;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -13,42 +15,18 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author carlosrodriguez
  */
-    public class Listado_De_Tarjetas extends javax.swing.JPanel {
+public class Listado_De_Solicitud extends javax.swing.JPanel {
 
-        /**
-         * Creates new form Solicitud
-         */
-
-        Procesos proceso=new Procesos();
-        public Listado_De_Tarjetas() {
-            initComponents();
-             // Columnas de la tabla
-            String[] columnas = {"NÚMERO TARJETA", "TIPO", "LÍMITE", "NOMBRE", "DIRECCIÓN", "FECHA", "ESTADO"};
-
-            // Datos de ejemplo
-            Object[][] datos = {
-                {"1234567890123456", "Visa", 5000, "Juan Pérez", "Calle 123", "2024-08-15", "Activa"},
-                {"9876543210987654", "MasterCard", 10000, "María López", "Avenida 456", "2024-08-14", "Inactiva"},
-                // Puedes agregar más filas de datos aquí
-            };
-
-            // Modelo de la tabla
-            DefaultTableModel model = new DefaultTableModel(datos, columnas);
-            JTable table = new JTable(model);
-
-            // Colocar la tabla en un JScrollPane
-            JScrollPane scrollPane = new JScrollPane(table);
-            
-        scrollPane.setBounds(5, 5, 720, 375); // Ajusta estos valores según sea necesario
-
-        // Agregar el JScrollPane al JPanel
-        add(scrollPane);
-
-        // Asegurarse de que el panel se dibuje correctamente
-        revalidate();
-        repaint();
-
-        }
+    /**
+     * Creates new form Solicitud
+     */
+    Procesos proceso = new Procesos();
+    private JTable table;
+    private JScrollPane scrollPane;
+    public Listado_De_Solicitud() {
+        initComponents();
+        mostrarDatos();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -66,14 +44,12 @@ import javax.swing.table.DefaultTableModel;
         borrar_filtros = new javax.swing.JButton();
         Tipo = new javax.swing.JComboBox<>();
         monto = new javax.swing.JTextField();
-        Nombre = new javax.swing.JCheckBox();
         despues_de = new javax.swing.JTextField();
         antes_de = new javax.swing.JTextField();
-        nombre = new javax.swing.JTextField();
-        fecha = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        Monto = new javax.swing.JCheckBox();
+        Estado = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(228, 207, 154));
         setPreferredSize(new java.awt.Dimension(730, 490));
@@ -159,45 +135,38 @@ import javax.swing.table.DefaultTableModel;
         Tipo.setForeground(new java.awt.Color(255, 255, 255));
         Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo", "NACIONAL", "REGIONAL", "INTERNACIONAL" }));
         add(Tipo);
-        Tipo.setBounds(540, 460, 180, 26);
+        Tipo.setBounds(340, 400, 180, 26);
         add(monto);
-        monto.setBounds(540, 430, 180, 24);
-
-        Nombre.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
-        Nombre.setForeground(new java.awt.Color(0, 51, 102));
-        Nombre.setText("Nombre");
-        add(Nombre);
-        Nombre.setBounds(452, 400, 80, 24);
+        monto.setBounds(540, 420, 180, 24);
         add(despues_de);
-        despues_de.setBounds(280, 430, 140, 24);
+        despues_de.setBounds(160, 440, 140, 24);
         add(antes_de);
-        antes_de.setBounds(280, 400, 140, 24);
-        add(nombre);
-        nombre.setBounds(540, 400, 180, 24);
-
-        fecha.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
-        fecha.setForeground(new java.awt.Color(0, 51, 102));
-        fecha.setText("Fecha");
-        add(fecha);
-        fecha.setBounds(200, 410, 70, 24);
+        antes_de.setBounds(160, 400, 140, 24);
 
         jLabel1.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 102));
         jLabel1.setText("Antes de...");
         add(jLabel1);
-        jLabel1.setBounds(320, 380, 80, 18);
+        jLabel1.setBounds(200, 380, 80, 18);
 
         jLabel2.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 51, 102));
-        jLabel2.setText("Depues de...");
+        jLabel2.setText("Salario mayor a...");
         add(jLabel2);
-        jLabel2.setBounds(310, 460, 90, 20);
+        jLabel2.setBounds(570, 450, 130, 20);
 
-        Monto.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
-        Monto.setForeground(new java.awt.Color(0, 51, 102));
-        Monto.setText("Monto");
-        add(Monto);
-        Monto.setBounds(452, 430, 70, 24);
+        Estado.setBackground(new java.awt.Color(158, 144, 100));
+        Estado.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
+        Estado.setForeground(new java.awt.Color(255, 255, 255));
+        Estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estado", "AUTORIZADA", "CANCELADA" }));
+        add(Estado);
+        Estado.setBounds(340, 440, 180, 26);
+
+        jLabel3.setFont(new java.awt.Font("Century Schoolbook L", 2, 15)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 51, 102));
+        jLabel3.setText("Depues de...");
+        add(jLabel3);
+        jLabel3.setBounds(190, 470, 90, 20);
     }// </editor-fold>//GEN-END:initComponents
 
     private void boton_ayudaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_ayudaMouseEntered
@@ -223,9 +192,20 @@ import javax.swing.table.DefaultTableModel;
     }//GEN-LAST:event_boton_procesarMouseExited
 
     private void boton_procesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_procesarActionPerformed
-       
-        
-        
+        String tipo = (String) Tipo.getSelectedItem();
+        String estado = (String) Estado.getSelectedItem();
+
+        try {
+            if (monto.getText().isEmpty()) {
+                monto.setText("0");
+            }
+           
+            proceso.ListadoSolicitudes(tipo, Double.valueOf(monto.getText()), despues_de.getText(), antes_de.getText(), estado);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Monto no legible.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        mostrarDatos();
+
     }//GEN-LAST:event_boton_procesarActionPerformed
 
     private void borrar_filtrosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrar_filtrosMouseEntered
@@ -238,19 +218,58 @@ import javax.swing.table.DefaultTableModel;
     }//GEN-LAST:event_borrar_filtrosMouseExited
 
     private void borrar_filtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrar_filtrosActionPerformed
-        
+
         reiniciar_formulario();
     }//GEN-LAST:event_borrar_filtrosActionPerformed
 
-   
-    void reiniciar_formulario(){
-       
-        
-    
+  void mostrarDatos() {
+    // Usar null layout
+    setLayout(null);
+
+    // Eliminar el JScrollPane que contiene la tabla, si existe
+    for (Component comp : getComponents()) {
+        if (comp instanceof JScrollPane) {
+            remove(comp);
+        }
+    }
+
+    // Crear el arreglo de datos utilizando solo `numeroTarjeta`
+    Object[][] datos = new Object[Listado_De_Solicitudes.numero_solicitud.size()][7];
+    for (int i = 0; i < Listado_De_Solicitudes.numero_solicitud.size(); i++) {
+        datos[i][0] = Listado_De_Solicitudes.numero_solicitud.get(i);
+        datos[i][1] = Listado_De_Solicitudes.fecha.get(i);
+        datos[i][2] = Listado_De_Solicitudes.tipoTarjeta.get(i);
+        datos[i][3] = Listado_De_Solicitudes.nombreCliente.get(i);
+        datos[i][4] = Listado_De_Solicitudes.salarios.get(i);
+        datos[i][5] = Listado_De_Solicitudes.direccion.get(i);
+        datos[i][6] = Listado_De_Solicitudes.estadoTarjeta.get(i);
+    }
+
+    // Columnas de la tabla
+    String[] columnas = {"NÚMERO TARJETA", "FECHA", "TIPO", "NOMBRE","SALARIO", "DIRECCIÓN", "ESTADO"};
+
+    // Crear el modelo de la tabla
+    DefaultTableModel model = new DefaultTableModel(datos, columnas);
+    JTable table = new JTable(model);
+
+    // Colocar la tabla en un JScrollPane
+    JScrollPane scrollPane = new JScrollPane(table);
+    scrollPane.setBounds(10, 10, 720, 360);
+
+    // Agregar el JScrollPane al JPanel
+    add(scrollPane);
+
+    // Asegurarse de que el panel se dibuje correctamente
+    revalidate();
+    repaint();
+}
+
+
+    void reiniciar_formulario() {
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox Monto;
-    private javax.swing.JCheckBox Nombre;
+    private javax.swing.JComboBox<String> Estado;
     private javax.swing.JComboBox<String> Tipo;
     private javax.swing.JTextField antes_de;
     private javax.swing.JButton borrar_filtros;
@@ -259,10 +278,9 @@ import javax.swing.table.DefaultTableModel;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JTextField despues_de;
-    private javax.swing.JCheckBox fecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField monto;
-    private javax.swing.JTextField nombre;
     // End of variables declaration//GEN-END:variables
 }

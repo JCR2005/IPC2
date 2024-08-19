@@ -4,9 +4,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * La clase Procesos gestiona el procesamiento de solicitudes, autorizaciones, movimientos y cancelaciones de tarjetas.
- * Utiliza instancias de otras clases para llevar a cabo estas tareas.
- * 
+ * La clase Procesos gestiona el procesamiento de solicitudes, autorizaciones,
+ * movimientos y cancelaciones de tarjetas. Utiliza instancias de otras clases
+ * para llevar a cabo estas tareas.
+ *
  * @author carlosrodriguez
  */
 public class Procesos {
@@ -17,6 +18,10 @@ public class Procesos {
     private Movimiento movimiento = new Movimiento();
     private Cancelacion cancelacion = new Cancelacion();
     private Consulta consulta = new Consulta();
+    private Listado_De_Tarjetas lt = new Listado_De_Tarjetas();
+    private Listado_De_Solicitudes ls = new Listado_De_Solicitudes();
+    private Listado_De_Estado_Cuenta lec = new Listado_De_Estado_Cuenta();
+    private Archivo_Esntrada ae = new Archivo_Esntrada();
 
     // Variables para almacenar el estado de la solicitud
     private boolean existeSolicitud;
@@ -24,7 +29,7 @@ public class Procesos {
 
     /**
      * Procesa una solicitud de tarjeta.
-     * 
+     *
      * @param ns El número de solicitud
      * @param f La fecha de la solicitud
      * @param t El tipo de tarjeta
@@ -32,14 +37,15 @@ public class Procesos {
      * @param s El límite de la tarjeta
      * @param d La dirección del solicitante
      */
-    public void procesarSolicitud(int ns, String f, String t, String n, double s, String d) {
+    public void procesarSolicitud(String ns, String f, String t, String n, String s, String d) {
+
         solicitud.obtenerDatosSolicitudFormulario(ns, f, t, n, s, d);
         solicitud.guardarSolicitud();
     }
 
     /**
      * Procesa la autorización de una solicitud.
-     * 
+     *
      * @param ns El número de solicitud
      */
     public void procesarAutorizacion(int ns) {
@@ -57,7 +63,7 @@ public class Procesos {
 
     /**
      * Verifica si existe una solicitud.
-     * 
+     *
      * @return true si existe una solicitud, false en caso contrario
      */
     public boolean isExisteSolicitud() {
@@ -66,7 +72,7 @@ public class Procesos {
 
     /**
      * Verifica si una solicitud fue aceptada.
-     * 
+     *
      * @return true si la solicitud fue aceptada, false en caso contrario
      */
     public boolean isAceptadaSolicitud() {
@@ -75,7 +81,7 @@ public class Procesos {
 
     /**
      * Obtiene la fecha actual en formato yyyy-MM-dd.
-     * 
+     *
      * @return La fecha actual formateada como una cadena
      */
     public String fechaActual() {
@@ -88,7 +94,7 @@ public class Procesos {
 
     /**
      * Procesa un movimiento de tarjeta.
-     * 
+     *
      * @param nt El número de tarjeta
      * @param f La fecha del movimiento
      * @param e El establecimiento donde se realizó el movimiento
@@ -98,12 +104,14 @@ public class Procesos {
      */
     public void procesarMovimiento(String nt, String f, String e, String d, double m, String tm) {
         movimiento.obtenerDatosMovimientoFormulario(nt, f, e, d, m, tm);
+        movimiento.obtenerMontoTotalActual(nt);
+        movimiento.definirSaldo(nt);
         movimiento.guardarMovimiento();
     }
 
     /**
      * Procesa la cancelación de una tarjeta.
-     * 
+     *
      * @param nt El número de tarjeta
      */
     public void procesarCancelacion(String nt) {
@@ -113,11 +121,74 @@ public class Procesos {
 
     /**
      * Realiza una consulta sobre una tarjeta.
-     * 
+     *
      * @param nt El número de tarjeta
      */
     public void consulta(String nt) {
         consulta.obtenerNumeroDeTarjeta(nt);
         consulta.validarTarjeta();
+    }
+
+    /**
+     *
+     * @param t
+     * @param n
+     * @param m
+     */
+    public void ListadoTarjetas(String t, String n, double m, String fp, String fs, String e) {
+
+        if (t.equals("Tipo")) {
+            t = "";
+        }
+        if (e.equals("Estado")) {
+            e = "";
+        }
+        lt.reiniciarListas();
+        lt.obtener_filtros(t, n, m, fp, fs, e);
+        lt.establecerInstruccion();
+        lt.darInstruccion();
+    }
+
+    public void ListadoSolicitudes(String t, double m, String fp, String fs, String e) {
+
+        if (t.equals("Tipo")) {
+            t = "";
+        }
+        if (e.equals("Estado")) {
+            e = "";
+        }
+        ls.reiniciarListas();
+        ls.obtener_filtros(t, m, fp, fs, e);
+        ls.establecerInstruccion();
+        ls.darInstruccion();
+    }
+
+    public void ListadoEstadosCuentas(String t, String i, String s, String nt) {
+
+        if (t.equals("Tipo")) {
+            t = "";
+        }
+        if (s.isEmpty()) {
+            s = ("0");
+        }
+        if (i.isEmpty()) {
+            i=("0");
+        }
+
+        lec.reiniciarListas();
+        lec.obtener_filtros(t, i, s, nt);
+        lec.establecerInstruccion();
+        lec.darInstruccion();
+    }
+
+    public void datosEstadoCuenta(String nt) {
+        lec.reiniciarListasEstado();
+        lec.datosCliente(nt);
+        lec.datosClienteMovimientos(nt);
+    }
+
+    public void Archivo(String path) {
+        ae.leerArchivo(path);
+
     }
 }

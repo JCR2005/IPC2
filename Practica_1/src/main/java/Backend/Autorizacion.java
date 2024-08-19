@@ -1,15 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Backend;
 
 import Conexion.Base_De_Datos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,25 +18,21 @@ public class Autorizacion {
 
     public boolean consulta(int numero_Solicitud) {
 
-        bandera=false;
-        String select = "select * from solicitud where Numero_Solicitud='"+numero_Solicitud+"'";
+        bandera = false;
+        String select = "select * from solicitud where Numero_Solicitud='" + numero_Solicitud + "'";
 
         Statement statemenInsert;
         try {
             statemenInsert = Base_De_Datos.getConnection().createStatement();
-             ResultSet result = statemenInsert.executeQuery(select);
-              
-              if (result.next()) {
-                  bandera=true;
-              }
+            ResultSet result = statemenInsert.executeQuery(select);
+
+            if (result.next()) {
+                bandera = true;
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(Autorizacion.class.getName()).log(Level.SEVERE, null, ex);
+           JOptionPane.showMessageDialog(null, "Este numero de tarjeta es invalido", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-      
-        
-    
-    
         return bandera;
     }
 
@@ -84,12 +77,12 @@ public class Autorizacion {
 
                 if (!bandera) {
                     System.out.println("rechazada");
-                    String insert = "UPDATE solicitud SET Estado = 'RECHAZADA' where Numero_Solicitud = '"+numero_Solicitud+"'";
+                    String insert = "UPDATE solicitud SET Estado = 'RECHAZADA' where Numero_Solicitud = '" + numero_Solicitud + "'";
                     Statement statemenInser = Base_De_Datos.getConnection().createStatement();
                     int rowsAffected = statemenInser.executeUpdate(insert);
                     creacion_tarjeta(tipo, nombre, direccion);
                 } else {
-                    String insert = "UPDATE solicitud SET Estado = 'ACEPTADA' where Numero_Solicitud = '"+numero_Solicitud+"'";
+                    String insert = "UPDATE solicitud SET Estado = 'ACEPTADA' where Numero_Solicitud = '" + numero_Solicitud + "'";
                     Statement statemenInser = Base_De_Datos.getConnection().createStatement();
                     int rowsAffected = statemenInser.executeUpdate(insert);
                     creacion_tarjeta(tipo, nombre, direccion);
@@ -119,23 +112,18 @@ public class Autorizacion {
             Formato = "42563102656";
         }
 
-        String Extension;
-        String numeroTarjeta;
-        int inicio;
-        int contador;
-        boolean bandera;
         try {
 
-            bandera = false;
-            contador = 0;
-            inicio = 0;
+            boolean bandera = false;
+            int contador = 0;
+            int inicio = 0;
             ResultSet result;
             Statement statemenInsert = Base_De_Datos.getConnection().createStatement();
             do {
 
-                Extension = String.format("%05d", inicio + contador);
+                String Extension = String.format("%05d", inicio + contador);
 
-                numeroTarjeta = Formato + Extension;
+                String numeroTarjeta = Formato + Extension;
                 System.out.println(numeroTarjeta);
 
                 String select = "select * from Datos_Tarjeta where Numero_Tarjeta=" + numeroTarjeta;
@@ -165,7 +153,7 @@ public class Autorizacion {
 
             } while (bandera);
 
-        } catch (SQLException e)    {
+        } catch (SQLException e) {
             System.out.println("errore");
         }
 

@@ -20,30 +20,33 @@ public class Ventana_Principal extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    static JButton[] botones =new JButton[9];; 
-    static Movimientos mt=new Movimientos();
-    static Solicitud st=new Solicitud();
-    static Consulta ct=new Consulta();
-    static Autorizacion at=new Autorizacion();
-    static Cancelacion cat=new Cancelacion();
-    static Listado_De_Tarjetas ldt=new Listado_De_Tarjetas();
-    
-    Procesos proceso=new Procesos();
-    
+    static JButton[] botones = new JButton[9];
+    ; 
+    static Movimientos mt = new Movimientos();
+    static Solicitud st = new Solicitud();
+    static Consulta ct = new Consulta();
+    static Autorizacion at = new Autorizacion();
+    static Cancelacion cat = new Cancelacion();
+    static Listado_De_Tarjeta ldt = new Listado_De_Tarjeta();
+    static Listado_De_Solicitud lds = new Listado_De_Solicitud();
+    static Listado_De_Estados_De_Cuenta ldec = new Listado_De_Estados_De_Cuenta();
+    static Archivo_Entrada ae = new Archivo_Entrada();
+
+    Procesos proceso = new Procesos();
+
     public Ventana_Principal() {
         initComponents();
-        botones[0]=boton_solicitud;
-        botones[1]=boton_movimiento;
-        botones[2]=boton_consulta;
-        botones[3]=boton_autorizacion;
-        botones[4]=boton_cancelacion;
-        botones[5]=boton_estado_cuenta;
-        botones[6]=boton_listado_tarjetas;
-        botones[7]=boton_listado_solicitudes;
-        botones[8]=boton_reportes;
+        botones[0] = boton_solicitud;
+        botones[1] = boton_movimiento;
+        botones[2] = boton_consulta;
+        botones[3] = boton_autorizacion;
+        botones[4] = boton_cancelacion;
+        botones[5] = boton_estado_cuenta;
+        botones[6] = boton_listado_tarjetas;
+        botones[7] = boton_listado_solicitudes;
+        botones[8] = Boton_Archivo;
         Imagenes.logo(jLabel1);
-        
-        
+
     }
 
     /**
@@ -62,7 +65,7 @@ public class Ventana_Principal extends javax.swing.JFrame {
         boton_autorizacion = new javax.swing.JButton();
         boton_listado_solicitudes = new javax.swing.JButton();
         boton_listado_tarjetas = new javax.swing.JButton();
-        boton_reportes = new javax.swing.JButton();
+        Boton_Archivo = new javax.swing.JButton();
         boton_estado_cuenta = new javax.swing.JButton();
         boton_cerrar = new javax.swing.JButton();
         boton_solicitud = new javax.swing.JButton();
@@ -168,20 +171,20 @@ public class Ventana_Principal extends javax.swing.JFrame {
         jPanel1.add(boton_listado_tarjetas);
         boton_listado_tarjetas.setBounds(0, 440, 220, 40);
 
-        boton_reportes.setBackground(new java.awt.Color(255, 255, 254));
-        boton_reportes.setFont(new java.awt.Font("Century Schoolbook L", 3, 15)); // NOI18N
-        boton_reportes.setForeground(new java.awt.Color(119, 136, 147));
-        boton_reportes.setText("REPORTES");
-        boton_reportes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        boton_reportes.setEnabled(true
+        Boton_Archivo.setBackground(new java.awt.Color(255, 255, 254));
+        Boton_Archivo.setFont(new java.awt.Font("Century Schoolbook L", 3, 15)); // NOI18N
+        Boton_Archivo.setForeground(new java.awt.Color(119, 136, 147));
+        Boton_Archivo.setText("Archivo de entrada");
+        Boton_Archivo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Boton_Archivo.setEnabled(true
         );
-        boton_reportes.addActionListener(new java.awt.event.ActionListener() {
+        Boton_Archivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton_reportesActionPerformed(evt);
+                Boton_ArchivoActionPerformed(evt);
             }
         });
-        jPanel1.add(boton_reportes);
-        boton_reportes.setBounds(0, 560, 220, 40);
+        jPanel1.add(Boton_Archivo);
+        Boton_Archivo.setBounds(0, 560, 220, 40);
 
         boton_estado_cuenta.setBackground(new java.awt.Color(255, 255, 254));
         boton_estado_cuenta.setFont(new java.awt.Font("Century Schoolbook L", 3, 15)); // NOI18N
@@ -312,55 +315,52 @@ public class Ventana_Principal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-   static void cambiar_estado_botones(JButton boton_activo, JButton[] inactivos ){
-    
-        
+    static void cambiar_estado_botones(JButton boton_activo, JButton[] inactivos) {
+
         for (int i = 0; i < inactivos.length; i++) {
-            
-            if (inactivos[i].getWidth()==270){
+
+            if (inactivos[i].getWidth() == 270) {
                 inactivos[i].setForeground(new java.awt.Color(119, 136, 147));
-                inactivos[i].setBackground(new java.awt.Color(255,255,254));
-                inactivos[i].setSize(220, 40);  
+                inactivos[i].setBackground(new java.awt.Color(255, 255, 254));
+                inactivos[i].setSize(220, 40);
             }
-                 
-        
 
         }
-        
-        boton_activo.setForeground(new java.awt.Color(255,255,254));
-        boton_activo.setBackground(new java.awt.Color(178,195,212));
+
+        boton_activo.setForeground(new java.awt.Color(255, 255, 254));
+        boton_activo.setBackground(new java.awt.Color(178, 195, 212));
         boton_activo.setSize(270, 40);
-    
-       
+
         ejecucion.setText(boton_activo.getText());
-        
+
     }
-    
-   
+
+
     private void boton_solicitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_solicitudActionPerformed
-        
-        cambiar_estado_botones(boton_solicitud,botones);
+
+        cambiar_estado_botones(boton_solicitud, botones);
         ocultar_paneles();
         jPanel4.add(st);
         st.setVisible(true);
+       
         jPanel4.revalidate();
         jPanel4.repaint();
     }//GEN-LAST:event_boton_solicitudActionPerformed
 
     private void boton_movimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_movimientoActionPerformed
-        cambiar_estado_botones( boton_movimiento,botones);
-        
+        cambiar_estado_botones(boton_movimiento, botones);
+
         ocultar_paneles();
         jPanel4.add(mt);
-   
+
         mt.setVisible(true);
         jPanel4.revalidate();
         jPanel4.repaint();
     }//GEN-LAST:event_boton_movimientoActionPerformed
 
     private void boton_consultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_consultaActionPerformed
-       
-       cambiar_estado_botones( boton_consulta,botones);
+
+        cambiar_estado_botones(boton_consulta, botones);
         ocultar_paneles();
         jPanel4.add(ct);
         ct.setVisible(true);
@@ -369,18 +369,18 @@ public class Ventana_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_boton_consultaActionPerformed
 
     private void boton_autorizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_autorizacionActionPerformed
-        cambiar_estado_botones( boton_autorizacion,botones);
+        cambiar_estado_botones(boton_autorizacion, botones);
         ocultar_paneles();
         jPanel4.add(at);
         at.setVisible(true);
         jPanel4.revalidate();
         jPanel4.repaint();
-        
+
     }//GEN-LAST:event_boton_autorizacionActionPerformed
 
     private void boton_cancelacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cancelacionActionPerformed
-       cambiar_estado_botones( boton_cancelacion,botones);
-       ocultar_paneles();
+        cambiar_estado_botones(boton_cancelacion, botones);
+        ocultar_paneles();
         jPanel4.add(cat);
         cat.setVisible(true);
         jPanel4.revalidate();
@@ -388,11 +388,16 @@ public class Ventana_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_boton_cancelacionActionPerformed
 
     private void boton_listado_solicitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_listado_solicitudesActionPerformed
-        cambiar_estado_botones(boton_listado_solicitudes,botones);
+        cambiar_estado_botones(boton_listado_solicitudes, botones);
+        ocultar_paneles();
+        jPanel4.add(lds);
+        lds.setVisible(true);
+        jPanel4.revalidate();
+        jPanel4.repaint();
     }//GEN-LAST:event_boton_listado_solicitudesActionPerformed
 
     private void boton_listado_tarjetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_listado_tarjetasActionPerformed
-       cambiar_estado_botones( boton_listado_tarjetas,botones);
+        cambiar_estado_botones(boton_listado_tarjetas, botones);
         ocultar_paneles();
         jPanel4.add(ldt);
         ldt.setVisible(true);
@@ -400,20 +405,30 @@ public class Ventana_Principal extends javax.swing.JFrame {
         jPanel4.repaint();
     }//GEN-LAST:event_boton_listado_tarjetasActionPerformed
 
-    private void boton_reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_reportesActionPerformed
-        cambiar_estado_botones( boton_reportes,botones);
-    }//GEN-LAST:event_boton_reportesActionPerformed
+    private void Boton_ArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_ArchivoActionPerformed
+        cambiar_estado_botones(Boton_Archivo, botones);
+        ocultar_paneles();
+        jPanel4.add(ae);
+        ae.setVisible(true);
+        jPanel4.revalidate();
+        jPanel4.repaint();
+    }//GEN-LAST:event_Boton_ArchivoActionPerformed
 
     private void boton_estado_cuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_estado_cuentaActionPerformed
-        cambiar_estado_botones( boton_estado_cuenta,botones);
+        cambiar_estado_botones(boton_estado_cuenta, botones);
+        ocultar_paneles();
+        jPanel4.add(ldec);
+        ldec.setVisible(true);
+        jPanel4.revalidate();
+        jPanel4.repaint();
     }//GEN-LAST:event_boton_estado_cuentaActionPerformed
 
     private void boton_inicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_inicioActionPerformed
-        
+
     }//GEN-LAST:event_boton_inicioActionPerformed
 
     private void boton_cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cerrarActionPerformed
-      
+
     }//GEN-LAST:event_boton_cerrarActionPerformed
 
     private void boton_ayudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_ayudaActionPerformed
@@ -455,17 +470,20 @@ public class Ventana_Principal extends javax.swing.JFrame {
         });
     }
 
-    
-    private void ocultar_paneles(){
+    private void ocultar_paneles() {
         st.setVisible(false);
         mt.setVisible(false);
         ct.setVisible(false);
         at.setVisible(false);
         cat.setVisible(false);
         ldt.setVisible(false);
+        lds.setVisible(false);
+        ldec.setVisible(false);
+        ae.setVisible(false);
     }
-   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Boton_Archivo;
     private javax.swing.JButton boton_autorizacion;
     private javax.swing.JButton boton_ayuda;
     private javax.swing.JButton boton_cancelacion;
@@ -476,7 +494,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
     private javax.swing.JButton boton_listado_solicitudes;
     private javax.swing.JButton boton_listado_tarjetas;
     private javax.swing.JButton boton_movimiento;
-    private javax.swing.JButton boton_reportes;
     private javax.swing.JButton boton_solicitud;
     private static javax.swing.JLabel ejecucion;
     private javax.swing.JLabel jLabel1;

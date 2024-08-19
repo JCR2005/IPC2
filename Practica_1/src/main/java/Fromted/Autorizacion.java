@@ -1,4 +1,3 @@
-
 package Fromted;
 
 import Backend.Procesos;
@@ -14,8 +13,8 @@ public class Autorizacion extends javax.swing.JPanel {
     /**
      * Creates new form Solicitud
      */
-    
-    Procesos proceso=new Procesos();
+    Procesos proceso = new Procesos();
+
     public Autorizacion() {
         initComponents();
         jPanel1.setVisible(false);
@@ -209,28 +208,30 @@ public class Autorizacion extends javax.swing.JPanel {
     }//GEN-LAST:event_boton_procesarMouseExited
 
     private void boton_procesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_procesarActionPerformed
-       
-        proceso.procesarAutorizacion(Integer.parseInt(numero_solicitud.getText()));
-        if (!proceso.isExisteSolicitud()) {
-            
-            JOptionPane.showMessageDialog(null, "La solicitud indicada no existe", "Error", JOptionPane.ERROR_MESSAGE);
+        try {
+            // Intentar convertir el texto a un número entero
+            int numeroSolicitud = Integer.parseInt(numero_solicitud.getText());
 
-        }else{
+            // Procesar la autorización
+            proceso.procesarAutorizacion(numeroSolicitud);
 
-            if (proceso.isAceptadaSolicitud()) {
-                JOptionPane.showMessageDialog(null, "Solicitud aceptada.", "Información", JOptionPane.INFORMATION_MESSAGE);
-
-            }else{
-
-                JOptionPane.showMessageDialog(null, "Solicitud rechazas", "Error", JOptionPane.ERROR_MESSAGE);
-
+            // Verificar si la solicitud existe
+            if (!proceso.isExisteSolicitud()) {
+                JOptionPane.showMessageDialog(null, "La solicitud indicada no existe", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                // Verificar si la solicitud fue aceptada o rechazada
+                if (proceso.isAceptadaSolicitud()) {
+                    JOptionPane.showMessageDialog(null, "Solicitud aceptada.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Solicitud rechazada", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
-        
-        
-        }
-      
-        
-        
+        } catch (NumberFormatException e) {
+            // Manejar el caso en que el texto ingresado no sea un número válido
+            JOptionPane.showMessageDialog(null, "El número de solicitud no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+
+
     }//GEN-LAST:event_boton_procesarActionPerformed
 
     private void boton_cancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boton_cancelarMouseEntered
@@ -249,12 +250,10 @@ public class Autorizacion extends javax.swing.JPanel {
         reiniciar_formulario();
     }//GEN-LAST:event_boton_cancelarActionPerformed
 
-    
-    void reiniciar_formulario(){
-       
+    void reiniciar_formulario() {
+
         numero_solicitud.setText("");
-     
-    
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton boton_archivo_entrada;

@@ -76,7 +76,7 @@ public class Movimientos extends javax.swing.JPanel {
 
         tipomovimiento.setBackground(new java.awt.Color(158, 144, 100));
         tipomovimiento.setForeground(new java.awt.Color(255, 255, 255));
-        tipomovimiento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de Movimiento ...", "Cargo ", "Abono" }));
+        tipomovimiento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de Movimiento ...", "CARGO ", "ABONO", " " }));
         tipomovimiento.setToolTipText("");
         tipomovimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
