@@ -4,6 +4,8 @@ import Conexion.Base_De_Datos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 /**
@@ -223,8 +225,16 @@ public class Autorizacion {
      * @throws SQLException Si ocurre un error durante la inserción.
      */
     private void insertarTarjeta(Statement statement, String numeroTarjeta, String tipoTarjeta, int limite, String nombre, String direccion) throws SQLException {
-        String query = "INSERT INTO Datos_Tarjeta (Numero_Tarjeta, Tipo, Limite, Nombre, Direccion, Estado) " +
-                       "VALUES ('" + numeroTarjeta + "','" + tipoTarjeta + "','" + limite + "','" + nombre + "','" + direccion + "','ACTIVA')";
+         // Obtener la fecha actual
+        LocalDate fechaActual = LocalDate.now();
+        
+        // Crear el formateador con el formato deseado
+        DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        
+        // Formatear la fecha
+        String fechaFormateada = fechaActual.format(formateador);
+        String query = "INSERT INTO Datos_Tarjeta (Numero_Tarjeta, Tipo, Limite, Nombre, Direccion, Estado,Fecha) " +
+                       "VALUES ('" + numeroTarjeta + "','" + tipoTarjeta + "','" + limite + "','" + nombre + "','" + direccion + "','AUTORIZADA','"+fechaFormateada+"')";
         statement.executeUpdate(query);
     }
 }

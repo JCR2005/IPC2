@@ -80,7 +80,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Manejo De Tarjetas De Credito");
         setResizable(false);
-        getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(228, 207, 154));
         jPanel1.setMaximumSize(new java.awt.Dimension(32767, 650));
@@ -251,7 +250,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(44, 68, 85));
         jPanel3.setPreferredSize(new java.awt.Dimension(230, 570));
-        jPanel3.setLayout(null);
 
         boton_inicio.setBackground(new java.awt.Color(255, 255, 254));
         boton_inicio.setFont(new java.awt.Font("Century Schoolbook L", 3, 15)); // NOI18N
@@ -266,7 +264,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
             }
         });
         jPanel3.add(boton_inicio);
-        boton_inicio.setBounds(50, 20, 120, 30);
 
         jPanel1.add(jPanel3);
         jPanel3.setBounds(0, 0, 230, 650);
@@ -307,12 +304,19 @@ public class Ventana_Principal extends javax.swing.JFrame {
         boton_ayuda.setBounds(230, 620, 30, 30);
 
         jPanel4.setBackground(new java.awt.Color(228, 207, 154));
-        jPanel4.setLayout(new java.awt.BorderLayout());
         jPanel1.add(jPanel4);
         jPanel4.setBounds(270, 130, 730, 490);
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 1000, 650);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
         setLocationRelativeTo(null);
