@@ -1,0 +1,33 @@
+
+<nav class="navbar">
+  <div class="navbar-container">
+    <a class="navbar-logo" >REVISTAS HUB</a>
+    <ul class="navbar-menu">
+      <!-- Configuración de precios de anuncios con menú desplegable -->
+      <li class="navbar-item dropdown">
+        <a class="navbar-link" >Configuración de anuncios</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-link" routerLink="/configuracionCostoAnuncios">Configuración de precios de anuncios</a></li>
+          <li><a class="dropdown-link" routerLink="/configuracionVigenciaAnuncios">Configuración de vigencia de anuncios</a></li>
+
+        </ul>
+      </li>
+
+      <li class="navbar-item">
+        <a class="navbar-link" routerLink="/ConfiguracionCompraDeAnunciosComponent" >Comprar anuncios</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" routerLink="/miPerfil">Mi perfil</a>
+      </li>
+      <li class="navbar-item">
+        <a class="navbar-link" href="/login">Cerrar sesión</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<h1>REVISTAS HUB</h1>
+<h1 class="h12">Anunciante</h1>
+
+<router-outlet></router-outlet>
+

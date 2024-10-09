@@ -1,0 +1,85 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+<div class="registro-container">
+  <div class="registro-box">
+    <h1>Registro</h1>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <input type="text" id="usuario" required placeholder=" " [(ngModel)]="usuario" name="usuario"/>
+        <label for="usuario">Nombre de Usuario*</label>
+
+        <div *ngIf="usuarioExiste">
+          <label class="mensajeError" >El usuario ya existe, por favor ingrese otro usuario</label>
+          <br>
+        </div>
+
+      </div>
+
+
+
+      <div class="form-group">
+        <input type="password" id="contraseña" required placeholder=" " [(ngModel)]="password" [type]="showPassword ? 'text' : 'password'" name="password"/>
+        <label for="contraseña">Contraseña*</label>
+
+        <!-- Botón para cambiar la visibilidad de la contraseña -->
+        <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+            <span class="material-icons">
+                {{ showPassword ? 'visibility_off' : 'visibility' }}
+            </span>
+        </button>
+
+        <div *ngIf="!passwordValida">
+          <label class="mensajeError" >Ingrese una contrceña valida(minimo 8 caracteres, maximo 32 caracteres, sin espacios)</label>
+          <br>
+        </div>
+    </div>
+
+      <div class="form-group">
+        <select id="tipoCuenta" required [(ngModel)]="tipoCuenta" (change)="cambiar()" name="tipoCuenta" >
+          <option value="" disabled selected hidden></option>
+          <option value="Suscriptor">Suscriptor</option>
+          <option value="Administrador">Administrador</option>
+          <option value="Anunciante">Anunciante</option>
+          <option value="Editor">Editor</option>
+        </select>
+        <label  for="tipoCuenta" *ngIf="!seleccionoTipoCuenta" >Tipo de cuenta:*</label>
+
+        <label  class="selects"  for="tipoCuenta" *ngIf="seleccionoTipoCuenta">Tipo de cuenta:*</label>
+
+      </div>
+
+      <div class="form-group">
+        <input type="text" id="nombre" required placeholder=" " [(ngModel)]="nombre" name="nombre"/>
+        <label for="nombre">Nombre Completo*</label>
+        <div *ngIf="!nombreValido">
+          <label class="mensajeError" >Ingrese un nombre valido(minimo 2 caracteres, maximo 30 caracteres)</label>
+          <br><br>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <input type="number" id="edad" min="18" required placeholder=" " [(ngModel)]="edad" name="edad"/>
+        <label for="edad*">Edad</label>
+        <div *ngIf="!edadValida">
+          <label class="mensajeError" >Ingrese una edad valida(mayores de 18 años)</label>
+          <br><br>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <textarea id="descripcion" rows="4" required placeholder=" " [(ngModel)]="descripcion" name="descripcion"></textarea>
+        <label for="descripcion">Descripción*</label>
+        <div *ngIf="!descripcionValida">
+          <label class="mensajeError" >Ingrese una descripcion valida(mayor a 10caracteres, menor a 1000 caracteres)</label>
+          <br><br>
+        </div>
+      </div>
+
+      <button class="button_siguiente" type="submit">Siguiente</button>
+      <br />
+      <button class="button_reiniciar" type="reset">Reiniciar campos</button>
+    </form>
+  </div>
+</div>

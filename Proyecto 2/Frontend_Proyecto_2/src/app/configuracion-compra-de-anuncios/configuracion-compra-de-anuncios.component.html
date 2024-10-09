@@ -1,0 +1,91 @@
+<div class="registro-container">
+  <div class="registro-box">
+    <h2>Adquiere tu Anuncio</h2>
+    <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+
+      <div class="form-group">
+
+        <select id="tipo_anuncio" required  [(ngModel)]="tipoAnuncio" (change)="actualizarPrecio()" name="tipo_anuncio">
+          <option value="" disabled selected hidden></option>
+          <option value="texto" data-precio="10">Texto</option>
+          <option value="imagen" data-precio="100">Texto e Imagen</option>
+          <option value="video" data-precio="150">Video</option>
+        </select>
+        <label  for="tipo_anuncio" *ngIf="!seleccionoTipoAnuncio" >Tipo de anuncio:</label>
+
+        <label  class="selects"  for="tipo_anuncio" *ngIf="seleccionoTipoAnuncio">Tipo de anuncio:</label>
+
+
+      </div>
+
+      <div class="form-group">
+        <select id="vigencia" class="select_vigencia" [(ngModel)]="vigencia" (change)="actualizarPrecio()" name="vigencia">
+          <option value="" disabled selected hidden></option>
+          <option value="1" data-multiplicador="1">1 Días</option>
+          <option value="3" data-multiplicador="3">4 Días</option>
+          <option value="14" data-multiplicador="14">7 Días</option>
+          <option value="28" data-multiplicador="28">14 Días</option>
+        </select>
+        <label  for="vigencia" *ngIf="!seleccionoVigencia" >vigencia de anuncio:</label>
+
+        <label  class="selects"  for="vigencia" *ngIf="seleccionoVigencia">vigencia de anuncio:</label>
+
+
+      </div>
+
+      <div class="form-group">
+
+        <input class="imput_fecha" type="date" placeholder="fecha" [(ngModel)]="fechaPublicacion" name="fecha_publicacion">
+        <label  for="fecha_publicacion">Selecciona una fecha:</label>
+        </div>
+
+        <label  class="form-group" >ingrese el anuncio</label>
+        <br><br><br>
+     <div class="form-group">
+
+
+
+
+
+        <input *ngIf="tipoAnuncio === 'texto'" class="imput_anuncioTexto" type="text" [(ngModel)]="anuncioTexto" name="anuncioTexto">
+        <label class="selects"   for="anuncioTexto" *ngIf="tipoAnuncio === 'texto'" >Ingrese su anuncio de texto:</label>
+
+
+
+        <input *ngIf="tipoAnuncio === 'imagen'" name="imagen" class="input_imagen" type="file" (change)="onFileChange($event)" accept="image/jpeg, image/png, image/gif">
+        <label class="selects"   for="imagen" *ngIf="tipoAnuncio === 'imagen' " >Seleccione su imagen</label>
+
+
+        <input *ngIf="tipoAnuncio === 'video'" class="input_video" type="text"  (change)="onVideoChange($event)" name="video" accept="video/*">
+        <label class="selects"   for="video" *ngIf="tipoAnuncio === 'video' " >Ingrese su url de su video</label>
+
+
+      </div>
+
+      <button id="boton_comprar" type="submit" class="boton_comprar" value="comprar">comprar</button>
+
+
+      <div class="form-group">
+        <p id="precio" class="precio">Precio: {{ precio | currency:'Q' }}</p>
+        <input type="hidden" id="precioInput" name="precio" [value]="precio">
+        <p id="error_message" class="error">{{ errorMessage }}</p>
+      </div>
+
+
+
+       </form>
+  </div>
+
+<!--<div class="credito_panel">
+    <h3 class="label_credito1">Mi cartera</h3>
+    <p class="label_credito2">No.Cartera: {{ cartera }}</p>
+    <p class="label_credito3">Saldo: {{ saldo }} Q</p>
+  //</div>
+
+  <button id="boton_regresar" class="boton_regresar" (click)="goBack()">Regresar</button>
+
+  <div *ngIf="mensajeExito" class="panel_exito">
+    ¡Su anuncio ha sido aceptado!
+  </div>-->
+
+</div>

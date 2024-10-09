@@ -1,0 +1,51 @@
+.contenedor {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente el contenido */
+  align-items: center;     /* Centra verticalmente el contenido */
+  height: 100vh;           /* Ocupa toda la altura de la ventana */
+  width: 100vw;            /* Ocupa toda la anchura de la ventana */
+  background-color: #fff; /* Color de fondo para mejor visibilidad */
+}
+html, body {
+  height: 100%;
+  margin: 0;
+}
+.navbar {
+  background-color: #1f315e; /* Color de fondo */
+  padding: 10px 20px; /* Espaciado */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+.navbar-container {
+  display: flex; /* Usar flexbox para el layout */
+  justify-content: space-between; /* Espaciado entre elementos */
+  align-items: center; /* Alinear verticalmente */
+}
+
+.navbar-logo {
+  color: #ffffff; /* Color del logo */
+  font-size: 24px; /* Tamaño del texto */
+  text-decoration: none; /* Sin subrayado */
+}
+
+.navbar-menu {
+  list-style: none; /* Sin viñetas */
+  display: flex; /* Usar flexbox para el menú */
+  margin: 0; /* Sin margen */
+  padding: 0; /* Sin padding */
+}
+
+.navbar-item {
+  margin-left: 20px; /* Espaciado entre elementos del menú */
+}
+
+.navbar-link {
+  color:  #ffffff; /* Color del enlace */
+  text-decoration: none; /* Sin subrayado */
+  font-weight: bold; /* Negrita */
+  transition: color 0.3s; /* Transición suave para el hover */
+}
+
+.navbar-link:hover {
+  color: #fff; /* Color en hover */
+}
