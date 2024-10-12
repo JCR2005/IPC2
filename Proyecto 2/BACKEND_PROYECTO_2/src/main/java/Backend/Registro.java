@@ -36,19 +36,35 @@ public class Registro {
         } else if (!validarNombre(usuario)) {
 
             mensaje = "nombreInvalido";
-        }else if (!validarEdad(usuario)) {
+        } else if (!validarEdad(usuario)) {
 
             mensaje = "edadInvalida";
-        }  else if (!validarDescripcion(usuario)) {
+        } else if (!validarDescripcion(usuario)) {
 
             mensaje = "descripcionValida";
         } else if (verificarCamposVacios(usuario)) {
             mensaje = "Por favor llene todos los cambios";
-        }else{
-            mensaje = "Felicidades "+usuario.getUsuario()+" su cuenta ha sido creada";
+        } else {
+            mensaje = "Felicidades " + usuario.getUsuario() + " su cuenta ha sido creada";
+
+            if (verificarNecesidadCartera(usuario.getTipoCuenta())) {
+                usuario.setIdCartera(crearCartera());
+            }
+            
             controladora.crearUsuario(usuario);
-                
+
         }
+    }
+
+    private boolean verificarNecesidadCartera(String tipoUsuario) {
+
+        boolean necesitaCartera = false;
+        if (tipoUsuario.endsWith("Anunciante") || tipoUsuario.endsWith("Editor")) {
+            necesitaCartera = true;
+        }
+
+        return necesitaCartera;
+
     }
 
     private boolean verificarCamposVacios(Usuario usuario) {
@@ -84,7 +100,7 @@ public class Registro {
     private boolean validarContraceña(Usuario usuario) {
         boolean contrecañaValida = false;
 
-        if ((usuario.getPassword().length() >= 8)  && (usuario.getPassword().length() <= 32) && (!usuario.getPassword().contains(" "))) {
+        if ((usuario.getPassword().length() >= 8) && (usuario.getPassword().length() <= 32) && (!usuario.getPassword().contains(" "))) {
             contrecañaValida = true;
         }
         return contrecañaValida;
@@ -99,7 +115,7 @@ public class Registro {
 
         return nombreValido;
     }
-    
+
     private boolean validarEdad(Usuario usuario) {
         boolean edadValida = false;
 
@@ -109,7 +125,7 @@ public class Registro {
 
         return edadValida;
     }
-    
+
     private boolean validarDescripcion(Usuario usuario) {
         boolean descripcionValida = false;
 
@@ -118,6 +134,30 @@ public class Registro {
         }
 
         return descripcionValida;
+    }
+
+    public String crearCartera() throws Exception {
+        String idCartera = "";
+        int contador = 0;
+        boolean carteraGenerada = false;
+
+        while (!carteraGenerada) {
+
+            String id_cartera = String.format("%016d", contador);
+
+            if (!controladora.buscarCartera(id_cartera)) {
+                
+                controladora.crearCartera(id_cartera );
+                carteraGenerada = true;
+                idCartera = id_cartera;
+            } else {
+                contador++;
+            }
+
+        }
+
+        return idCartera;
+
     }
 
 }

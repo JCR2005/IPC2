@@ -19,12 +19,15 @@ public class Usuario implements Serializable {
     private int edad;
     private String descripcion;
     private String urlFoto;
+    private String idCartera;
+
+
 
    
     public Usuario() {
     }
 
-    public Usuario(String usuario, String nombre, String tipoUsuario, String password, String descripcion, String urlFoto, int edad) {
+    public Usuario(String usuario, String nombre, String tipoUsuario, String password, String descripcion, String urlFoto, int edad,String cartera) {
         this.usuario = usuario;
         this.nombre = nombre;
         this.tipoCuenta = tipoUsuario;
@@ -32,6 +35,7 @@ public class Usuario implements Serializable {
         this.descripcion = descripcion;
         this.urlFoto = urlFoto;
         this.edad = edad;
+        this.idCartera=cartera;
 
     }
 
@@ -92,6 +96,13 @@ public class Usuario implements Serializable {
         this.urlFoto = urlFoto;
     }
 
+        public String getIdCartera() {
+        return idCartera;
+    }
+
+    public void setIdCartera(String idCartera) {
+        this.idCartera = idCartera;
+    }
 
     @Override
     public String toString() {
@@ -103,6 +114,7 @@ public class Usuario implements Serializable {
                 + ", edad=" + edad
                 + ", descripcion='" + descripcion + '\''
                 + ", urlFoto='" + urlFoto + '\''
+                + ", idCartera='" + idCartera + '\''
                 + '}';
     }
 }

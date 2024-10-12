@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package ControlPersistencia;
 
 import ControlPersistencia.exceptions.NonexistentEntityException;
 import ControlPersistencia.exceptions.PreexistingEntityException;
-import JPA.CostoAnuncio;
+import JPA.vigenciaAnuncio;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import java.io.Serializable;
@@ -16,53 +13,50 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author carlosrodriguez
  */
-public class CostoAnuncioJpaController implements Serializable {
+public class vigenciaAnuncioJpaController implements Serializable {
 
-    public CostoAnuncioJpaController(EntityManagerFactory emf) {
+    public vigenciaAnuncioJpaController(EntityManagerFactory emf) {
         this.emf = emf;
-       
-    }
-    
-      public CostoAnuncioJpaController() {
-     
-        emf = Persistence.createEntityManagerFactory("PersistentUnit");
-
     }
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-     
         return emf.createEntityManager();
-       
     }
+    
+     public vigenciaAnuncioJpaController() {
+     
+        emf = Persistence.createEntityManagerFactory("PersistentUnit");
 
-     public void initializeCostoAnuncio() throws Exception {
+    }
+     
+     public void initializeVigenciaAnuncio() throws Exception {
    
-        int count = getCostoAnuncioCount();
+        int count = getvigenciaAnuncioCount();
 
         if (count == 0) {
-          create(new CostoAnuncio("texto", 10));
-          create(new CostoAnuncio("imagen", 30));
-          create(new CostoAnuncio("video", 50));
+          create(new vigenciaAnuncio("v_1", 1));
+          create(new vigenciaAnuncio("v_2", 7));
+          create(new vigenciaAnuncio("v_3", 14));
+           create(new vigenciaAnuncio("v_4", 21));
         }
     }
-    public void create(CostoAnuncio costoAnuncio) throws PreexistingEntityException, Exception {
+
+    public void create(vigenciaAnuncio vigenciaAnuncio) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(costoAnuncio);
+            em.persist(vigenciaAnuncio);
             em.getTransaction().commit();
         } catch (Exception ex) {
-            if (findCostoAnuncio(costoAnuncio.getId_Add()) != null) {
-                throw new PreexistingEntityException("CostoAnuncio " + costoAnuncio + " already exists.", ex);
+            if (findvigenciaAnuncio(vigenciaAnuncio.getId_vigencia()) != null) {
+                throw new PreexistingEntityException("vigenciaAnuncio " + vigenciaAnuncio + " already exists.", ex);
             }
             throw ex;
         } finally {
@@ -72,19 +66,19 @@ public class CostoAnuncioJpaController implements Serializable {
         }
     }
 
-    public void edit(CostoAnuncio costoAnuncio) throws NonexistentEntityException, Exception {
+    public void edit(vigenciaAnuncio vigenciaAnuncio) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            costoAnuncio = em.merge(costoAnuncio);
+            vigenciaAnuncio = em.merge(vigenciaAnuncio);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = costoAnuncio.getId_Add();
-                if (findCostoAnuncio(id) == null) {
-                    throw new NonexistentEntityException("The costoAnuncio with id " + id + " no longer exists.");
+                String id = vigenciaAnuncio.getId_vigencia();
+                if (findvigenciaAnuncio(id) == null) {
+                    throw new NonexistentEntityException("The vigenciaAnuncio with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -100,14 +94,14 @@ public class CostoAnuncioJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            CostoAnuncio costoAnuncio;
+            vigenciaAnuncio vigenciaAnuncio;
             try {
-                costoAnuncio = em.getReference(CostoAnuncio.class, id);
-                costoAnuncio.getId_Add();
+                vigenciaAnuncio = em.getReference(vigenciaAnuncio.class, id);
+                vigenciaAnuncio.getId_vigencia();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The costoAnuncio with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The vigenciaAnuncio with id " + id + " no longer exists.", enfe);
             }
-            em.remove(costoAnuncio);
+            em.remove(vigenciaAnuncio);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -116,19 +110,19 @@ public class CostoAnuncioJpaController implements Serializable {
         }
     }
 
-    public List<CostoAnuncio> findCostoAnuncioEntities() {
-        return findCostoAnuncioEntities(true, -1, -1);
+    public List<vigenciaAnuncio> findvigenciaAnuncioEntities() {
+        return findvigenciaAnuncioEntities(true, -1, -1);
     }
 
-    public List<CostoAnuncio> findCostoAnuncioEntities(int maxResults, int firstResult) {
-        return findCostoAnuncioEntities(false, maxResults, firstResult);
+    public List<vigenciaAnuncio> findvigenciaAnuncioEntities(int maxResults, int firstResult) {
+        return findvigenciaAnuncioEntities(false, maxResults, firstResult);
     }
 
-    private List<CostoAnuncio> findCostoAnuncioEntities(boolean all, int maxResults, int firstResult) {
+    private List<vigenciaAnuncio> findvigenciaAnuncioEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(CostoAnuncio.class));
+            cq.select(cq.from(vigenciaAnuncio.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -140,20 +134,20 @@ public class CostoAnuncioJpaController implements Serializable {
         }
     }
 
-    public CostoAnuncio findCostoAnuncio(String id) {
+    public vigenciaAnuncio findvigenciaAnuncio(String id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(CostoAnuncio.class, id);
+            return em.find(vigenciaAnuncio.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getCostoAnuncioCount() {
+    public int getvigenciaAnuncioCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<CostoAnuncio> rt = cq.from(CostoAnuncio.class);
+            Root<vigenciaAnuncio> rt = cq.from(vigenciaAnuncio.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

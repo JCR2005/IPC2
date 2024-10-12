@@ -8,7 +8,7 @@
         <select id="tipo_anuncio" required  [(ngModel)]="tipoAnuncio" (change)="actualizarPrecio()" name="tipo_anuncio">
           <option value="" disabled selected hidden></option>
           <option value="texto" data-precio="10">Texto</option>
-          <option value="imagen" data-precio="100">Texto e Imagen</option>
+          <option value="imagen" data-precio="100">Imagen</option>
           <option value="video" data-precio="150">Video</option>
         </select>
         <label  for="tipo_anuncio" *ngIf="!seleccionoTipoAnuncio" >Tipo de anuncio:</label>
@@ -39,8 +39,8 @@
         <label  for="fecha_publicacion">Selecciona una fecha:</label>
         </div>
 
-        <label  class="form-group" >ingrese el anuncio</label>
-        <br><br><br>
+
+        <br>
      <div class="form-group">
 
 
@@ -53,10 +53,15 @@
 
 
         <input *ngIf="tipoAnuncio === 'imagen'" name="imagen" class="input_imagen" type="file" (change)="onFileChange($event)" accept="image/jpeg, image/png, image/gif">
-        <label class="selects"   for="imagen" *ngIf="tipoAnuncio === 'imagen' " >Seleccione su imagen</label>
+<label class="selects" for="imagen" *ngIf="tipoAnuncio === 'imagen'">Seleccione su imagen</label>
+
+<div  class="form-group" *ngIf="imagenVisualizacion">
+
+  <img  class="panelImagen" [src]="imagenVisualizacion" alt="" >
 
 
-        <input *ngIf="tipoAnuncio === 'video'" class="input_video" type="text"  (change)="onVideoChange($event)" name="video" accept="video/*">
+</div>
+        <input *ngIf="tipoAnuncio === 'video'" class="input_video" type="text"   [(ngModel)]="anuncioVideo" name="anuncioVideo">
         <label class="selects"   for="video" *ngIf="tipoAnuncio === 'video' " >Ingrese su url de su video</label>
 
 
@@ -76,16 +81,6 @@
        </form>
   </div>
 
-<!--<div class="credito_panel">
-    <h3 class="label_credito1">Mi cartera</h3>
-    <p class="label_credito2">No.Cartera: {{ cartera }}</p>
-    <p class="label_credito3">Saldo: {{ saldo }} Q</p>
-  //</div>
 
-  <button id="boton_regresar" class="boton_regresar" (click)="goBack()">Regresar</button>
-
-  <div *ngIf="mensajeExito" class="panel_exito">
-    ¡Su anuncio ha sido aceptado!
-  </div>-->
 
 </div>

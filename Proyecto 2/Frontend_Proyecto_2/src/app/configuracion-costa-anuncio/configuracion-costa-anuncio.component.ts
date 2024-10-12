@@ -26,22 +26,28 @@ export class ConfigPreciosAnunciosComponent {
 
   // Validación de los campos antes de enviar
   validarPrecios(): boolean {
-    const esValidoTexto = this.precioTexto >= 0 && /^[0-9]+(\.[0-9]+)?$/.test(this.precioTexto.toString());
-    const esValidoImagen = this.precioImagen >= 0 && /^[0-9]+(\.[0-9]+)?$/.test(this.precioImagen.toString());
-    const esValidoVideo = this.precioVideo >= 0 && /^[0-9]+(\.[0-9]+)?$/.test(this.precioVideo.toString());
+    const esNumeroValido = (valor: any): boolean => {
+  // Validar que el valor sea estrictamente numérico y no contenga letras
+  return typeof valor === 'number' && /^[0-9]+(\.[0-9]+)?$/.test(valor.toString());
+  };
+
+// Ejemplo de uso para los precios de texto, imagen y video
+const esValidoTexto = esNumeroValido(this.precioTexto);
+const esValidoImagen = esNumeroValido(this.precioImagen);
+const esValidoVideo = esNumeroValido(this.precioVideo);
 
     if (!esValidoTexto) {
-      alert('El precio de anuncio de texto no es válido.');
+      alert('El precio de anuncio de texto no es válido, ingrese valores numericos(todo valor no numerico se tomara como "0")');
       return false;
     }
 
     if (!esValidoImagen) {
-      alert('El precio de anuncio de imagen no es válido.');
+      alert('El precio de anuncio de imagen no es válido, ingrese valores numericos(todo valor no numerico se tomara como "0")');
       return false;
     }
 
     if (!esValidoVideo) {
-      alert('El precio de anuncio de video no es válido.');
+      alert('El precio de anuncio de video no es válido, ingrese valores numericos(todo valor no numerico se tomara como "0")');
       return false;
     }
 

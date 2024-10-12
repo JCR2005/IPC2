@@ -6,7 +6,7 @@ package ControlPersistencia;
 
 import ControlPersistencia.exceptions.NonexistentEntityException;
 import ControlPersistencia.exceptions.PreexistingEntityException;
-import JPA.CostoAnuncio;
+import JPA.Cartera;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import java.io.Serializable;
@@ -16,21 +16,18 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author carlosrodriguez
  */
-public class CostoAnuncioJpaController implements Serializable {
+public class CarteraJpaController implements Serializable {
 
-    public CostoAnuncioJpaController(EntityManagerFactory emf) {
+    public CarteraJpaController(EntityManagerFactory emf) {
         this.emf = emf;
-       
     }
     
-      public CostoAnuncioJpaController() {
+     public CarteraJpaController() {
      
         emf = Persistence.createEntityManagerFactory("PersistentUnit");
 
@@ -38,31 +35,19 @@ public class CostoAnuncioJpaController implements Serializable {
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-     
         return emf.createEntityManager();
-       
     }
 
-     public void initializeCostoAnuncio() throws Exception {
-   
-        int count = getCostoAnuncioCount();
-
-        if (count == 0) {
-          create(new CostoAnuncio("texto", 10));
-          create(new CostoAnuncio("imagen", 30));
-          create(new CostoAnuncio("video", 50));
-        }
-    }
-    public void create(CostoAnuncio costoAnuncio) throws PreexistingEntityException, Exception {
+    public void create(Cartera cartera) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(costoAnuncio);
+            em.persist(cartera);
             em.getTransaction().commit();
         } catch (Exception ex) {
-            if (findCostoAnuncio(costoAnuncio.getId_Add()) != null) {
-                throw new PreexistingEntityException("CostoAnuncio " + costoAnuncio + " already exists.", ex);
+            if (findCartera(cartera.getIdCartera()) != null) {
+                throw new PreexistingEntityException("Cartera " + cartera + " already exists.", ex);
             }
             throw ex;
         } finally {
@@ -72,19 +57,19 @@ public class CostoAnuncioJpaController implements Serializable {
         }
     }
 
-    public void edit(CostoAnuncio costoAnuncio) throws NonexistentEntityException, Exception {
+    public void edit(Cartera cartera) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            costoAnuncio = em.merge(costoAnuncio);
+            cartera = em.merge(cartera);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = costoAnuncio.getId_Add();
-                if (findCostoAnuncio(id) == null) {
-                    throw new NonexistentEntityException("The costoAnuncio with id " + id + " no longer exists.");
+                String id = cartera.getIdCartera();
+                if (findCartera(id) == null) {
+                    throw new NonexistentEntityException("The cartera with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -100,14 +85,14 @@ public class CostoAnuncioJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            CostoAnuncio costoAnuncio;
+            Cartera cartera;
             try {
-                costoAnuncio = em.getReference(CostoAnuncio.class, id);
-                costoAnuncio.getId_Add();
+                cartera = em.getReference(Cartera.class, id);
+                cartera.getIdCartera();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The costoAnuncio with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The cartera with id " + id + " no longer exists.", enfe);
             }
-            em.remove(costoAnuncio);
+            em.remove(cartera);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -116,19 +101,19 @@ public class CostoAnuncioJpaController implements Serializable {
         }
     }
 
-    public List<CostoAnuncio> findCostoAnuncioEntities() {
-        return findCostoAnuncioEntities(true, -1, -1);
+    public List<Cartera> findCarteraEntities() {
+        return findCarteraEntities(true, -1, -1);
     }
 
-    public List<CostoAnuncio> findCostoAnuncioEntities(int maxResults, int firstResult) {
-        return findCostoAnuncioEntities(false, maxResults, firstResult);
+    public List<Cartera> findCarteraEntities(int maxResults, int firstResult) {
+        return findCarteraEntities(false, maxResults, firstResult);
     }
 
-    private List<CostoAnuncio> findCostoAnuncioEntities(boolean all, int maxResults, int firstResult) {
+    private List<Cartera> findCarteraEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(CostoAnuncio.class));
+            cq.select(cq.from(Cartera.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -140,24 +125,24 @@ public class CostoAnuncioJpaController implements Serializable {
         }
     }
 
-    public CostoAnuncio findCostoAnuncio(String id) {
+    public Cartera findCartera(String id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(CostoAnuncio.class, id);
+            return em.find(Cartera.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getCostoAnuncioCount() {
+    public int getCarteraCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<CostoAnuncio> rt = cq.from(CostoAnuncio.class);
+            Root<Cartera> rt = cq.from(Cartera.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
-        } finally {
+        } finally { 
             em.close();
         }
     }

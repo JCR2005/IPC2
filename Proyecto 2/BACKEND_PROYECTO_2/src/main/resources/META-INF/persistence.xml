@@ -3,23 +3,40 @@
   <persistence-unit name="PersistentUnit" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <class>JPA.Usuario</class>
-    <!-- Verifica que la clase esté bien mapeada -->
     <class>JPA.CostoAnuncio</class>
+    <class>JPA.Anuncio</class>
+    <class>JPA.vigenciaAnuncio</class>
+    <class>JPA.Cartera</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
+      <!-- Configuración JDBC -->
       <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/PROYECTO_2?serverTimezone=UTC"/>
       <property name="jakarta.persistence.jdbc.user" value="root"/>
       <property name="jakarta.persistence.jdbc.password" value="4170"/>
       <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-      <!-- Cambia a 'update' si no deseas borrar datos -->
+      <!-- Usar HikariCP como pool de conexiones -->
+      <property name="hibernate.hikari.minimumIdle" value="10"/>
+      <!-- Mínimo 10 conexiones inactivas -->
+      <property name="hibernate.hikari.maximumPoolSize" value="100"/>
+      <!-- Máximo 100 conexiones -->
+      <property name="hibernate.hikari.connectionTimeout" value="30000"/>
+      <!-- 30 segundos para obtener una conexión -->
+      <property name="hibernate.hikari.idleTimeout" value="600000"/>
+      <!-- 10 minutos para conexiones inactivas -->
+      <property name="hibernate.hikari.maxLifetime" value="1800000"/>
+      <!-- 30 minutos para la vida máxima de la conexión -->
+      <property name="hibernate.hikari.leakDetectionThreshold" value="2000"/>
+      <!-- Detecta fugas de conexiones -->
+      <property name="hibernate.hikari.connectionTestQuery" value="SELECT 1"/>
+      <!-- Test de conexión para asegurar que es válida -->
+      <!-- Otras propiedades de Hibernate -->
       <property name="hibernate.hbm2ddl.auto" value="update"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
       <property name="hibernate.show_sql" value="true"/>
-      <!-- Muestra las consultas SQL generadas -->
       <property name="hibernate.format_sql" value="true"/>
-      <!-- Formatea las consultas SQL -->
       <property name="jakarta.persistence.logging.level" value="FINE"/>
-      <!-- Detalles de los logs -->
+<property name="jakarta.persistence.schema-generation.database.action" value="update"/>
+      
     </properties>
   </persistence-unit>
 </persistence>

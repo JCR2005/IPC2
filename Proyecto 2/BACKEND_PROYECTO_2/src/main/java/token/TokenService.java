@@ -13,7 +13,7 @@ public class TokenService {
     public String generateToken(Usuario usuario) {
         Algorithm algorithm = Algorithm.HMAC256(SECRET);
         String token = JWT.create()
-                .withSubject(usuario.getUsuario().toString()) // Aquí puedes agregar más datos del usuario
+               .withClaim("usuario", usuario.getUsuario().toString()) // Cambia .withSubject por .withClaim para agregar otro dato
                 .withClaim("tipoCuenta", usuario.getTipoCuenta().toString()) // Cambia .withSubject por .withClaim para agregar otro dato
                 .withIssuedAt(new Date())
                 // .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME)) // Se elimina la expiración

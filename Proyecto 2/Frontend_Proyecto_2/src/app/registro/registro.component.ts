@@ -53,7 +53,7 @@ export class RegistroComponent {
   }
 
   onSubmit() {
-   
+
     this.usuarioExiste = false;
     this.passwordValida = true;
     this.nombreValido = true;
@@ -87,8 +87,10 @@ export class RegistroComponent {
           this.descripcionValida = false;
         } else {
           alert(response.message);
+          this.reiniciarDatos();
         }
-        this.reiniciarDatos();
+
+
       },
       (error) => {
         console.error('Error al enviar los datos:', error);

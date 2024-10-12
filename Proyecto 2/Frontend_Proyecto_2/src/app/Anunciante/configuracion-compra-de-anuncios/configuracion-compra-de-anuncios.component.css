@@ -22,6 +22,12 @@ body {
   border-radius: 25px;
 }
 
+.panelImagen{
+  height: 300px;
+  width: 100%;
+
+}
+
 .registro-box {
   background-color: #fff;
   padding: 5%;
@@ -134,5 +140,5 @@ button:hover {
 }
 
 
-    
+
 
