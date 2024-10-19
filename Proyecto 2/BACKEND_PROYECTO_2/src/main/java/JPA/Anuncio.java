@@ -7,20 +7,19 @@ import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.sql.Date;
 
-
 /**
  *
  * @author carlosrodriguez
  */
 @Entity
 public class Anuncio implements Serializable {
- @Id
 
+    @Id
     private String idAnuncio;
 
     // Constructor
     public Anuncio() {
-       
+
     }
     private String usuario;
     private String tipoAnuncio;
@@ -30,17 +29,14 @@ public class Anuncio implements Serializable {
     private Date fechaPublicacion;
     private Date fechaFinalizacion;
 
-    
     private boolean estado;
     private String rutaImagen; // Atributo para la imagen
     private String anuncioVideo;
     private String anuncioTexto;
-    
+
     @Transient // Esto indica que este campo no se persistirá en la base de datos
     private String fechaPublicacionTexto;
 
-    
-    
     public Date getFechaFinalizacion() {
         return fechaFinalizacion;
     }
@@ -56,6 +52,7 @@ public class Anuncio implements Serializable {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
     public String getFechaPublicacionTexto() {
         return fechaPublicacionTexto;
     }
@@ -136,5 +133,4 @@ public class Anuncio implements Serializable {
         this.anuncioTexto = anuncioTexto;
     }
 
-   
 }

@@ -7,6 +7,23 @@ import { Injectable } from "@angular/core";
 export class token {
 
 
+  public obtenerUsuario(): string {
+    let  usuario:string = ""; // Aquí puedes obtener el nombre del usuario de alguna fuente
+
+    const token = sessionStorage.getItem('token');
+
+    if (token) {
+      try {
+        const payload = this.parseJwt(token);
+        // Verifica si el tipo de cuenta es 'Administrador'
+        usuario=payload.usuario;
+      } catch (error) {
+
+      }
+    }
+    return usuario; // Retornar el string
+  }
+
   public parseJwt(token: string): any {
     try {
       const base64Url = token.split('.')[1];

@@ -1,8 +1,7 @@
-package Backend;
+package Backend.anuncios;
 
 import JPA.Anuncio;
 import JPA.Controladora;
-import JPA.Usuario;
 import com.google.gson.Gson;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -12,9 +11,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
+
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
+
 import java.util.Date;
 
 /**
@@ -49,18 +48,22 @@ public class CompraAnuncio {
         } else if (!validarSaldo(anuncioObjeto)) {
             this.mensaje = "saldo insuficiente, por favor recarge";
         } else {
-               anuncioObjeto.setIdAnuncio(crearIdAnuncio());
-            if (anuncioObjeto.getTipoAnuncio().endsWith("imagen")) {
-                guardarImagen(new ByteArrayInputStream(imagenBytes), anuncioObjeto);
-            } else {
-                anuncioObjeto.setRutaImagen("");
+            anuncioObjeto.setIdAnuncio(crearIdAnuncio());
+            try {
+                if (anuncioObjeto.getTipoAnuncio().endsWith("imagen")) {
+                    guardarImagen(new ByteArrayInputStream(imagenBytes), anuncioObjeto);
+                }
+                guardarAnuncio(anuncioObjeto);  // Solo se ejecutará si guardarImagen no lanza una excepción
+                this.mensaje = "Se ha registrado su anuncio correctamente";
+            } catch (Exception e) {
+                this.mensaje = "Hubo un error al guardar la imagen del anuncio: " + e.getMessage();
+                e.printStackTrace();  // O usar logging para registrar el error
             }
 
-            guardarAnuncio(anuncioObjeto);
+  
         }
 
-        System.out.println(mensaje);
-        return respuesta;
+        return "{\"message\":\" " + this.mensaje + "\"}";
     }
 
     // Método para convertir InputStream a byte array
@@ -76,7 +79,6 @@ public class CompraAnuncio {
 
     private void guardarAnuncio(Anuncio anuncio) throws Exception {
 
-     
         anuncio.setEstado(true);
         generarFechaPublicacion(anuncio);
         generarFechaFinalizacion(anuncio);

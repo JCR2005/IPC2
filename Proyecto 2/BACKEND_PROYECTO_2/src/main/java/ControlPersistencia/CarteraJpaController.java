@@ -29,8 +29,7 @@ public class CarteraJpaController implements Serializable {
     
      public CarteraJpaController() {
      
-        emf = Persistence.createEntityManagerFactory("PersistentUnit");
-
+        this.emf = EntityManagerUtil.getEntityManagerFactory();
     }
     private EntityManagerFactory emf = null;
 

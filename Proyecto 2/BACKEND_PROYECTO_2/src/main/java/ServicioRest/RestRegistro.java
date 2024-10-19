@@ -28,7 +28,7 @@ public class RestRegistro {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)  // Asegúrate de que la respuesta sea JSON
+    @Produces(MediaType.APPLICATION_JSON)  
     public Response registrarUsuario(Usuario usuario) throws Exception {
 
         String jsonResponse = null;

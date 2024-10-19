@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { ConfigPreciosAnunciosComponent } from "./configuracion-costa-anuncio/configuracion-costa-anuncio.component";
+import { ConfigPreciosAnunciosComponent } from "./administrador/configuracion-costa-anuncio/configuracion-costa-anuncio.component";
 
 @Component({
   selector: 'app-root',

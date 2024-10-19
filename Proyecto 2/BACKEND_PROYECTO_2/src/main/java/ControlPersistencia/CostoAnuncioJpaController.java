@@ -32,8 +32,8 @@ public class CostoAnuncioJpaController implements Serializable {
     
       public CostoAnuncioJpaController() {
      
-        emf = Persistence.createEntityManagerFactory("PersistentUnit");
-
+       
+        this.emf = EntityManagerUtil.getEntityManagerFactory();
     }
     private EntityManagerFactory emf = null;
 
@@ -48,9 +48,9 @@ public class CostoAnuncioJpaController implements Serializable {
         int count = getCostoAnuncioCount();
 
         if (count == 0) {
-          create(new CostoAnuncio("texto", 10));
-          create(new CostoAnuncio("imagen", 30));
-          create(new CostoAnuncio("video", 50));
+          create(new CostoAnuncio("add_texto", 10));
+          create(new CostoAnuncio("add_imagen", 30));
+          create(new CostoAnuncio("add_video", 50));
         }
     }
     public void create(CostoAnuncio costoAnuncio) throws PreexistingEntityException, Exception {

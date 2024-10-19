@@ -1,6 +1,7 @@
 package JPA;
 
 import ControlPersistencia.ControladorPersistencia;
+import java.util.List;
 
 /**
  *
@@ -76,5 +77,43 @@ public class Controladora {
 
     public void crearAnuncio(Anuncio anuncio) {
        controladorPersistencia.crearAnuncio(anuncio);
+    }
+
+    public List<Anuncio> obtenerAlumnos() {
+       return controladorPersistencia.obtenerAnuncios();
+    }
+
+    public Anuncio obetenerAnuncio(String idAnuncio) {
+       
+        return controladorPersistencia.obtenerAnuncios(idAnuncio);
+    }
+    
+    public void editarAnuncio(Anuncio anuncio) throws Exception {
+       controladorPersistencia.editarAnuncio(anuncio);
+    }
+
+    public boolean buscarRevista(String idRevista) {
+     
+        return controladorPersistencia.buscarRevista(idRevista);
+    }
+
+    public void crearRevista(Revista revista) throws Exception {
+       controladorPersistencia.crearRevista(revista);
+    }
+
+    public void guardarTags(revistaEtiqueta revistaEtiqueta) throws Exception {
+        controladorPersistencia.guardarTags(revistaEtiqueta);
+    }
+
+    public List<Revista> obtenerRevistas() {
+          return controladorPersistencia.obtenerRevistas();
+    }   
+
+    public Revista obtenerRevista(String idRevista) {
+      return controladorPersistencia.obtenerRevista(idRevista);
+    }
+
+    public void editarRevista(Revista revista) throws Exception {
+        controladorPersistencia.editarRevista(revista);
     }
 }

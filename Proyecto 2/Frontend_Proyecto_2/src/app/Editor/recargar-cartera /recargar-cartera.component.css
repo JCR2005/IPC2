@@ -1,0 +1,184 @@
+.panel_exito {
+  position: absolute;
+  background-color: #cce5ff; /* Azul claro */
+  color: #004085; /* Azul oscuro */
+  border: 1px solid #b8daff; /* Azul más claro */
+  padding: 10px;
+  border-radius: 5px;
+  width: 80%;
+  margin: 10px auto;
+  text-align: center;
+  top: 5%;
+  display: none;
+}
+
+/* Asegurar que html y body ocupen todo el espacio visible */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* Evitar scroll innecesario */
+  font-family: "Matemasie", sans-serif;
+  background-color: #f8f9fa; /* Gris claro */
+}
+
+.full-screen-div {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente el contenido */
+  align-items: center;     /* Centra verticalmente el contenido */
+  height: 100vh;           /* Ocupa toda la altura de la ventana */
+  width: 100vw;            /* Ocupa toda la anchura de la ventana */
+  background-color: #ffffff; /* Color de fondo blanco */
+}
+
+.panel_cartera {
+  position: absolute;
+  width: 90%;
+  height: 80%;
+  background-color: #fff; /* Azul intenso */
+  border-radius: 25px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #ffffff; /* Texto blanco */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.label_Titulo {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #162c5e; /* Texto blanco */
+  font-family: "Matemasie", sans-serif;
+}
+
+
+.label_numero_cartera {
+  position:absolute;
+  top: 10%;
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #162c5e; /* Texto blanco */
+  font-family: "Matemasie", sans-serif;
+}
+
+.label_saldo, .label_acreditar {
+  font-size: 150%;
+  color: #162c5e; /* Azul intenso */
+  font-family: "Matemasie", sans-serif;
+}
+
+.imput_acreditar {
+  width: 80%;
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  padding: 10px;
+  font-size: 1em;
+  color: #162c5e; /* Texto blanco */
+  font-family: "Matemasie", sans-serif;
+  border-radius: 5px;
+  border: 2px solid #162c5e; /* Borde azul intenso */
+  background-color: #fff; /* Fondo azul intenso */
+}
+
+.panel_saldo {
+  position: absolute;
+  width: 50%;
+  height: 5%;
+  top: 25%;
+  background-color: #fff; /* Azul claro */
+  border-radius: 25px;
+
+  border: 2px solid #162c5e;
+
+  color: #162c5e; /* Texto azul oscuro */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.panel_recarga {
+  position: absolute;
+  width: 90%;
+  height: 50%;
+  top: 40%;
+  background-color: #e9edf1; /* Azul claro */
+  border-radius: 30px;
+  padding: 15px 10px;
+  display: flex;
+  border: 2px solid #162c5e;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boton_recargar {
+  position: absolute;
+  font-family: "Matemasie", sans-serif;
+  bottom: 35%;
+  left: 40%;
+  background-color: #162c5e; /* Azul intenso */
+  color: #ffffff; /* Texto blanco */
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  border-radius: 25px;
+  cursor: pointer;
+  width: 20%;
+  margin-top: 20px;
+}
+
+.boton_recargar:hover {
+  background-color: #162c5e; /* Azul oscuro al pasar el mouse */
+}
+
+.boton_regresar {
+  position: absolute;
+  bottom: 10%;
+  background-color: #162c5e; /* Azul intenso */
+  color: #ffffff; /* Texto blanco */
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  border-radius: 25px;
+  cursor: pointer;
+  width: 15%;
+  margin-top: 10px;
+  font-family: "Matemasie", sans-serif;
+}
+
+.boton_regresar:hover {
+  background-color: #162c5e; /* Azul oscuro al pasar el mouse */
+}
+
+.credito_panel {
+  position: absolute;
+  top: 20px;
+  right: 5%;
+  width: 20%;
+  background-color: #cce5ff; /* Azul claro */
+  color: #004085; /* Texto azul oscuro */
+  border-radius: 25px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2em;
+  border: 2px solid #162c5e ; /* Borde azul intenso */
+}
+
+.credito_panel h3 {
+  margin: 0;
+}
+
+.credito_panel p {
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+  font-size: 1.1em;
+}

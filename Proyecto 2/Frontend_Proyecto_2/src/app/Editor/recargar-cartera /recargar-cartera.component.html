@@ -1,0 +1,27 @@
+
+<div class="full-screen-div">
+  <div id="mensaje_exito" class="panel_exito" style="display:none;">
+      ¡Se ha acreditado con éxito!
+  </div>
+  <div class="panel_cartera">
+      <h2 class="label_Titulo">MI CARTERA</h2>
+      <h2 class="label_numero_cartera">No.{{numeroCartera}}</h2>
+
+      <div class="panel_saldo">
+          <label class="label_saldo"  for="saldo"> {{ usuario  }}   ¡Tu saldo es de:  {{  saldo }} Q </label>
+      </div>
+
+      <div class="panel_recarga">
+          <form (ngSubmit)="racargarCartera()"  enctype="multipart/form-data">
+
+              <label class="label_acreditar" for="monto_recarga">¿Sin saldo? ¡Acredita y sigue atrayendo clientes!</label>
+
+              <input class="imput_acreditar" min=0 type="number" [(ngModel)]="recarga"  id="monto_recarga" name="monto_recarga" placeholder="Ingrese monto a acreditar a su cartera" />
+
+              <button id="boton_recargar" type="submit" class="boton_recargar">Recargar Saldo</button>
+          </form>
+      </div>
+      <button id="boton_regresar" class="boton_regresar" onclick="window.history.back()">Regresar</button>
+
+  </div>
+ </div>

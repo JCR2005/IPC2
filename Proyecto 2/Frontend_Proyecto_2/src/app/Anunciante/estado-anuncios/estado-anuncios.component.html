@@ -1,0 +1,41 @@
+<ng-template #noAnuncios>
+  <p>No hay anuncios disponibles.</p>
+</ng-template>
+
+<div class="window">
+  <h2>Mis anuncios</h2>
+  <div *ngIf="cargando" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p>Cargando, por favor espera...</p>
+  </div>
+
+  <div *ngIf="Procesando"  class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p> procesando cambio</p>
+
+  </div>
+
+  <div *ngIf="respuesta"  class="panelMensaje">
+
+    <h3> ¡{{mensaje}}!</h3>
+
+  </div>
+
+  <div class="data-list" *ngIf="!cargando && anuncios.length > 0; else noAnuncios">
+    <div class="data-header">
+      <span>id  :</span>
+      <span>Tipo Anuncio:</span>
+
+      <span>Vigencia:</span>
+      <span>Estado:</span>
+      <span>Acciones:</span>
+    </div>
+    <div class="data-row" *ngFor="let anuncio of anuncios">
+      <span>{{ anuncio.idAnuncio }}</span>
+      <span>{{ anuncio.tipoAnuncio }}</span>
+      <span>{{ anuncio.vigencia }} Dia(s)</span>
+      <span>{{ anuncio.estado ? 'Activo' : 'Inactivo' }}</span>
+      <button class="activate-btn" (click)="cambiarEstadoAnuncio(anuncio.idAnuncio,anuncio.estado)">{{ anuncio.estado ? 'Desactivar' : 'Activar' }} </button>
+    </div>
+  </div>
+</div>

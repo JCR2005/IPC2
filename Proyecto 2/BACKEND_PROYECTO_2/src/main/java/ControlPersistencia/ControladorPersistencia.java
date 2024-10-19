@@ -4,9 +4,12 @@ import ControlPersistencia.exceptions.NonexistentEntityException;
 import JPA.Anuncio;
 import JPA.Cartera;
 import JPA.CostoAnuncio;
+import JPA.Revista;
 import JPA.Usuario;
+import JPA.revistaEtiqueta;
 import JPA.vigenciaAnuncio;
-import jakarta.persistence.EntityNotFoundException;
+
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +24,9 @@ public class ControladorPersistencia {
     private CarteraJpaController carteraJpaController = new CarteraJpaController();
     private vigenciaAnuncioJpaController vigenciaAnuncioJpaController = new vigenciaAnuncioJpaController();
     private AnuncioJpaController anuncioJpaController=new AnuncioJpaController();
-
+    private RevistaJpaController revistaJpaController=new RevistaJpaController();
+    private revistaEtiquetaJpaController revistaEtiquetaJpaController=new revistaEtiquetaJpaController();
+    
     public void crearUsuario(Usuario usuario) throws Exception {
 
         this.usuario.create(usuario);
@@ -152,6 +157,47 @@ public class ControladorPersistencia {
 
     public void crearAnuncio(Anuncio anuncio) {
       anuncioJpaController.create(anuncio);
+    }
+
+    public List<Anuncio> obtenerAnuncios() {
+        return anuncioJpaController.findAnuncioEntities();
+    }
+
+    public Anuncio obtenerAnuncios(String idAnuncio) {
+       return  anuncioJpaController.findAnuncio(idAnuncio);
+    }
+
+    public void editarAnuncio(Anuncio anuncio) throws Exception {
+       anuncioJpaController.edit(anuncio);
+    }
+
+    public boolean buscarRevista(String idRevista) {
+     boolean existeRevista = false;
+        if (this.revistaJpaController.findRevista(idRevista) != null) {
+            existeRevista = true;
+
+        }
+        return existeRevista;
+    }
+
+    public void crearRevista(Revista revista) throws Exception {
+       this.revistaJpaController.create(revista);
+    }
+
+    public void guardarTags(revistaEtiqueta revistaEtiqueta) throws Exception {
+        this.revistaEtiquetaJpaController.create(revistaEtiqueta);
+    }
+
+    public List<Revista> obtenerRevistas() {
+        return revistaJpaController.findRevistaEntities();
+    }
+
+    public Revista obtenerRevista(String idRevista) {
+         return revistaJpaController.findRevista(idRevista);
+    }
+
+    public void editarRevista(Revista revista) throws Exception {
+         revistaJpaController.edit(revista);
     }
 
 }

@@ -1,0 +1,97 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+<nav class="navbar">
+  <div class="navbar-container">
+    <a class="navbar-logo" >APROBACION DE REVISTAS</a>
+    <ul class="navbar-menu">
+      <!-- Configuración de precios de anuncios con menú desplegable -->
+
+
+
+      <li class="navbar-item">
+        <a class="navbar-link" href="/paginaPrincipalAdministrador">Pagina principal</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+
+<ng-template #noAnuncios>
+  <p>No hay anuncios disponibles.</p>
+</ng-template>
+
+<div class="window">
+  <h2>Revistas por aprobar</h2>
+  <div *ngIf="cargando" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p>Cargando, por favor espera...</p>
+  </div>
+
+
+
+  <div *ngIf="respuesta"  class="panelMensaje">
+
+    <h3></h3>
+
+  </div>
+
+  <div class="data-list" *ngIf="!cargando && revistas.length > 0; else noAnuncios">
+    <div class="data-header">
+      <span>idRevista:</span>
+      <span>usuario creador:</span>
+
+      <span>titulo:</span>
+      <span>fechaPublicacion:</span>
+      <span>aprobacion:</span>
+      <span>Acciones:</span>
+    </div>
+    <div class="data-row" *ngFor="let revista of revistas">
+      <span>{{ revista.idRevista }}</span>
+      <span>{{ revista.autor }}</span>
+      <span>{{ revista.titulo }}</span>
+      <span>{{ revista.fechaPublicacion }}</span>
+
+      <span>{{ revista.aprobacion ? 'En espera' : 'En espera' }}</span>
+      <button class="activate-btn" (click)="cambiarEstadoAnuncio(revista.idRevista)">{{ revista.aprobacion ? 'Aprobar' : 'Aprobar' }} </button>
+    </div>
+  </div>
+
+
+</div>
+<div *ngIf="panelAprobacion" class="aprobacion">
+
+  <h3>Aprobacion de {{revistaEnRevision}}</h3>
+  <br>
+  <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+
+    <div class="section">
+      <label for="precioVideo">Costo asociado por día(Q)</label>
+      <input type="number"   [(ngModel)]="costoAsociado" name="costoAsociado" placeholder="0" min="0" />
+      <label  *ngIf="mensajeErrorcostoAsociado" class="mensajeError" >Ingrese un costo asociado valido</label>
+
+    </div>
+
+    <div class="section">
+      <label for="precioVideo">Costo ocultaciòn(Q)</label>
+      <input type="number"   [(ngModel)]="costoOcultacion" name="costoOcultacion" placeholder="0" min="0" />
+
+        <label  *ngIf="mensajeErrorcostoOcultacion" class="mensajeError" >Ingrese un costo de ocultacion valido</label>
+        <br>
+    </div>
+
+    <button class="aprobar-btn" tipe="submit">aprobar</button>
+
+  </form>
+  <button class="cerrarPanelAprobar-btn"  (click)="cerrarPanelAprobacion()" >X</button>
+
+
+
+</div>
+<div   *ngIf="mensajeExito"  class="mensajeExito">
+  <i class="fas fa-check-circle check-icon"></i>
+  <h4>Se aprobo la revista {{revistaEnRevision}}</h4>
+
+</div>
+<router-outlet></router-outlet>

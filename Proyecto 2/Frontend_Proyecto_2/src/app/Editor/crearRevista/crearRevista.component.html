@@ -1,0 +1,70 @@
+<div class="form-container">
+  <h1>Crear Nueva Revista</h1>
+  <div *ngIf="cargando"  class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p> procesando cambio</p>
+
+  </div>
+  <form id="formRevista" (ngSubmit)="onSubmit($event)">
+    <div class="form-group">
+      <label for="nombreRevista">Nombre de la Revista</label>
+      <input type="text" id="nombreRevista" name="nombreRevista" [(ngModel)]="nombreRevista" required>
+    </div>
+
+    <div class="form-group">
+      <label for="descripcionRevista">Descripción</label>
+      <textarea id="descripcionRevista" name="descripcionRevista" [(ngModel)]="descripcion" rows="4" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="fechaCreacion">Fecha de Creación</label>
+      <input type="date" id="fechaCreacion" name="fechaCreacion" [(ngModel)]="fecha" required>
+    </div>
+
+    <div class="form-group">
+      <label for="categoria">Categoría</label>
+      <select id="categoria" name="categoria" [(ngModel)]="categoria" required>
+        <option value="" disabled selected>Selecciona una categoría</option>
+        <option value="Noticias">Noticias</option>
+        <option value="Deportes">Deportes</option>
+        <option value="Moda">Moda</option>
+        <option value="Ciencia">Ciencia</option>
+        <option value="Tecnología">Tecnología</option>
+        <option value="Salud">Salud</option>
+        <option value="Arte">Arte</option>
+        <option value="Música">Música</option>
+        <option value="Cultura">Cultura</option>
+        <option value="Viajes">Viajes</option>
+        <option value="Negocios">Negocios</option>
+        <option value="Finanzas">Finanzas</option>
+        <option value="Gastronomía">Gastronomía</option>
+        <option value="Educación">Educación</option>
+        <option value="Historia">Historia</option>
+        <option value="Entretenimiento">Entretenimiento</option>
+        <option value="Hogar">Hogar</option>
+        <option value="Automóviles">Automóviles</option>
+        <option value="Política">Política</option>
+        <option value="Religión">Religión</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Etiquetas</label>
+      <div class="checkbox-panel">
+        <div *ngFor="let etiqueta of ['Tecnología', 'Ciencia', 'Deportes', 'Moda', 'Salud', 'Arte', 'Cultura', 'Entretenimiento', 'Historia',
+          'Negocios', 'Viajes', 'Gastronomía', 'Educación', 'Religión', 'Finanzas', 'Ecología', 'Literatura', 'Fotografía',
+          'Bienestar', 'Juegos', 'DIY', 'Filosofía', 'Crítica Social', 'Feminismo', 'Tecnología Verde', 'Desarrollo Personal',
+          'Sostenibilidad', 'Ciberseguridad', 'Salud Mental', 'Marketing', 'E-commerce', 'Moda Sostenible', 'Eventos',
+          'Actualidad', 'Podcasting', 'Crítica Cinematográfica', 'Danza', 'Nostalgia']">
+          <input type="checkbox" [id]="'etiqueta' + etiqueta"
+                 [value]="etiqueta"
+                 [checked]="etiquetasSeleccionadas[etiqueta]"
+                 (change)="toggleEtiqueta(etiqueta, $event)">
+          <label [for]="'etiqueta' + etiqueta">{{ etiqueta }}</label>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn submit" type="submit">Crear Revista</button>
+  </form>
+</div>

@@ -1,4 +1,4 @@
-import { DuracionAnuncioService } from './../services/servicioDuracionAnuncio/duracion-anuncio.service';
+import { DuracionAnuncioService } from '../../services/servicioDuracionAnuncio/duracion-anuncio.service';
   import { Component } from '@angular/core';
   import { FormsModule } from '@angular/forms';
    import { CommonModule } from '@angular/common';

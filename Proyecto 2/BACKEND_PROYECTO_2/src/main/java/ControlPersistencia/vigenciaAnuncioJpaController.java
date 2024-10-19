@@ -31,8 +31,7 @@ public class vigenciaAnuncioJpaController implements Serializable {
     
      public vigenciaAnuncioJpaController() {
      
-        emf = Persistence.createEntityManagerFactory("PersistentUnit");
-
+       this.emf = EntityManagerUtil.getEntityManagerFactory();
     }
      
      public void initializeVigenciaAnuncio() throws Exception {

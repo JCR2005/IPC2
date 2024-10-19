@@ -88,6 +88,8 @@ public class Login {
             ruta="/paginaPrincipalAdministrador";
         }else if (this.usuario.getTipoCuenta().endsWith("Anunciante")) {
             ruta="/paginaprincipalanunciante";
+        }else if (this.usuario.getTipoCuenta().endsWith("Editor")) {
+            ruta="/paginaPrincipalEditor";
         }else{
               ruta="/soporte";
         }

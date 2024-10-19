@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+<nav class="navbar">
+  <div class="navbar-container">
+    <a class="navbar-logo" >Bloqueo de Adds</a>
+    <ul class="navbar-menu">
+      <!-- Configuración de precios de anuncios con menú desplegable -->
+
+
+
+      <li class="navbar-item">
+        <a class="navbar-link" href="/paginaPrincipalAdministrador">Pagina principal</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<ng-template #noAnuncios>
+  <p>No hay anuncios disponibles.</p>
+</ng-template>
+
+<div class="window">
+  <h2>bloqueo adds</h2>
+  <div *ngIf="cargando" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p>Cargando, por favor espera...</p>
+  </div>
+
+  <div *ngIf="Procesando"  class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p> procesando cambio</p>
+
+  </div>
+
+
+  <div class="data-list" *ngIf="!cargando && revistas.length > 0; else noAnuncios">
+    <div class="data-header">
+      <span >Titulo:</span>
+
+      <span>Acciones:</span>
+
+    </div>
+    <div class="data-row" *ngFor="let revista of revistas">
+      <span>{{ revista.titulo }}</span>
+
+      <button class="activate-btn" >Bloquear adds</button>
+
+     </div>
+  </div>
+</div>
+
+<div   *ngIf="mensajeExito"  class="mensajeExito">
+  <i class="fas fa-check-circle check-icon"></i>
+  <h4>{{mensaje}}</h4>
+
+</div>
+<router-outlet></router-outlet>
+
