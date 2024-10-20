@@ -6,6 +6,7 @@ import JPA.Cartera;
 import JPA.CostoAnuncio;
 import JPA.Revista;
 import JPA.Usuario;
+import JPA.bloqueoAddsRevista;
 import JPA.revistaEtiqueta;
 import JPA.vigenciaAnuncio;
 
@@ -26,6 +27,7 @@ public class ControladorPersistencia {
     private AnuncioJpaController anuncioJpaController=new AnuncioJpaController();
     private RevistaJpaController revistaJpaController=new RevistaJpaController();
     private revistaEtiquetaJpaController revistaEtiquetaJpaController=new revistaEtiquetaJpaController();
+    private bloqueoAddsRevistaJpaController bloqueoAddsRevistas= new bloqueoAddsRevistaJpaController();
     
     public void crearUsuario(Usuario usuario) throws Exception {
 
@@ -129,12 +131,12 @@ public class ControladorPersistencia {
         return cartera.getSaldo();
     }
 
-    public boolean actualizarCartera(String idCartera, double saldoRecarga) throws Exception {
+    public boolean actualizarCartera(String idCartera, double saldo) throws Exception {
         Cartera cartera = carteraJpaController.findCartera(idCartera);
 
-        double recargar = cartera.getSaldo() + saldoRecarga;
+      
 
-        cartera.setSaldo(recargar);
+        cartera.setSaldo(saldo);
         boolean carteraActualizada = false;
 
         try {
@@ -199,5 +201,24 @@ public class ControladorPersistencia {
     public void editarRevista(Revista revista) throws Exception {
          revistaJpaController.edit(revista);
     }
+
+    public void darAltaRevistaAnuncios(bloqueoAddsRevista bloqueoAddsRevista) throws Exception {
+       bloqueoAddsRevistas.create(bloqueoAddsRevista);
+    }
+
+    public bloqueoAddsRevista obetenerRevistaEnProcesos(String idRevista) {
+    return bloqueoAddsRevistas.findbloqueoAddsRevista(idRevista);
+      
+    }
+
+    public void bloquearAdds(bloqueoAddsRevista revista) throws Exception {
+       bloqueoAddsRevistas.edit(revista);
+    }
+
+    public List<bloqueoAddsRevista> obtenerListaBloqueoAnuncios() {
+       return bloqueoAddsRevistas.findbloqueoAddsRevistaEntities();
+    }
+
+
 
 }

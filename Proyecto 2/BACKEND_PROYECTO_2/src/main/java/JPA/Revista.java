@@ -29,8 +29,6 @@ public class Revista implements Serializable {
     private boolean suscripciones;
     private double costoOcultacion;
 
-    
-
     @Transient
     private String fechaPublicacionTexto;
 
@@ -43,12 +41,16 @@ public class Revista implements Serializable {
         this.comentarios=true;
         this.likes=true;
         this.suscripciones=true;
-        this.anuncios=true;
+
         this.costoAsociado=0.0;
         this.cantidadLikes=0;
         this.costoOcultacion=0.0;
     
     }
+    
+    
+
+
     
     public double getCostoOcultacion() {
         return costoOcultacion;
@@ -66,15 +68,8 @@ public class Revista implements Serializable {
         this.etiquetas = etiquetas;
     }
 
-    private boolean anuncios;
 
-    public boolean isAnuncios() {
-        return anuncios;
-    }
 
-    public void setAnuncios(boolean anuncios) {
-        this.anuncios = anuncios;
-    }
 
     public boolean isSuscripciones() {
         return suscripciones;

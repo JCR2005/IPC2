@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import respuetas.respuestaAprobacionRevista;
+import respuetas.respuestaBloqueoDeAdds;
 
 /**
  *
@@ -131,13 +132,13 @@ public class RestRevista {
     }
     
     
-      @POST
+    @POST
     @Path("cambioEstadoSuscripciones")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response cambiarEstadoSuscripciones(@FormDataParam("idRevista") String idRevista,@FormDataParam("suscripciones") String suscripciones) throws Exception {
-        
-        String jsonResponse =configuracionRevistas.procesoCambioDeEstadoSuscripciones(idRevista, suscripciones);
+    public Response cambiarEstadoSuscripciones(@FormDataParam("idRevista") String idRevista, @FormDataParam("suscripciones") String suscripciones) throws Exception {
+
+        String jsonResponse = configuracionRevistas.procesoCambioDeEstadoSuscripciones(idRevista, suscripciones);
         return Response.ok(jsonResponse).build();
     }
     
@@ -156,5 +157,19 @@ public class RestRevista {
 
         List<Revista> Revista = (List<Revista>) responseMap.get("listaAnuncios");
         return Revista; // Retornar la lista de anuncios
+    }
+    
+    
+    
+    
+     @POST
+    @Path("bloquearAnuncios")
+   @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)  
+    public Response bloquearAnuncios(@FormDataParam("idRevista") String idRevista,@FormDataParam("fecha") String fecha,@FormDataParam("vigencia") String vigencia) throws Exception {
+      
+         respuestaBloqueoDeAdds response =bloquearAnuncios.procesoBloqueoAdds(idRevista, fecha, vigencia);
+         System.out.println(response.getMensaje()+"_______________________");
+        return Response.ok(response).build();
     }
 }

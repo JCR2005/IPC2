@@ -116,4 +116,22 @@ public class Controladora {
     public void editarRevista(Revista revista) throws Exception {
         controladorPersistencia.editarRevista(revista);
     }
+
+    public void darAltaRevistaAnucios(bloqueoAddsRevista bloqueoAddsRevista) throws Exception {
+        controladorPersistencia.darAltaRevistaAnuncios(bloqueoAddsRevista);
+    }
+
+    public bloqueoAddsRevista obetenerRevistaEnProcesos(String idRevista) {
+       return controladorPersistencia.obetenerRevistaEnProcesos(idRevista);
+    }
+
+   
+
+    public void bloquearAdds(bloqueoAddsRevista revista) throws Exception {
+        this.controladorPersistencia. bloquearAdds( revista);
+    }
+    
+     public List<bloqueoAddsRevista> obtenerListaBloqueoAnuncios() {
+       return controladorPersistencia.obtenerListaBloqueoAnuncios();
+    }
 }

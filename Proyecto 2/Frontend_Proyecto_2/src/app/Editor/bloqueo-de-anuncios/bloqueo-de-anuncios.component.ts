@@ -16,12 +16,25 @@ import { RouterModule } from '@angular/router';
 export class BloqueoDeAnunciosComponent {
   revistas: Revista[] = [];
   usuario: string = "";
-  mensaje: string = "";
+  precio:number=0;
+
+  panelBloqueo: boolean = false;
   cargando: boolean = false;
   Procesando: boolean = false; // Nueva propiedad para el estado de carga
   respuesta: boolean = false;
-  mensajeExito: boolean = false;
 
+  revistaEnproceso:string="";
+  mensajeErrorVigencia: boolean = false;
+  costoOcultacion:number=0;
+  vigencia:number=0;
+  fecha:string="";
+
+
+  //varibles de mensaje
+  procesoExitoso: boolean = false;
+  panelMensaje: boolean = false;
+  mensaje: string = "";
+  listaRevistas:boolean=true;
 
   constructor(
     private ListaDeRevistasService: ListaDeRevistasService,
@@ -29,14 +42,75 @@ export class BloqueoDeAnunciosComponent {
   ) {}
 
 
-  bloquearAdda(idRevista: string) {
+  mostrarPanelBloqueo(idRevista: string, costoOcultacion: number) {
+
+    this.reiniciarDatos();
+    this.revistaEnproceso=idRevista;
+    this.panelBloqueo=true;
+
+    this.costoOcultacion=costoOcultacion;
+  }
+
+  reiniciarDatos(){
+    this.precio=0;
+    this.vigencia=0;
+    this.fecha="";
+  }
+
+  cerrarPanelBloqueo(){
+    this.panelBloqueo=false;
+
+  }
+  modificarPrecios(event: any): void {
+    const vigencia = event.target.value;
+    this.precio=vigencia*this.costoOcultacion;
+    // Aquí puedes ejecutar la lógica que desees con la fecha seleccionada.
+  }
+  onSubmit(){
+    this.cargando = true;
+    this.panelBloqueo=false;
+    this.listaRevistas=false;
+    const formData = new FormData();
+    formData.append('idRevista', this.revistaEnproceso);
+    formData.append('fecha', this.fecha);
+    formData.append('vigencia', this.vigencia.toString());
+
+    this.ListaDeRevistasService.bloquearAdds(formData).subscribe(
+      (response: any) => {
+        this.validaciones(response);
+        setTimeout(() => {
+          this.cargando = false; // Terminar la carga después de 500ms
+          this.panelMensaje=true;
+        }, 1000);
 
 
+      },
+      (error) => {
+
+      }
+    );
   }
   ngOnInit(): void {
     this.cargarDatos();
   }
 
+  validaciones(response :any){
+
+  this.procesoExitoso=response.procesoExitoso;
+  this.mensaje=response.mensaje;
+  }
+
+  cerrarPanelMensaje(){
+    this.panelMensaje=false;
+
+    if(this.procesoExitoso){
+      this.listaRevistas=true;
+      this.cargarDatos();
+    }else{
+      this.panelBloqueo=true;
+    }
+
+  }
   cargarDatos() {
     this.cargando = true; // Iniciar la carga
     const token = sessionStorage.getItem('token');

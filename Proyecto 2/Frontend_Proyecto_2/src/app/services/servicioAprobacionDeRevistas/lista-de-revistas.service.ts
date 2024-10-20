@@ -15,7 +15,7 @@ export class ListaDeRevistasService {
   private apiUrl6 = 'http://localhost:8080/BACKEND_PROYECTO_2/resources/revista/cambioEstadoComentarios';
   private apiUrl7 = 'http://localhost:8080/BACKEND_PROYECTO_2/resources/revista/cambioEstadoSuscripciones';
   private apiUrl8 = 'http://localhost:8080/BACKEND_PROYECTO_2/resources/revista/listaRevistasAdda';
-
+  private apiUrl9 = 'http://localhost:8080/BACKEND_PROYECTO_2/resources/revista/bloquearAnuncios';
 
   constructor(private http: HttpClient) {}
 
@@ -53,6 +53,10 @@ export class ListaDeRevistasService {
 
   listaRevistasConAdds(formData: any): Observable<any> {
     return this.http.post(this.apiUrl8,formData);
+  }
+
+  bloquearAdds(formData: any): Observable<any> {
+    return this.http.post(this.apiUrl9,formData);
   }
 
 }

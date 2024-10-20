@@ -2,6 +2,7 @@ package Backend.revistas;
 
 import JPA.Controladora;
 import JPA.Revista;
+import JPA.bloqueoAddsRevista;
 import JPA.revistaEtiqueta;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -37,6 +38,8 @@ public class crearRevista {
             generarFechaPublicacion(revista);
             controladora.crearRevista(revista);
 
+            darAltaRevistaAnuncios(revista.getIdRevista());
+            
             for (String etiqueta : revista.getEtiquetas()) {
                 revistaEtiqueta revistaEtiqueta = new revistaEtiqueta(revista.getIdRevista(), etiqueta);
                 controladora.guardarTags(revistaEtiqueta);
@@ -81,6 +84,15 @@ public class crearRevista {
 
         return idAdd;
 
+    }
+    
+    
+    private void darAltaRevistaAnuncios(String idRevista) throws Exception{
+    
+        bloqueoAddsRevista bloqueoAddsRevista=new bloqueoAddsRevista(idRevista);
+        
+        this.controladora.darAltaRevistaAnucios(bloqueoAddsRevista);
+    
     }
 
 }

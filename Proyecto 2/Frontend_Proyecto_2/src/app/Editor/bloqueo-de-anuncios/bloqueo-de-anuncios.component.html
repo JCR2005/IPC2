@@ -1,3 +1,4 @@
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 
@@ -5,9 +6,6 @@
   <div class="navbar-container">
     <a class="navbar-logo" >Bloqueo de Adds</a>
     <ul class="navbar-menu">
-      <!-- Configuración de precios de anuncios con menú desplegable -->
-
-
 
       <li class="navbar-item">
         <a class="navbar-link" href="/paginaPrincipalAdministrador">Pagina principal</a>
@@ -16,16 +14,18 @@
   </div>
 </nav>
 
-<ng-template #noAnuncios>
-  <p>No hay anuncios disponibles.</p>
-</ng-template>
-
-<div class="window">
-  <h2>bloqueo adds</h2>
-  <div *ngIf="cargando" class="loading-overlay">
-    <div class="loading-spinner"></div>
-    <p>Cargando, por favor espera...</p>
+<ng-template #noAnuncios >
+  <div >
+    <p>Exelente tus suscriptores disfrutan de tu tabajo sin anuncios!!</p>
   </div>
+</ng-template>
+<div *ngIf="cargando" class="loading-overlay">
+  <div class="loading-spinner"></div>
+  <p>Cargando, por favor espera...</p>
+</div>
+<div class="window" *ngIf="listaRevistas">
+  <h2>bloqueo adds</h2>
+
 
   <div *ngIf="Procesando"  class="loading-overlay">
     <div class="loading-spinner"></div>
@@ -44,16 +44,54 @@
     <div class="data-row" *ngFor="let revista of revistas">
       <span>{{ revista.titulo }}</span>
 
-      <button class="activate-btn" >Bloquear adds</button>
+      <button class="activate-btn"  (click)="mostrarPanelBloqueo(revista.idRevista,revista.costoOcultacion)">Bloquear adds</button>
 
      </div>
   </div>
 </div>
 
-<div   *ngIf="mensajeExito"  class="mensajeExito">
-  <i class="fas fa-check-circle check-icon"></i>
-  <h4>{{mensaje}}</h4>
+
+<div *ngIf="panelBloqueo" class="aprobacion">
+
+  <h3>bloqueo de anuncios</h3>
+
+  <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+
+    <div class="section">
+          <label class="label_saldo"  for="saldo">  total a pagar {{precio}}Q </label>
+  </div>
+    <div class="section">
+      <label>Cantidad de días a bloquear los anuncios (Días)</label>
+      <input type="number" name="costoOcultacion" [(ngModel)]="vigencia" (change)="modificarPrecios($event)" placeholder="0" min="0" />
+      <label *ngIf="mensajeErrorVigencia" class="mensajeError">Ingrese un costo de ocultación válido</label>
+      <br>
+    </div>
+
+    <div class="section">
+      <label>Fecha de pago</label>
+      <input type="date" name="fechaBloqueo"  [(ngModel)]="fecha"  required />
+      <br>
+    </div>
+    <br>
+    <br>
+
+    <button class="aprobar-btn" type="submit">Bloquear adds</button>
+</form>
+
+  <button class="cerrarPanelAprobar-btn"  (click)="cerrarPanelBloqueo()" >X</button>
+
+
 
 </div>
+<div   *ngIf="panelMensaje"  class="panelMensaje">
+  <i *ngIf="procesoExitoso"  class="fas fa-check-circle  check-icon"></i>
+  <i *ngIf="!procesoExitoso" class="fas fa-times-circle error-icon"></i>
+  <h4>{{mensaje}}</h4>
+  <br>
+  <br> <br>
+  <button class="cerrarPanelMensaje-btn"  (click)="cerrarPanelMensaje()" >continuar</button>
+</div>
+
+
 <router-outlet></router-outlet>
 
