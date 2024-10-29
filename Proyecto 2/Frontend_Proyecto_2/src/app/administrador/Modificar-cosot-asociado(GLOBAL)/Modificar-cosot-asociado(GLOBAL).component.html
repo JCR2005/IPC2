@@ -1,0 +1,44 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+<nav class="navbar">
+  <div class="navbar-container">
+    <a class="navbar-logo" >Costo bloqueo de adds</a>
+    <ul class="navbar-menu">
+      <!-- Configuración de precios de anuncios con menú desplegable -->
+
+
+
+      <li class="navbar-item">
+        <a class="navbar-link" href="/paginaPrincipalAdministrador">Pagina principal</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+
+
+  <div class="panelPrincipal">
+      <h2 class="label_Titulo">Costo asociado(GLOBAL)</h2>
+
+      <div class="panelCosto">
+          <label class="label_costo"  for="costo">Costo asociado (GLOBAL) actual: {{costoGlobalAsociado}}.00Q </label>
+      </div>
+
+      <div class="panelIngresoCsoto">
+          <form (ngSubmit)="racargarCartera()"  enctype="multipart/form-data">
+
+              <label class="labelCostoNuevo">Ingresa el costo (GLOBAL) nuevo:</label>
+
+              <input class="imput_CostoNuevo" min=0 type="number" [(ngModel)]="costoNuevo" name="costoNuevo" placeholder="Ingrese el nuevo costo" />
+
+              <button  type="submit" class="botonContinuar">Continuar</button>
+          </form>
+
+      </div>
+      <button id="boton_regresar" class="boton_regresar" onclick="window.history.back()">Regresar</button>
+
+  </div>
+

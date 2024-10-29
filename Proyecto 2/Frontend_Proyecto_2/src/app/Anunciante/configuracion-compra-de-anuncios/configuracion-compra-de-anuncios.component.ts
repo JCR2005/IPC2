@@ -57,7 +57,7 @@ export class ConfiguracionCompraDeAnunciosComponent {
     this.imagenVisualizacion="";
     this.anuncioTexto = '';
     this.anuncioVideo = '';
-    this.imagenVisualizacion = '';
+
     this.precio = 0;
   }
 

@@ -1,3 +1,4 @@
+import { PerfilComponent } from './ComponentesComunes/perfil/perfil.component';
 // app.routes.ts
 import { Routes } from '@angular/router';
 import { PaginaPrincipalAdministradorComponent } from './administrador/pagina-principal-administrador/pagina-principal-administrador.component';
@@ -19,6 +20,10 @@ import { AprobarRevistaComponent } from './administrador/aprobar-revista/aprobar
 import { ModificarCostoOcultacionComponent } from './administrador/modificar-costo-ocultacion/modificar-costo-ocultacion.component';
 import { ConfiguracionRevistasComponent } from './Editor/configuracion-revistas/configuracion-revistas.component';
 import { BloqueoDeAnunciosComponent } from './Editor/bloqueo-de-anuncios/bloqueo-de-anuncios.component';
+import { EditarPerfilComponent } from './ComponentesComunes/editar-perfil/editar-perfil.component';
+import { EstadoAnunciosAdminComponent } from './administrador/estado-anuncios/estado-anuncios.component';
+import { ModificarCostoAsociadoComponent } from './administrador/modificar-costo-asociado/modificar-costo-asociado.component';
+import { classModificarCosotAsociadoGLOBALComponent } from './administrador/Modificar-cosot-asociado(GLOBAL)/Modificar-cosot-asociado(GLOBAL).component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -34,9 +39,13 @@ export const routes: Routes = [
   { path: 'CrearRevista', component: CrearRevistaComponent,canActivate: [editorGuardia] }, // Protegiendo la ruta
   { path: 'aprobarRevista', component: AprobarRevistaComponent }, // Protegiendo la ruta
   { path: 'modificacionCostoOcultacion', component: ModificarCostoOcultacionComponent }, // Protegiendo la ruta
+  { path: 'modificacionCostoAsociado', component: ModificarCostoAsociadoComponent }, // Protegiendo la ruta
   { path: 'configuracionRevistas', component: ConfiguracionRevistasComponent }, // Protegiendo la ruta
   { path: 'bloqueoAdss', component: BloqueoDeAnunciosComponent }, // Protegiendo la ruta
-
+  { path: 'perfil', component: PerfilComponent }, // Protegiendo la ruta
+  { path: 'estadoAnunciosAdmin', component: EstadoAnunciosAdminComponent},
+  { path: 'editarRerfil', component: EditarPerfilComponent }, // Protegiendo la ruta
   { path: 'configuracionVigenciaAnuncios', component: ConfiguracionDuracionAnunciosComponent, canActivate: [adminGuardia] },
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirige a login por defecto
+  { path: 'modificacionCostoAsociado(Global)', component: classModificarCosotAsociadoGLOBALComponent },
 ];

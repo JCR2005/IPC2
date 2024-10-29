@@ -128,7 +128,7 @@ public class CompraAnuncio {
             }
 
             // Obtener la ruta del directorio de Documentos del usuario
-            String rutaDocumentos = System.getProperty("user.home") + File.separator + "Documents";
+            String rutaDocumentos = System.getProperty("user.home") + File.separator + "Documentos/Proyecto 2/Proyecto 2/BACKEND_PROYECTO_2/src/main/resources";
 
             anuncio.setRutaImagen(rutaDocumentos + File.separator + nombreArchivo);
             // Crear el archivo en la ruta de Documentos

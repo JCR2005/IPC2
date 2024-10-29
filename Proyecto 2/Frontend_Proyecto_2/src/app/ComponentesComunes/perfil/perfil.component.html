@@ -1,0 +1,85 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a class="navbar-logo" >REVISTAS HUB</a>
+      <ul class="navbar-menu">
+
+
+
+        <li class="navbar-item">
+          <a class="navbar-link" href="/login">pagina principal</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div *ngIf="cargando" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p>...Cargando...</p>
+  </div>
+<div class="profile-container">
+
+
+  <div class="profile-header">
+    <img class="profile-photo"[src]="imagenVisualizacion"  alt="Profile Photo">
+    <div class="profile-info">
+      <h2 class="profile-name">Nombre: </h2>
+      <p>{{nombre}}</p>
+      <h2 class="profile-name">Usuario:</h2>
+      <p>{{usuario}}</p>
+      <h2 class="profile-name">Tipo Cuenta:</h2>
+      <p>{{tipoCuenta}}</p>
+      <h2 class="profile-name">Edad:</h2>
+      <p>{{edad}}</p>
+
+
+    </div>
+  </div>
+
+  <div   class="profile-descripcion">
+    <h2>Descripcion</h2>
+    <div class="detail-section">
+
+      <p class="profile-description">
+        {{descripcion}}
+      </p>
+
+
+    </div>
+  </div>
+  <div class="profile-details">
+    <h2>Intereses</h2>
+    <div class="detail-section">
+
+      <ul>
+        <h2 *ngIf="">sin intereses aun </h2>
+        <li *ngFor="let interes of intereses">{{ interes }}</li>
+      </ul>
+    </div>
+  </div>
+
+
+
+  <div class="profile-actions">
+    <button class="password-btn">Cerrar sesiòn</button>
+
+    <button class="edit-btn"  routerLink="/editarRerfil">Editar Perfil</button>
+
+  </div>
+
+
+</div>
+
+</body>
+<div   *ngIf="panelMensaje"  class="panelMensaje">
+
+  <i  class="fas fa-times-circle error-icon"></i>
+  <br><br> <br> <br>
+  <h4>{{mensaje}}</h4>
+
+  <button class="cerrarPanelMensaje-btn"  (click)="cerrarPanelMensaje()" >continuar</button>
+</div>
+<router-outlet></router-outlet>

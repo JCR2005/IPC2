@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+<nav class="navbar">
+  <div class="navbar-container">
+    <a class="navbar-logo" >Configuraciòn de estado de anuncio</a>
+    <ul class="navbar-menu">
+      <li class="navbar-item">
+        <a class="navbar-link" href="/paginaPrincipalAdministrador">Pagina principal</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<ng-template #noAnuncios>
+  <p>No hay anuncios disponibles.</p>
+</ng-template>
+
+<div *ngIf="window" class="window">
+  <h2> Anuncios</h2>
+  <div *ngIf="cargando" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p>Cargando, por favor espera...</p>
+  </div>
+
+  <div *ngIf="Procesando"  class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p> procesando cambio</p>
+
+  </div>
+
+
+
+  <div class="data-list" *ngIf="!cargando && anuncios.length > 0; else noAnuncios">
+    <div class="data-header">
+      <span>id  :</span>
+      <span>Tipo Anuncio:</span>
+
+      <span>Vigencia:</span>
+      <span>Estado:</span>
+      <span>Acciones:</span>
+    </div>
+    <div class="data-row" *ngFor="let anuncio of anuncios">
+      <span>{{ anuncio.idAnuncio }}</span>
+      <span>{{ anuncio.tipoAnuncio }}</span>
+      <span>{{ anuncio.vigencia }} Dia(s)</span>
+      <span>{{ anuncio.estado ? 'Activo' : 'Inactivo' }}</span>
+      <button class="activate-btn" (click)="cambiarEstadoAnuncio(anuncio.idAnuncio,anuncio.estado)">{{ anuncio.estado ? 'Desactivar' : 'Activar' }} </button>
+    </div>
+  </div>
+</div>
+
+<div  *ngIf="panelMensaje" class="PanelMensaje">
+  <i *ngIf="!procesoExitoso" class="fas fa-times-circle  error-icon"></i>
+  <i *ngIf="procesoExitoso"  class="fas fa-check-circle  check-icon"></i>
+  <br><br><br><br><br>
+  <h4>{{mensaje}}</h4>
+  <br>
+  <br> <br>
+  <button class="cerrarPanelMensaje-btn"  (click)="cerrarPanelMensaje()" >continuar</button>
+</div>

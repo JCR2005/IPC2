@@ -4,6 +4,7 @@ import ControlPersistencia.exceptions.NonexistentEntityException;
 import JPA.Anuncio;
 import JPA.Cartera;
 import JPA.CostoAnuncio;
+import JPA.CostosGlobales;
 import JPA.Revista;
 import JPA.Usuario;
 import JPA.bloqueoAddsRevista;
@@ -28,6 +29,7 @@ public class ControladorPersistencia {
     private RevistaJpaController revistaJpaController=new RevistaJpaController();
     private revistaEtiquetaJpaController revistaEtiquetaJpaController=new revistaEtiquetaJpaController();
     private bloqueoAddsRevistaJpaController bloqueoAddsRevistas= new bloqueoAddsRevistaJpaController();
+    private CostosGlobalesJpaController costosGlobalesJpaController=new CostosGlobalesJpaController();
     
     public void crearUsuario(Usuario usuario) throws Exception {
 
@@ -217,6 +219,22 @@ public class ControladorPersistencia {
 
     public List<bloqueoAddsRevista> obtenerListaBloqueoAnuncios() {
        return bloqueoAddsRevistas.findbloqueoAddsRevistaEntities();
+    }
+
+    public void editarUsuario(Usuario usuario) throws Exception {
+     this.usuario.edit(usuario);
+    }
+
+    public void inicializarCostosGlobales() throws Exception {
+      this.costosGlobalesJpaController.initializeCostosGlobales();
+    }
+
+    public CostosGlobales obtenerCostoAsociadoGlobal() {
+       return costosGlobalesJpaController.findCostosGlobales("CostoAsociado");
+    }
+
+    public void editarCostoGlobal(CostosGlobales costosGlobales) throws Exception {
+      costosGlobalesJpaController.edit(costosGlobales);
     }
 
 

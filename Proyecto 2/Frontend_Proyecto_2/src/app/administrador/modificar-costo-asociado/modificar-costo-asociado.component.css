@@ -1,0 +1,371 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden; /* Evita el desbordamiento de la página */
+}
+.mensajeExito {
+  padding: 0px 5%;
+  align-items: center; /* Centra horizontalmente */
+  border-radius: 15px;
+  position: absolute; /* Fija el panel en la pantalla */
+  top: 30%; /* Empieza desde la parte superior */
+  left: 30%; /* Empieza desde la izquierda */
+  width: 35%; /* Cubre todo el ancho de la pantalla */
+  height: 40%; /* Cubre toda la altura de la pantalla */
+  background-color: #ffffff; /* Fondo semi-transparente */
+  display: flex; /* Usa flexbox para centrar el contenido */
+  flex-direction: column; /* Coloca los elementos en columna */
+  justify-content: center; /* Centra verticalmente */
+  box-shadow: 0 4px 8px #00000070;
+  z-index: 1000; /* Asegura que esté encima de otros elementos */
+}
+.check-icon {
+  position: absolute;
+  top: 25%;
+  color: #162c5e; /* Color verde */
+  font-size: 500%;
+  margin-right: 0;
+}
+.aprobacion {
+  padding: 0px 5%;
+
+  border-radius: 15px;
+  position: absolute; /* Fija el panel en la pantalla */
+  top: 25%; /* Empieza desde la parte superior */
+  left: 5%; /* Empieza desde la izquierda */
+  width: 90%; /* Cubre todo el ancho de la pantalla */
+  height: 50%; /* Cubre toda la altura de la pantalla */
+  background-color: #ffffff; /* Fondo semi-transparente */
+  display: flex; /* Usa flexbox para centrar el contenido */
+  flex-direction: column; /* Coloca los elementos en columna */
+  justify-content: center; /* Centra verticalmente */
+  box-shadow: 0 4px 8px #00000070;
+  z-index: 1000; /* Asegura que esté encima de otros elementos */
+}
+
+.loading-overlay {
+  position: fixed; /* Fija el panel en la pantalla */
+  top: 0; /* Empieza desde la parte superior */
+  left: 0; /* Empieza desde la izquierda */
+  width: 100%; /* Cubre todo el ancho de la pantalla */
+  height: 100%; /* Cubre toda la altura de la pantalla */
+  background-color: #ffffff; /* Fondo semi-transparente */
+  display: flex; /* Usa flexbox para centrar el contenido */
+  flex-direction: column; /* Coloca los elementos en columna */
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  z-index: 1000; /* Asegura que esté encima de otros elementos */
+}
+
+.panelMensaje {
+  position: absolute; /* Fija el panel en la pantalla */
+  top: -180%; /* Empieza desde la parte superior */
+  left: 20%; /* Empieza desde la izquierda */
+  width: 60%; /* Cubre todo el ancho de la pantalla */
+  height: 20%; /* Cubre toda la altura de la pantalla */
+  color: #fff;
+  background-color: #162c5e; /* Fondo semi-transparente */
+  display: flex; /* Usa flexbox para centrar el contenido */
+  flex-direction: column; /* Coloca los elementos en columna */
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  z-index: 1000; /* Asegura que esté encima de otros elementos */
+  border-radius: 30px; /* Forma redonda */
+
+}
+
+.loading-spinner {
+  border: 8px solid #f3f3f3; /* Color del fondo del spinner */
+  border-top: 8px solid #162c5e; /* Color de la parte superior del spinner */
+  border-radius: 50%; /* Forma redonda */
+  width: 50px; /* Ancho del spinner */
+  height: 50px; /* Alto del spinner */
+  animation: spin 1s linear infinite; /* Animación de giro */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-overlay p {
+  margin-top: 15px; /* Espacio entre el spinner y el texto */
+  font-size: 15px; /* Tamaño del texto */
+  color: #162c5e; /* Color del texto */
+}
+
+.window {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px #00000070;
+  width: 180%; /* Ajusta el ancho al valor deseado */
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%); /* Centra horizontalmente */
+}
+.section {
+
+
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.sectionCostoActual {
+  padding: 0 1%;
+  border-radius: 30px; /* Forma redonda */
+  position: absolute;
+  left: 35%;
+  background-color: #162c5e;
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  color: #f0f0f0;
+  width: 30%;
+
+}
+
+.labelCostoActual {
+  font-weight: bold;
+  color: #ffffff;
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  text-align: center;
+}
+
+
+label {
+  font-weight: bold;
+  color: #162c5e;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 40px;
+  color: #162c5e;
+}
+
+h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 30px;
+  color: #162c5e;
+}
+
+h4 {
+  position: absolute;
+  bottom: 5%;
+
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 150%;
+  color: #162c5e;
+}
+
+.data-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 300px; /* Limita la altura del contenedor de datos */
+  overflow-y: auto; /* Agrega scroll si hay más datos de los que caben */
+}
+
+.data-header, .data-row {
+  display: flex;
+  justify-content: space-between; /* Distribuye el espacio entre encabezados y datos */
+  align-items: center; /* Alinea verticalmente los elementos en el centro */
+  padding: 5px 10px; /* Añade padding superior e inferior */
+}
+
+.data-header {
+  font-weight: bold; /* Estilo para las etiquetas */
+  background-color: #f0f0f0; /* Fondo para diferenciar el encabezado */
+}
+
+.data-row {
+  border-bottom: 1px solid #ddd; /* Línea inferior para las filas de datos */
+}
+
+.data-row:last-child {
+  border-bottom: none; /* Elimina la línea en la última fila */
+}
+
+span {
+  flex: 0.16; /* Hace que cada columna ocupe el mismo espacio */
+  color: #555; /* Color para los datos */
+  text-align: center; /* Centra el texto en cada celda */
+}
+
+.activate-btn {
+  background-color: #162c5e;
+  color: #fff;
+  border: none;
+  width: 14%;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.activate-btn:hover {
+  background-color: #254ba3;
+}
+
+
+.actualizar-btn {
+  position: absolute;
+  left: 42%;
+  bottom: 5%;
+  background-color: #162c5e;
+  color: #fff;
+  border: none;
+  width: 16%;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.mensajeError{
+
+  font-size: 13px;
+  color: rgb(228, 0, 0)
+}
+
+.actualizar-btn:hover {
+  background-color: #254ba3;
+}
+.cerrarPanelActualizar-btn {
+  position: absolute;
+  right: 2%;
+  top: 5%;
+  background-color: #162c5e;
+  font-style: normal;
+  color: #fff;
+  border: none;
+  width: 2%;
+  padding: 5px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cerrarPanelActualizar-btn:hover {
+  background-color: #254ba3;
+}
+/* Estilo general de la barra de navegación */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0%;
+  width: 100%;
+  height: 8%;
+  background-color: #162c5e;
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  color: white;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item {
+  margin-left: 20px;
+  position: relative; /* Necesario para posicionar el menú desplegable */
+}
+
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-link:hover {
+  background-color: #ffffff;
+  color: #35466e;
+  border-radius: 25px;
+}
+
+/* Estilos para el menú desplegable */
+.dropdown-menu {
+  display: none; /* Ocultar el menú inicialmente */
+  position: absolute;
+  top: 100%; /* Aparece justo debajo del enlace principal */
+  left: 0;
+  background-color: #ffffff;
+  padding: 10px 0;
+  list-style: none;
+  border-radius: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  z-index: 1001; /* Asegurarse de que el menú esté sobre otros elementos */
+}
+
+.dropdown-menu li {
+  padding: 5px 20px;
+}
+
+.dropdown-link {
+  color: #35466e;
+  text-decoration: none;
+  display: block;
+  border: 25px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-link:hover {
+  background-color: #e9ebee;
+}
+
+/* Mostrar el menú desplegable cuando el ratón está sobre el enlace principal */
+.navbar-item:hover .dropdown-menu {
+  display: block;
+}
+
+h1{
+
+  color: rgb(240, 240, 232);
+  font-size: 700%;
+}
+
+.h12{
+
+  color: rgb(221, 221, 206);
+  font-size: 400%;
+
+
+}

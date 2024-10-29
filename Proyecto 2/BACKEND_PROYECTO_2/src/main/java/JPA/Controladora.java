@@ -134,4 +134,17 @@ public class Controladora {
      public List<bloqueoAddsRevista> obtenerListaBloqueoAnuncios() {
        return controladorPersistencia.obtenerListaBloqueoAnuncios();
     }
+
+    public void editarUsuario(Usuario usuario) throws Exception {
+      controladorPersistencia.editarUsuario(usuario);
+    }
+
+    public CostosGlobales obtenerCostoAsociado() {
+        
+        return controladorPersistencia.obtenerCostoAsociadoGlobal();
+    }
+
+    public void editarCostoGlobal(CostosGlobales costosGlobales) throws Exception {
+       controladorPersistencia.editarCostoGlobal(costosGlobales);
+    }
 }

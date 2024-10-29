@@ -1,0 +1,228 @@
+/* Estilos globales */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/*Barra navegacion____________________________________________________________________________________*/
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8%;
+  background-color: #fff;
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  font-weight: bold;
+  font-style: oblique;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  color: #162c5e;
+  font-size: 24px;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item {
+  margin-left: 20px;
+}
+
+.navbar-link {
+  color: #162c5e;
+  padding: 10px 15px;
+  border-radius: 25px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-link:hover {
+  background-color: #162c5e;
+  color: #fff;
+}
+
+
+/*Panel Edicion datos*/
+.contenedor-box {
+  background-color: #fff;
+  padding: 5%;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 500px;
+  max-height: 97vh;
+  text-align: center;
+  font-weight: bold;
+  font-style: oblique;
+}
+
+h1 {
+  margin-bottom: 5px;
+  font-size: 35px;
+  color: #162c5e;
+}
+h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #162c5e;
+}
+.form-group {
+  position: relative;
+  margin-bottom: 30px;
+}
+/* Estilos para campos de entrada */
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: transparent;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-bottom-color: #162c5e;
+}
+
+label {
+  position: absolute;
+  left: 10px;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #aaa;
+  transition: 0.3s ease;
+}
+
+input:focus + label,
+select:focus + label,
+textarea:focus + label,
+input:not(:placeholder-shown) + label,
+textarea:not(:placeholder-shown) + label {
+  top: -20px;
+  font-size: 12px;
+  color: #162c5e;
+}
+
+/* Estilo para botón de ojo */
+.toggle-password {width: 10%;
+  position: absolute;
+  right: 10px; /* Asegúrate de que esté alineado a la derecha */
+  top: 50%;
+  transform: translateY(-50%);
+
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 16px; /* Tamaño reducido del botón */
+}
+
+/* Estilos para los botones */
+button {
+  width: 50%;
+  font-weight: bold;
+  font-style: oblique;
+  padding: 9px;
+  background-color: #162c5e;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+}
+
+button:hover {
+  background-color: #162c5e81;
+}
+
+.button_reiniciar {
+  padding: 5px;
+  width: 40%;
+}
+
+
+
+/*Mensaje___________________________________________________________________________________________*/
+.PanelMensaje {
+  padding: 0px 0%;
+  align-items: center; /* Centra horizontalmente el contenido flex */
+  border-radius: 15px;
+  position: absolute; /* Fija el panel en la pantalla */
+/* Empieza desde la izquierda */
+  width: 60%; /* Cubre todo el ancho de la pantalla */
+  height: 60%; /* Cubre toda la altura de la pantalla */
+  background-color: #ffffff; /* Fondo semi-transparente */
+  display: flex; /* Usa flexbox para centrar el contenido */
+  flex-direction: column; /* Coloca los elementos en columna */
+  justify-content: center; /* Centra verticalmente */
+  text-align: center; /* Centra el texto horizontalmente */
+  box-shadow: 0 4px 8px #00000070;
+  transform: translate(-50%, -50%);
+}
+
+.mensajeError{
+  font-size: 13px;
+  color: rgb(228, 0, 0)
+}
+
+.question-icon {
+  position: absolute;
+  top: 10%;
+  color: #162c5e; /* Cambia el color según prefieras */
+  font-size: 600%; /* Ajusta el tamaño si es necesario */
+}
+
+.security-icon {
+  position: absolute;
+  top: -14%;
+  color: #162c5e; /* Cambia el color según prefieras */
+  font-size: 600%; /* Ajusta el tamaño si es necesario */
+}
+
+.check-icon {
+  position: absolute;
+  top: 10%;
+  color: #162c5e; /* Cambia el color según prefieras */
+  font-size: 600%; 
+}
+
+.error-icon {
+  position: absolute;
+  top: 25%;
+  color: #ee2a07; /* Color verde */
+  font-size: 600%;
+  margin-right: 0;
+}
+.cerrarPanelMensaje-btn{
+
+  background-color: #162c5e;
+  color: #fff;
+  border: none;
+  width: 16%;
+  padding: 5px 10px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.cerrarPanelMensaje-btn:hover {
+  background-color: #162c5e85;
+}
+
+

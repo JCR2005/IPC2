@@ -4,7 +4,7 @@ export interface Revista {
   titulo: string;
   fechaPublicacion: string; // Puedes usar Date si prefieres
   costoOcultacion: number;
-  
+  costoAsociado: number;
   aprobacion: boolean;
   comentarios: boolean;
   likes: boolean;

@@ -10,12 +10,14 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import respuetas.RespuestaVerificacionIdentidad;
 
 
 @Path("Login")
 public class RestLogin {
 
     private Login login = new Login();
+     RespuestaVerificacionIdentidad repuesta=new RespuestaVerificacionIdentidad();
 
     @GET
     public Response ping() {
@@ -36,5 +38,17 @@ public class RestLogin {
         jsonResponse = login.validarInicioSesion(usuario);
 
         return Response.ok(jsonResponse).build();
+    }
+    
+    @POST
+    @Path("verificacionIdentidad")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response verificacionIdentidad(Usuario usuario) throws Exception {
+       
+        
+        repuesta = login.verificarUsuario(usuario);
+
+        return Response.ok(repuesta).build();
     }
 }

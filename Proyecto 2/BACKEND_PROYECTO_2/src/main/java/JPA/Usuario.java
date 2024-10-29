@@ -2,6 +2,7 @@ package JPA;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 import java.io.Serializable;
 
 /**
@@ -21,13 +22,16 @@ public class Usuario implements Serializable {
     private String urlFoto;
     private String idCartera;
 
+    @Transient
+    private String Intereses[];
 
+    @Transient
+    private String foto;
 
-   
     public Usuario() {
     }
 
-    public Usuario(String usuario, String nombre, String tipoUsuario, String password, String descripcion, String urlFoto, int edad,String cartera) {
+    public Usuario(String usuario, String nombre, String tipoUsuario, String password, String descripcion, String urlFoto, int edad, String cartera) {
         this.usuario = usuario;
         this.nombre = nombre;
         this.tipoCuenta = tipoUsuario;
@@ -35,11 +39,27 @@ public class Usuario implements Serializable {
         this.descripcion = descripcion;
         this.urlFoto = urlFoto;
         this.edad = edad;
-        this.idCartera=cartera;
+        this.idCartera = cartera;
 
     }
 
     // Getters y Setters
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public String[] getIntereses() {
+        return Intereses;
+    }
+
+    public void setIntereses(String[] Intereses) {
+        this.Intereses = Intereses;
+    }
+
     public String getUsuario() {
         return usuario;
     }
@@ -87,8 +107,8 @@ public class Usuario implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
-     public String getUrlFoto() {
+
+    public String getUrlFoto() {
         return urlFoto;
     }
 
@@ -96,7 +116,7 @@ public class Usuario implements Serializable {
         this.urlFoto = urlFoto;
     }
 
-        public String getIdCartera() {
+    public String getIdCartera() {
         return idCartera;
     }
 

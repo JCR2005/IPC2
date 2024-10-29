@@ -12,6 +12,7 @@ public class main {
         ControladorPersistencia controladorPersistencia=new ControladorPersistencia();
         controladorPersistencia.inicializarCostoAnuncio();
       controladorPersistencia.inicializarVigenciaAnuncio();
+      controladorPersistencia.inicializarCostosGlobales();
         
     }
     

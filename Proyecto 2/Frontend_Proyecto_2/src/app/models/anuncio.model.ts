@@ -1,8 +1,8 @@
 export interface Anuncio {
-  idAnuncio: string; // o string, según tu caso
+  idAnuncio: string;
   tipoAnuncio: string;
   vigencia: string;
-  fechaPublicacion: string; // Puedes usar Date si prefieres
+  fechaPublicacion: string;
   fechaFinalizacion: string;
   estado: boolean;
 }

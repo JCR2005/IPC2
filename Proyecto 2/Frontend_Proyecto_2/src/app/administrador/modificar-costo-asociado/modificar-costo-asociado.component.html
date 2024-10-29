@@ -1,0 +1,96 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+<nav class="navbar">
+  <div class="navbar-container">
+    <a class="navbar-logo" >Costo bloqueo de adds</a>
+    <ul class="navbar-menu">
+      <!-- Configuración de precios de anuncios con menú desplegable -->
+
+
+
+      <li class="navbar-item">
+        <a class="navbar-link" href="/paginaPrincipalAdministrador">Pagina principal</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<ng-template #noAnuncios>
+  <p>No hay anuncios disponibles.</p>
+</ng-template>
+
+<div class="window">
+  <h2>Actualizar costos</h2>
+  <div *ngIf="cargando" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p>Cargando, por favor espera...</p>
+  </div>
+
+
+
+  <div *ngIf="respuesta"  class="panelMensaje">
+
+    <h3></h3>
+
+  </div>
+
+  <div class="data-list" *ngIf="!cargando && revistas.length > 0; else noAnuncios">
+    <div class="data-header">
+      <span>idRevista:</span>
+      <span>usuario creador:</span>
+
+      <span>titulo:</span>
+      <span>fechaPublicacion:</span>
+      <span>costo Asociado:</span>
+      <span>aprobacion:</span>
+      <span>Acciones:</span>
+    </div>
+    <div class="data-row" *ngFor="let revista of revistas">
+      <span>{{ revista.idRevista }}</span>
+      <span>{{ revista.autor }}</span>
+      <span>{{ revista.titulo }}</span>
+      <span>{{ revista.fechaPublicacion }}</span>
+      <span>{{ revista.costoAsociado }}</span>
+      <span>{{ revista.aprobacion ? 'Aprobada' : 'En espera' }}</span>
+      <button class="activate-btn" (click)="cambiarCosto(revista.idRevista,revista.costoAsociado)"> Actualizar costo</button>
+    </div>
+  </div>
+
+
+</div>
+
+
+<div *ngIf="panelDeActualizacion" class="aprobacion">
+
+  <h3>Actualizaciòn de costo para la revista {{revistaEnRevision}}</h3>
+
+  <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+
+    <div class="sectionCostoActual">
+      <label class="labelCostoActual">Costo actual: {{costoAsociadoActual}}.00Q</label>
+
+    </div>
+    <br><br><br>
+    <div class="section">
+      <label >Costo ocultaciòn(Q)</label>
+      <input type="number"   [(ngModel)]="costoAsociado" name="costoOcultacion" placeholder="0" min="0" />
+
+        <label  *ngIf="mensajeErrorcostoAsociado" class="mensajeError" >Ingrese un costo de ocultacion valido</label>
+        <br>
+    </div>
+
+    <button class="actualizar-btn" tipe="submit">actualizar</button>
+
+  </form>
+  <button class="cerrarPanelActualizar-btn"  (click)="cerrarPanelActualizacion()" >X</button>
+
+
+
+</div>
+<div  *ngIf="mensajeExito"   class="mensajeExito">
+  <i  class="fas fa-check-circle check-icon"></i>
+  <h4>{{mensaje}}</h4>
+
+</div>
+<router-outlet></router-outlet>

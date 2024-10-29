@@ -6,6 +6,8 @@ package Backend;
 
 import JPA.Controladora;
 import JPA.Usuario;
+import jakarta.faces.annotation.RequestParameterValuesMap;
+import respuetas.RespuestaVerificacionIdentidad;
 import token.TokenService;
 
 /**
@@ -14,6 +16,7 @@ import token.TokenService;
  */
 public class Login {
 
+    RespuestaVerificacionIdentidad repuesta=new RespuestaVerificacionIdentidad();
     private String mensaje = "";
 
     private Usuario usuario = null;
@@ -56,6 +59,24 @@ public class Login {
         
         return respueta;
     }
+    
+        public  RespuestaVerificacionIdentidad verificarUsuario(Usuario usuario) throws Exception {
+
+        if (!buscarUsuario(usuario)) {
+             this.repuesta.setMensaje( "Credenciales incorectas");
+            
+        } else if (!validarPassword(usuario.getPassword())) {
+              this.repuesta.setMensaje("Credenciales incorectas");
+        } else {
+            this.repuesta.setMensaje( "Eres tu!! "+usuario.getUsuario()); 
+            this.usuarioValidado = true;
+            this.repuesta.setUsuarioVaerificado(true);
+        }
+        
+       
+        
+        return repuesta;
+    }
 
     private boolean buscarUsuario(Usuario usuario) throws Exception {
         boolean usuarioExiste = false;
@@ -71,8 +92,8 @@ public class Login {
 
     private boolean validarPassword(String password) throws Exception {
         boolean contraceñaValida = false;
-
-        if (this.usuario.getPassword().endsWith(password)) {
+        System.out.println(password+"______________________________________");
+        if (this.usuario.getPassword().endsWith(password) && !password.isEmpty()) {
             contraceñaValida = true;
         }
         return contraceñaValida;

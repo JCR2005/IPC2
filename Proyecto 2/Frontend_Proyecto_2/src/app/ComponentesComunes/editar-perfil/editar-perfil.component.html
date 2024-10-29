@@ -1,0 +1,107 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+<nav class="navbar">
+  <div class="navbar-container">
+    <a class="navbar-logo" >Edita tu perfil</a>
+    <ul class="navbar-menu">
+      <li class="navbar-item">
+        <a class="navbar-link" href="/perfil">Regresar a perfil</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div   *ngIf="panelDatos" class="contenedor-box">
+  <h2>Edita tu datos</h2>
+  <br>
+  <form (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <input type="password" id="contraseña" required placeholder=" " [(ngModel)]="passwordNueva" [type]="showPassword ? 'text' : 'password'" name="password"/>
+      <label for="contraseña">Contraseña(Campo en blanco, no se tomara en ceunta)</label>
+      <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+        <span class="material-icons">
+            {{ showPassword ? 'visibility_off' : 'visibility' }}
+        </span>
+    </button>
+
+      <div *ngIf="!passwordValida">
+        <label class="mensajeError" >Ingrese una contrceña valida(minimo 8 caracteres, maximo 32 caracteres, sin espacios)</label>
+        <br>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="text" id="nombre" required placeholder="" [(ngModel)]="nombre" name="nombre"/>
+      <label for="nombre">Nombre Completo(Campo en blanco, no se tomara en ceunta)</label>
+      <div *ngIf="!nombreValido">
+        <label class="mensajeError" >Ingrese un nombre valido(minimo 2 caracteres, maximo 30 caracteres)</label>
+        <br><br>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <textarea id="descripcion" rows="4" required placeholder=" " [(ngModel)]="descripcion" name="descripcion"></textarea>
+      <label for="descripcion">Descripción(Campo en blanco, no se tomara en ceunta)</label>
+      <div *ngIf="!descripcionValida">
+        <label class="mensajeError" >Ingrese una descripcion valida(mayor a 10caracteres, menor a 1000 caracteres)</label>
+        <br><br>
+      </div>
+    </div>
+
+    <button type="submit">guardar cambios</button>
+    <br />
+    <button class="button_reiniciar" type="reset">Reiniciar campos</button>
+  </form>
+</div>
+
+<div *ngIf="panelConfirmacion"  class="PanelMensaje">
+  <i class="fas fa-question-circle question-icon"></i>
+  <br><br><br><br><br><br>
+  <h4>¿Quiere realizar el cambio de datos?</h4>
+  <br><br>
+  <button class="cerrarPanelMensaje-btn"  (click)="verificarCambioContracena()">Continuar</button>
+  <button class="cerrarPanelMensaje-btn"  (click)="cerrarConfirmacion()">cancelar</button>
+</div>
+
+<div *ngIf="panelVerificacion"  class="PanelMensaje">
+  <i class="fas fa-lock security-icon"></i>
+  <br><br>
+  <h4>Hemos notado que quieres cambiar tu contraceña, verifica que eres tu.</h4>
+  <br><br>
+  <form (ngSubmit)="verificarIdentidad()" #loginForm="ngForm">
+
+    <div class="form-group">
+
+      <input type="password" id="contraseña" required placeholder=" " [(ngModel)]="password" [type]="showPassword ? 'text' : 'password'" name="password"/>
+      <label for="contraseña">Contraseña</label>
+
+      <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+        <span class="material-icons">
+            {{ showPassword ? 'visibility_off' : 'visibility' }}
+        </span>
+    </button>
+      <br>
+      <label *ngIf="!autenticacion"  class="mensajeError" >Contraceña Incorrecta</label>
+    </div >
+    <br><br>
+
+    <button type="submit">Realizar cambios</button>
+
+  </form>
+  <button class="cerrarPanelMensaje-btn"  (click)="cerrarConfirmacion()">cancelar</button>
+</div>
+
+
+
+<div *ngIf="panelMensaje"  class="PanelMensaje">
+  <i *ngIf="procesoExitoso"  class="fas fa-check-circle  check-icon"></i>
+  <i *ngIf="!procesoExitoso" class="fas fa-times-circle  error-icon"></i>
+  <br><br><br><br>
+  <h4>{{mensaje}}</h4>
+  <br>
+  <br> <br>
+  <button class="cerrarPanelMensaje-btn"  (click)="cerrarPanelMensaje()" >continuar</button>
+</div>
