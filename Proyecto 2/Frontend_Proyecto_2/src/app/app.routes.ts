@@ -24,9 +24,11 @@ import { EditarPerfilComponent } from './ComponentesComunes/editar-perfil/editar
 import { EstadoAnunciosAdminComponent } from './administrador/estado-anuncios/estado-anuncios.component';
 import { ModificarCostoAsociadoComponent } from './administrador/modificar-costo-asociado/modificar-costo-asociado.component';
 import { classModificarCosotAsociadoGLOBALComponent } from './administrador/Modificar-cosot-asociado(GLOBAL)/Modificar-cosot-asociado(GLOBAL).component';
+import { PaginaPrincipalSuscriptorComponent } from './Suscriptor/pagina-principal-suscriptor/pagina-principal-suscriptor.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'paginaPrincipalSuscritor', component: PaginaPrincipalSuscriptorComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'paginaPrincipalAdministrador', component: PaginaPrincipalAdministradorComponent, canActivate: [adminGuardia] }, // Protegiendo la ruta
   { path: 'configuracionCostoAnuncios', component: ConfigPreciosAnunciosComponent, canActivate: [adminGuardia] }, // Protegiendo la ruta
@@ -48,4 +50,5 @@ export const routes: Routes = [
   { path: 'configuracionVigenciaAnuncios', component: ConfiguracionDuracionAnunciosComponent, canActivate: [adminGuardia] },
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirige a login por defecto
   { path: 'modificacionCostoAsociado(Global)', component: classModificarCosotAsociadoGLOBALComponent },
+
 ];

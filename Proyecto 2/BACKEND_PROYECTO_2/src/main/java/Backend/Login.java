@@ -6,7 +6,6 @@ package Backend;
 
 import JPA.Controladora;
 import JPA.Usuario;
-import jakarta.faces.annotation.RequestParameterValuesMap;
 import respuetas.RespuestaVerificacionIdentidad;
 import token.TokenService;
 
@@ -111,6 +110,8 @@ public class Login {
             ruta="/paginaprincipalanunciante";
         }else if (this.usuario.getTipoCuenta().endsWith("Editor")) {
             ruta="/paginaPrincipalEditor";
+        }else if (this.usuario.getTipoCuenta().endsWith("Suscriptor")) {
+            ruta="/paginaprincipalsuscriptor";
         }else{
               ruta="/soporte";
         }
