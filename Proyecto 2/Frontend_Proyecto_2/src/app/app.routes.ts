@@ -25,6 +25,9 @@ import { EstadoAnunciosAdminComponent } from './administrador/estado-anuncios/es
 import { ModificarCostoAsociadoComponent } from './administrador/modificar-costo-asociado/modificar-costo-asociado.component';
 import { classModificarCosotAsociadoGLOBALComponent } from './administrador/Modificar-cosot-asociado(GLOBAL)/Modificar-cosot-asociado(GLOBAL).component';
 import { PaginaPrincipalSuscriptorComponent } from './Suscriptor/pagina-principal-suscriptor/pagina-principal-suscriptor.component';
+import { RevistasSuscritasComponent } from './Suscriptor/revistas-suscritas/revistas-suscritas.component';
+import { VisualizacionRevistaComponent } from './Suscriptor/visualizacion-revista/visualizacion-revista.component';
+import { CrearArticuloComponent } from './Editor/crearArticulo/crearArticulo.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -50,5 +53,7 @@ export const routes: Routes = [
   { path: 'configuracionVigenciaAnuncios', component: ConfiguracionDuracionAnunciosComponent, canActivate: [adminGuardia] },
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirige a login por defecto
   { path: 'modificacionCostoAsociado(Global)', component: classModificarCosotAsociadoGLOBALComponent },
-
+  { path: 'misSuscripciones', component: RevistasSuscritasComponent },
+  { path: 'revista', component: VisualizacionRevistaComponent },
+  { path: 'CrearArfticulo', component: CrearArticuloComponent},
 ];

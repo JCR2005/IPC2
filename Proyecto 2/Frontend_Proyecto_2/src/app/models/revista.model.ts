@@ -9,4 +9,5 @@ export interface Revista {
   comentarios: boolean;
   likes: boolean;
   suscripciones: boolean;
+  descripcion:string;
 }

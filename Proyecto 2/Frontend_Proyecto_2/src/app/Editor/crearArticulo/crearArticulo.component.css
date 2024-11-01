@@ -1,0 +1,169 @@
+.form-container {
+  background-color: #fff;
+  top: 10%;
+  left: 10%;
+  position: absolute;
+  border-radius: 25px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 100%; /* Ahora ocupa el 100% del ancho */
+  width: 79%; /* Se adapta al ancho completo */
+}
+
+h1 {
+  text-align: center;
+  color: #162c5e;
+  font-size: 1.8rem; /* Tamaño de fuente aumentado */
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #162c5e;
+}
+
+input[type="text"],
+textarea,
+input[type="date"] {
+  width: 100%;
+  padding: 10px; /* Mismo tamaño de los campos */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+textarea {
+  resize: none;
+  height: 100px; /* Altura ajustada para mantener equilibrio en el diseño */
+}
+
+.checkbox-panel {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #f9f9f9; /* Fondo del panel de etiquetas */
+  display: grid; /* Usar grid para organizar los checkboxes */
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Cuadrícula adaptable */
+  gap: 10px; /* Espaciado entre checkboxes */
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn.reset {
+  background-color: #f4f4f4;
+  color: #162c5e;
+  border: 1px solid #162c5e;
+}
+
+.btn.submit {
+  background-color: #162c5e;
+  color: #fff;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+select {
+  width: 100%; /* Ocupa el 100% del ancho del contenedor */
+  padding: 10px; /* Espaciado interno */
+  border: 1px solid #ccc; /* Borde del select */
+  border-radius: 4px; /* Bordes redondeados */
+  background-color: #fff; /* Fondo blanco */
+  color: #162c5e; /* Color del texto */
+  font-size: 16px; /* Tamaño de la fuente */
+  appearance: none; /* Elimina el estilo por defecto del navegador */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="0 0 10 5"><polygon points="0,0 10,0 5,5" fill="%23162c5e"/></svg>'); /* Icono de flecha hacia abajo */
+  background-repeat: no-repeat; /* No repetir la imagen de fondo */
+  background-position: right 10px center; /* Posición del icono */
+  background-size: 10px 5px; /* Tamaño del icono */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+select:focus {
+  border-color: #162c5e; /* Color del borde al enfocar */
+  outline: none; /* Eliminar el contorno por defecto */
+  box-shadow: 0 0 5px rgba(22, 44, 94, 0.2); /* Sombra suave al enfocar */
+}
+.loading-spinner {
+  border: 8px solid #f3f3f3; /* Color del fondo del spinner */
+  border-top: 8px solid #162c5e; /* Color de la parte superior del spinner */
+  border-radius: 50%; /* Forma redonda */
+  width: 50px; /* Ancho del spinner */
+  height: 50px; /* Alto del spinner */
+  animation: spin 1s linear infinite; /* Animación de giro */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-overlay p {
+  margin-top: 15px; /* Espacio entre el spinner y el texto */
+  font-size: 18px; /* Tamaño del texto */
+  color: #162c5e; /* Color del texto */
+}
+.loading-overlay {
+  position: fixed; /* Fija el panel en la pantalla */
+  top: 0; /* Empieza desde la parte superior */
+  left: 0; /* Empieza desde la izquierda */
+  width: 100%; /* Cubre todo el ancho de la pantalla */
+  height: 100%; /* Cubre toda la altura de la pantalla */
+  background-color: #ffffff; /* Fondo semi-transparente */
+  display: flex; /* Usa flexbox para centrar el contenido */
+  flex-direction: column; /* Coloca los elementos en columna */
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  z-index: 1000; /* Asegura que esté encima de otros elementos */
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+/* Estilos para campos de entrada */
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: transparent;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-bottom-color: #162c5e;
+}
+
+
+
+input:focus + label,
+select:focus + label,
+textarea:focus + label,
+input:not(:placeholder-shown) + label,
+textarea:not(:placeholder-shown) + label {
+  top: -20px;
+  font-size: 12px;
+  color: #162c5e;
+}

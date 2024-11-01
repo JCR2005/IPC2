@@ -4,14 +4,27 @@
     <a class="navbar-logo" >REVISTAS HUB</a>
     <ul class="navbar-menu">
       <!-- Configuración de precios de anuncios con menú desplegable -->
-      <li class="navbar-item">
-        <a class="navbar-link" routerLink="/configuracionRevistas" >Mis revistas</a>
+
+      <li class="navbar-item dropdown">
+        <a class="navbar-link" >Mis revistas</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-link" routerLink="/configuracionRevistas">Configuración de permisos de revistas</a></li>
+
+        </ul>
       </li>
 
-      <li class="navbar-item">
-        <a class="navbar-link" routerLink="/CrearRevista" >Crear Revista</a>
+      <li class="navbar-item dropdown">
+        <a class="navbar-link" >Crear</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-link" routerLink="/CrearRevista">Crear Revista</a></li>
+          <li><a class="dropdown-link" routerLink="/"> Crear articulo</a></li>
+
+        </ul>
       </li>
+
+
       <li class="navbar-item">
+
         <a class="navbar-link" routerLink="/RecargarSaldoEditor" >Recargar Saldo</a>
       </li>
       <li class="navbar-item">
@@ -20,9 +33,7 @@
       <li class="navbar-item">
         <a class="navbar-link" routerLink="/miPerfil">Mi perfil</a>
       </li>
-      <li class="navbar-item">
-        <a class="navbar-link" href="/login">Cerrar sesión</a>
-      </li>
+
     </ul>
   </div>
 </nav>

@@ -1,5 +1,6 @@
 package JPA;
 
+
 import ControlPersistencia.ControladorPersistencia;
 import java.util.List;
 
@@ -20,6 +21,12 @@ public class Controladora {
 
         return controladorPersistencia.buscarUsuario(usuario);
     }
+    
+      public boolean buscarUsuarios(String usuario) throws Exception {
+
+        return controladorPersistencia.buscarUsuarios(usuario);
+    }
+
 
     public Usuario obetenerUsuario(Usuario usuario) throws Exception {
 
@@ -147,4 +154,27 @@ public class Controladora {
     public void editarCostoGlobal(CostosGlobales costosGlobales) throws Exception {
        controladorPersistencia.editarCostoGlobal(costosGlobales);
     }
+
+    public void crearSuscripciòn(Suscripciòn suscripciòn) throws Exception {
+         System.out.println("legoooooooooooooooooooooooooo22");
+      this.controladorPersistencia.crearSuscripciòn(suscripciòn);
+    }
+
+    public List<Suscripciòn> obtenerSuscripciones() {
+       return controladorPersistencia.obtenerListaSuscripciones();
+    }
+
+    public void guardarArticulo(Articulo articulo) {
+       this.controladorPersistencia.crearArticulo(articulo);
+    }
+
+    public List<Articulo> obtenerArticulos() {
+      return  this.controladorPersistencia.obtenerArticulos();
+    }
+
+    public Articulo obtenerArticulo(Long idArticulo) {
+        return  this.controladorPersistencia.obtenerArticulo(idArticulo);
+    }
+
+
 }

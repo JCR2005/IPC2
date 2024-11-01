@@ -1,0 +1,40 @@
+<div class="form-container">
+  <h1>Crear Nuevo articulo</h1>
+  <div *ngIf="cargando"  class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p> procesando cambio</p>
+
+  </div>
+  <form id="formRevista" (ngSubmit)="onSubmit($event)">
+    <div class="form-group">
+      <label for="nombreRevista">Nombre del articulo</label>
+      <input type="text" id="nombreArticulo" name="nombreArticulo" [(ngModel)]="nombreArticulo" required>
+    </div>
+
+    <div class="form-group">
+      <label for="descripcionRevista">Descripción</label>
+      <textarea id="descripcionRevista" name="descripcionRevista" [(ngModel)]="descripcion" rows="4" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="fechaCreacion">Fecha de Creación</label>
+      <input type="date" id="fechaCreacion" name="fechaCreacion" [(ngModel)]="fecha" required>
+    </div>
+
+    <div class="form-group">
+      <label  for="imagen" >Seleccione su imagen</label>
+    <input  name="imagen" class="input_imagen" type="file" (change)="onFileChange($event)" accept="image/jpeg, image/png, image/gif">
+
+  </div>
+    <div  class="form-group" *ngIf="imagenVisualizacion">
+
+      <img  class="panelImagen" [src]="imagenVisualizacion" alt="" >
+    </div>
+    <div>
+      <label for="file">Subir PDF:</label>
+      <input type="file" id="file" (change)="onFileSelected($event)" accept=".pdf" required />
+    </div>
+    <br>
+    <button class="btn submit" type="submit">Crear Revista</button>
+  </form>
+</div>

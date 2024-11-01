@@ -19,7 +19,7 @@ export class ListaDeRevistasService {
 
   constructor(private http: HttpClient) {}
 
-  listarRevistas(): Observable<any> {
+  listarRevistas  (): Observable<any> {
     return this.http.get(this.apiUrl);
   }
 

@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
@@ -9,9 +9,12 @@ describe('CrearRevistaComponent', () => {
   let component: CrearRevistaComponent;
   let fixture: ComponentFixture<CrearRevistaComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CrearRevistaComponent ]
+      // Si tu componente usa formularios, agrega ReactiveFormsModule aquí
+      // imports: [ ReactiveFormsModule ],
+      // Si tienes otros módulos o servicios que necesita, agrégales aquí.
     })
     .compileComponents();
   }));

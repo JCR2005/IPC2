@@ -1,0 +1,336 @@
+/*Barra navegacion____________________________________________________________________________________*/
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 98%;
+  height: 5%;
+  background-color: #ffffff;
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  font-weight: bold;
+  font-style: oblique;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  color: #162c5e;
+  font-size: 24px;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item {
+  margin-left: 20px;
+}
+
+.navbar-link {
+  color: #162c5e;
+  padding: 10px 15px;
+  border-radius: 25px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-link:hover {
+  background-color: #162c5e;
+  color: #fff;
+}
+.contenedor{
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width:  100vw;
+}
+
+/*Panel de revistas_____________________________________________________________________________*/
+.panelRevistas{
+  top: 20%;
+  position: absolute;
+  left: 25%;
+  padding: 1% 1%;
+  border-radius: 25px;
+  border: 2px solid #162c5e;
+  background-color: #fff;
+  height: 65%;
+  box-shadow: 0 15px 20px #162c5e9a;
+  width: 50%;
+  overflow-y: auto; /* Agrega scroll si hay más datos de los que caben */
+}
+
+.panelRevista{
+  position: relative;
+  padding: 1% 1%;
+  border-radius: 25px;
+  border: 2px solid #162c5e;
+  background-color: #ffffff;
+  height: 60%;
+  width: 97%;
+  overflow-y: auto;
+}
+
+.panelSuscripcion{
+  position: relative;
+  padding: 1% 1%;
+  border-radius: 25px;
+  border: 2px solid #fff;
+  background-color: #162c5e;
+  height: 10%;
+  width: 97%;
+
+}
+
+.titulo{
+  position: absolute;
+  padding: 1% 1%;
+  border-radius: 25px;
+  border: 2px solid #162c5e;
+  background-color: #162c5e;
+  height: 70%;
+  width: 40%;
+  color: #ffffff;
+  font-size: 150%;
+  font-weight: bolder;
+  font-style: italic;
+  display: flex;
+  justify-content: center;     /* Centrar horizontalmente */
+  align-items: center;
+}
+
+.titulo:hover{
+  border: 2px solid #c8d2eb;
+  background-color: #162c5e8c;
+
+}
+
+
+
+.autor{
+  position: absolute;
+  right: 5%;
+  padding: 1% 1%;
+  color: #162c5e;
+  font-size: 100%;
+  font-weight: bolder;
+  font-style: italic;
+  display: flex;
+  justify-content: center;     /* Centrar horizontalmente */
+  align-items: center;
+  border-radius: 25px;
+  border: 2px solid #162c5e;
+  background-color: #fff;
+  height: 60%;
+  width: 30%;
+}
+
+.autor:hover{
+  border: 2px solid #162c5e;
+  background-color: rgba(0, 0, 0, 0.144)
+}
+.fecha{
+  position: absolute;
+  bottom: 5%;
+  padding: 1% 1%;
+  color: #162c5e;
+  font-size: 100%;
+  font-weight: bolder;
+  font-style: italic;
+  display: flex;
+  justify-content: center;     /* Centrar horizontalmente */
+  align-items: center;
+  border-radius: 25px;
+  border: 2px solid #162c5e;
+  background-color: #ffffff83;
+  height: 5%;
+  width: 25%;
+}
+
+.descripciòn{
+  position: absolute;
+  right: 1%;
+  padding: 1% 2%;  /* Agregar padding */
+  color: #162c5e;
+  font-size: 100%;
+  font-weight: bolder;
+  font-style: italic;
+  border-radius: 25px;
+  border: 2px solid #162c5e;
+  background-color: #ffffff83;
+  height: 85%;
+  width: 50%;
+  overflow-y: auto;    /* Scroll vertical */
+  overflow-x: hidden;  /* Evitar scroll horizontal */
+  word-wrap: break-word; /* Ajuste de línea para evitar desbordes */
+  word-break: break-word; /* Forzar el quiebre de palabras largas */
+  box-sizing: border-box; /* Incluir borde y padding en el ancho total */
+  line-height: 1; /* Espaciado entre líneas para mejor legibilidad */
+}
+
+
+
+/* Estilo del scrollbar */
+.descripciòn::-webkit-scrollbar,.panelRevistas::-webkit-scrollbar {
+  width: 12px;              /* Ancho del scrollbar */
+  height: 5%;
+}
+
+/* Estilo de la "pista" del scrollbar (el fondo del scroll) */
+.descripciòn::-webkit-scrollbar-track,.panelRevistas::-webkit-scrollbar-track {
+  background: #162c5e85;       /* Color de fondo del track */
+  border-radius: 25px;       /* Bordes redondeados */
+}
+
+/* Estilo del "dedo" del scrollbar (la parte móvil) */
+.descripciòn::-webkit-scrollbar-thumb,.panelRevistas::-webkit-scrollbar-thumb {
+  background-color: #162c5e; /* Color del dedo */
+  border-radius: 10px;       /* Bordes redondeados */
+  border: 3px solid #162c5e; /* Espacio alrededor del dedo para darle un efecto de borde */
+}
+
+/* Estilo cuando se pasa el mouse sobre el dedo del scrollbar */
+.descripciòn::-webkit-scrollbar-thumb:hover,.panelRevistas::-webkit-scrollbar-thumb:hover {
+  background: #fff;       /* Color más oscuro al pasar el mouse */
+}
+
+
+.botonSuscribirse{
+
+  width: 20%;
+  height: 20%;
+  top: 80%;
+  right: 40%;
+  border-radius: 25px;
+  border: 2px solid #162c5e;
+  background-color: #ffffff;
+  position: absolute;
+  color: #162c5e;
+  font-size: 100%;
+  font-weight: bolder;
+  font-style: italic;
+}
+
+.botonSuscribirse:hover{
+  background-color: #ffffffa6;
+
+}
+
+/*Mensaje___________________________________________________________________________________________*/
+.PanelMensaje {
+  color: #162c5e;
+  font-size: 150%;
+  font-weight: bolder;
+  font-style: italic;
+  padding: 0px 0%;
+  align-items: center; /* Centra horizontalmente el contenido flex */
+  border-radius: 15px;
+  position: absolute; /* Fija el panel en la pantalla */
+/* Empieza desde la izquierda */
+  width: 60%; /* Cubre todo el ancho de la pantalla */
+  height: 60%; /* Cubre toda la altura de la pantalla */
+  background-color: #ffffff; /* Fondo semi-transparente */
+  display: flex; /* Usa flexbox para centrar el contenido */
+  flex-direction: column; /* Coloca los elementos en columna */
+  justify-content: center; /* Centra verticalmente */
+  text-align: center; /* Centra el texto horizontalmente */
+  box-shadow: 0 4px 8px #00000070;
+  transform: translate(-50%, -50%);
+}
+
+.question-icon {
+  position: absolute;
+  top: 2%;
+  color: #162c5e; /* Cambia el color según prefieras */
+  font-size: 400%; /* Ajusta el tamaño si es necesario */
+}
+.cerrarPanelMensaje-btn{
+
+  background-color: #162c5e;
+  color: #fff;
+  border: none;
+  width: 16%;
+  padding: 5px 10px;
+  border-radius: 25px;
+  cursor: pointer;
+  border: 2px solid #fff;
+  transition: background-color 0.3s ease;
+}
+
+
+.cerrarPanelMensaje-btn:hover {
+  background-color: #162c5e85;
+}
+
+
+.calendar-button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #1a3d73; /* Color del borde */
+  border-radius: 4px; /* Bordes ligeramente redondeados */
+  color: #1a3d73; /* Color del icono */
+}
+
+.calendar-button:hover {
+  background-color: #e0e0e0; /* Cambia el color al pasar el cursor */
+}
+
+
+.loading-overlay {
+  position: fixed; /* Fija el panel en la pantalla */
+  top: 0; /* Empieza desde la parte superior */
+  left: 0; /* Empieza desde la izquierda */
+  width: 100%; /* Cubre todo el ancho de la pantalla */
+  height: 100%; /* Cubre toda la altura de la pantalla */
+  background-color: #ffffff; /* Fondo semi-transparente */
+  display: flex; /* Usa flexbox para centrar el contenido */
+  flex-direction: column; /* Coloca los elementos en columna */
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  z-index: 1000; /* Asegura que esté encima de otros elementos */
+}
+.loading-spinner {
+  border: 8px solid #f3f3f3; /* Color del fondo del spinner */
+  border-top: 8px solid #162c5e; /* Color de la parte superior del spinner */
+  border-radius: 50%; /* Forma redonda */
+  width: 50px; /* Ancho del spinner */
+  height: 50px; /* Alto del spinner */
+  animation: spin 1s linear infinite; /* Animación de giro */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-overlay p {
+  font-weight: bolder;
+  font-style: italic;
+  margin-top: 15px; /* Espacio entre el spinner y el texto */
+  font-size: 18px; /* Tamaño del texto */
+  color: #162c5e; /* Color del texto */
+}
+
+.check-icon {
+  position: absolute;
+  top: 15%;
+  color: #162c5e; /* Cambia el color según prefieras */
+  font-size: 500%;
+}
+.error-icon {
+  position: absolute;
+  top: 15%;
+  color: #ee2a07; /* Color verde */
+  font-size: 500%;
+  margin-right: 0;
+}

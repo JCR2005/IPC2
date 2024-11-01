@@ -1,0 +1,60 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <a class="navbar-logo" >Mis suscripciones</a>
+    <ul class="navbar-menu">
+      <!-- Configuración de precios de anuncios con menú desplegable -->
+
+      <li class="navbar-item">
+        <a class="navbar-link" routerLink="/paginaPrincipalSuscritor">Pagina principal</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+<div class="contenedor">
+  <div  class="panelRevistas"  *ngIf="panelRevistas" >
+    <ng-container *ngIf="revistas.length > 0; else noRevistas">
+      <div *ngFor="let revista of revistas" class="panelSuscripcion">
+
+      <div   class="panelRevista">
+        <button class="titulo"   (click)="abrirRevista(revista.idRevista)">{{ revista.titulo }}</button>
+        <button class="autor">Autor: {{ revista.autor}}</button>
+
+      </div>
+
+
+    </div>
+
+  </ng-container>
+  <ng-template #noRevistas>
+    <p>No hay revistas por suscribirse</p>
+  </ng-template>
+
+  </div>
+</div>
+
+<div *ngIf="cargando" class="loading-overlay">
+  <div class="loading-spinner"></div>
+  <p>Cargando, por favor espera...</p>
+</div>
+
+<div  *ngIf="panelMensaje" class="PanelMensaje">
+  <i *ngIf="!procesoExitoso" class="fas fa-times-circle  error-icon"></i>
+  <i *ngIf="procesoExitoso"  class="fas fa-check-circle  check-icon"></i>
+  <br><br><br><br><br>
+  <h4>{{mensaje}}</h4>
+  <br>
+  <br> <br>
+  <button class="cerrarPanelMensaje-btn"   >continuar</button>
+</div>
+  <div *ngIf="panelSuscripcion"  class="PanelMensaje">
+  <i class="fas fa-question-circle question-icon"></i>
+  <br><br>
+  <h4>¿Quiere suscribirse a {{revistaEnProceso.titulo}}?</h4>
+
+ <br>
+
+</div>
+
+<router-outlet></router-outlet>
+

@@ -6,7 +6,7 @@ import Backend.administracion.costoOcultacionAdd;
 import Backend.revistas.bloquearAnuncios;
 import Backend.revistas.configuracionRevistas;
 import Backend.revistas.crearRevista;
-import JPA.Anuncio;
+
 import JPA.Revista;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;

@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <nav class="navbar">
     <div class="navbar-container">
@@ -5,7 +6,9 @@
       <ul class="navbar-menu">
         <!-- Configuración de precios de anuncios con menú desplegable -->
 
-
+        <li class="navbar-item">
+          <a class="navbar-link" routerLink="/misSuscripciones">Mis Suscripciones</a>
+        </li>
 
         <li class="navbar-item">
           <a class="navbar-link" routerLink="/miPerfil">Mi perfil</a>
@@ -17,8 +20,65 @@
     </div>
   </nav>
 
-  <h1>REVISTAS HUB</h1>
-  <h1 class="h12"></h1>
+
+
+
+
+  <div class="contenedor">
+
+    <div  class="panelRevistas"  *ngIf="panelRevistas" >
+      <ng-container *ngIf="revistas.length > 0; else noRevistas">
+        <div *ngFor="let revista of revistas" class="panelSuscripcion">
+
+        <div   class="panelRevista">
+          <div class="titulo">{{ revista.titulo }}</div>
+          <div class="autor">Autor: {{ revista.autor}}</div>
+          <div class="fecha">Creada: {{ obtenerFechaLegible(revista.fechaPublicacion) }}</div>
+          <div class="descripciòn">{{ revista.descripcion}}</div>
+        </div>
+        <button  class="botonSuscribirse" (click)="mostraPanelConfirmacionSuscripcion(revista)">Suscribirse</button>
+
+      </div>
+
+    </ng-container>
+    <ng-template #noRevistas>
+      <p>No hay revistas por suscribirse</p>
+    </ng-template>
+
+    </div>
+  </div>
+
+  <div *ngIf="cargando" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p>Cargando, por favor espera...</p>
+  </div>
+
+  <div  *ngIf="panelMensaje" class="PanelMensaje">
+    <i *ngIf="!procesoExitoso" class="fas fa-times-circle  error-icon"></i>
+    <i *ngIf="procesoExitoso"  class="fas fa-check-circle  check-icon"></i>
+    <br><br><br><br><br>
+    <h4>{{mensaje}}</h4>
+    <br>
+    <br> <br>
+    <button class="cerrarPanelMensaje-btn"  (click)="cerrarPanelMensaje()" >continuar</button>
+  </div>
+    <div *ngIf="panelSuscripcion"  class="PanelMensaje">
+    <i class="fas fa-question-circle question-icon"></i>
+    <br><br>
+    <h4>¿Quiere suscribirse a {{revistaEnProceso.titulo}}?</h4>
+
+   <br>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+      <button mat-icon-button (click)="picker.open()" class="calendar-button">
+        <mat-icon>calendar_today</mat-icon>
+      </button>
+      <input matInput [matDatepicker]="picker"  [(ngModel)]="fechaSuscripcion " placeholder="Seleccione una fecha">
+      <mat-datepicker #picker></mat-datepicker>
+    </div>
+    <button  class="cerrarPanelMensaje-btn" (click)="suscribirse()">Suscribirse</button>
+
+    <button  class="cerrarPanelMensaje-btn" (click)="ocultarPanelConfirmacionSuscripcion()">Cancelar</button>
+  </div>
 
   <router-outlet></router-outlet>
 

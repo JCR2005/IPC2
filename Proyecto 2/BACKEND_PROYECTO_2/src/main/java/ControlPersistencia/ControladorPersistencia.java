@@ -2,10 +2,12 @@ package ControlPersistencia;
 
 import ControlPersistencia.exceptions.NonexistentEntityException;
 import JPA.Anuncio;
+import JPA.Articulo;
 import JPA.Cartera;
 import JPA.CostoAnuncio;
 import JPA.CostosGlobales;
 import JPA.Revista;
+import JPA.Suscripciòn;
 import JPA.Usuario;
 import JPA.bloqueoAddsRevista;
 import JPA.revistaEtiqueta;
@@ -25,12 +27,14 @@ public class ControladorPersistencia {
     private CostoAnuncioJpaController costoAnuncio = new CostoAnuncioJpaController();
     private CarteraJpaController carteraJpaController = new CarteraJpaController();
     private vigenciaAnuncioJpaController vigenciaAnuncioJpaController = new vigenciaAnuncioJpaController();
-    private AnuncioJpaController anuncioJpaController=new AnuncioJpaController();
-    private RevistaJpaController revistaJpaController=new RevistaJpaController();
-    private revistaEtiquetaJpaController revistaEtiquetaJpaController=new revistaEtiquetaJpaController();
-    private bloqueoAddsRevistaJpaController bloqueoAddsRevistas= new bloqueoAddsRevistaJpaController();
-    private CostosGlobalesJpaController costosGlobalesJpaController=new CostosGlobalesJpaController();
-    
+    private AnuncioJpaController anuncioJpaController = new AnuncioJpaController();
+    private RevistaJpaController revistaJpaController = new RevistaJpaController();
+    private revistaEtiquetaJpaController revistaEtiquetaJpaController = new revistaEtiquetaJpaController();
+    private bloqueoAddsRevistaJpaController bloqueoAddsRevistas = new bloqueoAddsRevistaJpaController();
+    private CostosGlobalesJpaController costosGlobalesJpaController = new CostosGlobalesJpaController();
+    private SuscripciònJpaController suscripciònJpaController = new SuscripciònJpaController();
+    private ArticuloJpaController articuloJpaController = new ArticuloJpaController();
+
     public void crearUsuario(Usuario usuario) throws Exception {
 
         this.usuario.create(usuario);
@@ -40,6 +44,17 @@ public class ControladorPersistencia {
 
         boolean usuarioEncontrado = false;
         if (this.usuario.findUsuario(usuario.getUsuario()) != null) {
+            usuarioEncontrado = true;
+
+        }
+
+        return usuarioEncontrado;
+    }
+
+    public boolean buscarUsuarios(String usuario) throws Exception {
+
+        boolean usuarioEncontrado = false;
+        if (this.usuario.findUsuario(usuario) != null) {
             usuarioEncontrado = true;
 
         }
@@ -104,7 +119,7 @@ public class ControladorPersistencia {
         return existeCartera;
 
     }
-    
+
     public boolean buscarAnuncio(String idAnuncio) {
         boolean existeAnuncio = false;
         if (this.anuncioJpaController.findAnuncio(idAnuncio) != null) {
@@ -136,8 +151,6 @@ public class ControladorPersistencia {
     public boolean actualizarCartera(String idCartera, double saldo) throws Exception {
         Cartera cartera = carteraJpaController.findCartera(idCartera);
 
-      
-
         cartera.setSaldo(saldo);
         boolean carteraActualizada = false;
 
@@ -160,7 +173,7 @@ public class ControladorPersistencia {
     }
 
     public void crearAnuncio(Anuncio anuncio) {
-      anuncioJpaController.create(anuncio);
+        anuncioJpaController.create(anuncio);
     }
 
     public List<Anuncio> obtenerAnuncios() {
@@ -168,15 +181,15 @@ public class ControladorPersistencia {
     }
 
     public Anuncio obtenerAnuncios(String idAnuncio) {
-       return  anuncioJpaController.findAnuncio(idAnuncio);
+        return anuncioJpaController.findAnuncio(idAnuncio);
     }
 
     public void editarAnuncio(Anuncio anuncio) throws Exception {
-       anuncioJpaController.edit(anuncio);
+        anuncioJpaController.edit(anuncio);
     }
 
     public boolean buscarRevista(String idRevista) {
-     boolean existeRevista = false;
+        boolean existeRevista = false;
         if (this.revistaJpaController.findRevista(idRevista) != null) {
             existeRevista = true;
 
@@ -185,7 +198,7 @@ public class ControladorPersistencia {
     }
 
     public void crearRevista(Revista revista) throws Exception {
-       this.revistaJpaController.create(revista);
+        this.revistaJpaController.create(revista);
     }
 
     public void guardarTags(revistaEtiqueta revistaEtiqueta) throws Exception {
@@ -197,46 +210,65 @@ public class ControladorPersistencia {
     }
 
     public Revista obtenerRevista(String idRevista) {
-         return revistaJpaController.findRevista(idRevista);
+        return revistaJpaController.findRevista(idRevista);
     }
 
     public void editarRevista(Revista revista) throws Exception {
-         revistaJpaController.edit(revista);
+        revistaJpaController.edit(revista);
     }
 
     public void darAltaRevistaAnuncios(bloqueoAddsRevista bloqueoAddsRevista) throws Exception {
-       bloqueoAddsRevistas.create(bloqueoAddsRevista);
+        bloqueoAddsRevistas.create(bloqueoAddsRevista);
     }
 
     public bloqueoAddsRevista obetenerRevistaEnProcesos(String idRevista) {
-    return bloqueoAddsRevistas.findbloqueoAddsRevista(idRevista);
-      
+        return bloqueoAddsRevistas.findbloqueoAddsRevista(idRevista);
+
     }
 
     public void bloquearAdds(bloqueoAddsRevista revista) throws Exception {
-       bloqueoAddsRevistas.edit(revista);
+        bloqueoAddsRevistas.edit(revista);
     }
 
     public List<bloqueoAddsRevista> obtenerListaBloqueoAnuncios() {
-       return bloqueoAddsRevistas.findbloqueoAddsRevistaEntities();
+        return bloqueoAddsRevistas.findbloqueoAddsRevistaEntities();
     }
 
     public void editarUsuario(Usuario usuario) throws Exception {
-     this.usuario.edit(usuario);
+        this.usuario.edit(usuario);
     }
 
     public void inicializarCostosGlobales() throws Exception {
-      this.costosGlobalesJpaController.initializeCostosGlobales();
+        this.costosGlobalesJpaController.initializeCostosGlobales();
     }
 
     public CostosGlobales obtenerCostoAsociadoGlobal() {
-       return costosGlobalesJpaController.findCostosGlobales("CostoAsociado");
+        return costosGlobalesJpaController.findCostosGlobales("CostoAsociado");
     }
 
     public void editarCostoGlobal(CostosGlobales costosGlobales) throws Exception {
-      costosGlobalesJpaController.edit(costosGlobales);
+        costosGlobalesJpaController.edit(costosGlobales);
     }
 
+    public void crearSuscripciòn(Suscripciòn suscripciòn) throws Exception {
+        System.out.println("legoooooooooooooooooooooooooo");
+        this.suscripciònJpaController.create(suscripciòn);
+    }
 
+    public List<Suscripciòn> obtenerListaSuscripciones() {
+        return this.suscripciònJpaController.findSuscripciònEntities();
+    }
+
+    public void crearArticulo(Articulo articulo) {
+        this.articuloJpaController.create(articulo);
+    }
+
+    public List<Articulo> obtenerArticulos() {
+        return this.articuloJpaController.findArticuloEntities();
+    }
+
+    public Articulo obtenerArticulo(Long idArticulo) {
+        return this.articuloJpaController.findArticulo(idArticulo);
+    }
 
 }

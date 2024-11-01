@@ -22,9 +22,11 @@ public class JakartaRestConfiguration extends Application {
         resources.add(ServicioRest.RestCartera.class);
          resources.add(ServicioRest.RestRevista.class);
          resources.add(ServicioRest.RestPerfil.class);
+         resources.add(ServicioRest.Editor.RestArticulo.class);
          resources.add(ServicioRest.Administraciòn.RestAnuncios.class);
           resources.add(ServicioRest.Administraciòn.RestRevistas.class);
-         
+         resources.add(ServicioRest.Suscritores.RestSuscripcòn.class);
+             resources.add(ServicioRest.Suscritores.RestVusaulizaciòn.class);
         resources.add(filters.CORSFilter.class);                   // Filtro CORS
         return resources;
     }
