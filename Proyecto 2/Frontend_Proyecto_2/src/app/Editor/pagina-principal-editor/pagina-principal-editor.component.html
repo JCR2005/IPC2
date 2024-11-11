@@ -9,6 +9,7 @@
         <a class="navbar-link" >Mis revistas</a>
         <ul class="dropdown-menu">
           <li><a class="dropdown-link" routerLink="/configuracionRevistas">Configuración de permisos de revistas</a></li>
+          <li><a class="dropdown-link" routerLink="/RepostesEditor">Reportes</a></li>
 
         </ul>
       </li>
@@ -17,7 +18,7 @@
         <a class="navbar-link" >Crear</a>
         <ul class="dropdown-menu">
           <li><a class="dropdown-link" routerLink="/CrearRevista">Crear Revista</a></li>
-          <li><a class="dropdown-link" routerLink="/"> Crear articulo</a></li>
+          <li><a class="dropdown-link" routerLink="/CrearArfticulo"> Crear articulo</a></li>
 
         </ul>
       </li>
@@ -31,7 +32,7 @@
         <a class="navbar-link" routerLink="/bloqueoAdss" >bloqueo de adds</a>
       </li>
       <li class="navbar-item">
-        <a class="navbar-link" routerLink="/miPerfil">Mi perfil</a>
+        <a class="navbar-link" routerLink="/perfil">Mi perfil</a>
       </li>
 
     </ul>
@@ -43,3 +44,14 @@
 
 <router-outlet></router-outlet>
 
+<div class="confirm-container" *ngIf="panelLogout">
+  <div class="confirm-box">
+    <!-- Ícono de pregunta -->
+    <i class="fas fa-question-circle question-icon"></i>
+    <h2>¿Estás seguro de que deseas cerrar sesión?</h2>
+    <div class="buttons">
+      <button (click)="confirmLogout()" class="btn btn-confirm">Sí, cerrar sesión</button>
+      <button (click)="cancelLogout()" class="btn btn-cancel">No, regresar</button>
+    </div>
+  </div>
+</div>

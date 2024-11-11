@@ -4,6 +4,8 @@ import { Revista } from '../../models/revista.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { RevistasService } from './../../services/serviciosAdministraciòn/Revistas/revistas.service';
+
 
 @Component({
   selector: 'app-aprobar-revista',
@@ -14,7 +16,7 @@ import { RouterModule } from '@angular/router';
 })
 export class AprobarRevistaComponent {
   constructor(
-  private ListaDeRevistasService: ListaDeRevistasService) {}
+  private ListaDeRevistasService: ListaDeRevistasService,private RevistasService:RevistasService) {}
   costoOcultacion:number=0;
   costoAsociado:number=0;
   panelAprobacion: boolean=false;
@@ -28,10 +30,28 @@ export class AprobarRevistaComponent {
   aprobacionExitosa=true;
 
 
+  costoGlobalAsociado: number= 0.00;
   ngOnInit(): void {
     this.cargarDatos();
+    this.obtenerDatos();
   }
+ //metodo para obetener datos de la cartera del usuario
+ obtenerDatos(){
 
+  this.RevistasService.obtenerCostoAsociadoGlobal().subscribe(
+    (response: any) => {
+
+      this.costoGlobalAsociado=response.costosGlobales.costo;
+      this.costoAsociado=this.costoGlobalAsociado;
+
+    },
+    (error) => {
+      console.error('Error al enviar los datos:', error);
+      alert('Error al registrar: ' + error.message);
+    }
+  );
+
+}
   cargarDatos() {
     this.cargando = true; // Iniciar la carga
 

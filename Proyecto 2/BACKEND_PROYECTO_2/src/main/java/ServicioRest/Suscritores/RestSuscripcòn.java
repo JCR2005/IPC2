@@ -40,6 +40,8 @@ public class RestSuscripcòn {
     @Produces(MediaType.APPLICATION_JSON)
     public Response suscribir(Suscripciòn suscripciòn) throws Exception {
         this.respuesta = this.suscripciòn.suscribirRevista(suscripciòn);
+        
+        
 
         return Response.ok(this.respuesta).build();
     }

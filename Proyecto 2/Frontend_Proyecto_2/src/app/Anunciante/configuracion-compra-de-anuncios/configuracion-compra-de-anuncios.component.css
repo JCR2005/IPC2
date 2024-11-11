@@ -16,6 +16,20 @@ body {
   overflow: hidden;
 }
 
+.panelPrecios{
+text-align: center;
+font-style: oblique;
+font-weight: bold;
+  position: absolute;
+  height: 50%;
+  border-radius: 25px;
+color: #fff;
+  width: 25%;
+  right: 2%;
+  top: 20%;
+  background-color: #162c5e;
+}
+
 .registro-container {
   justify-content: center;
   align-items: center;
@@ -142,3 +156,54 @@ button:hover {
 
 
 
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0%;
+  width: 100%;
+  height: 8%;
+  background-color: #162c5e;
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  font-weight: bold;
+  color: white;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item {
+  margin-left: 20px;
+  position: relative; /* Necesario para posicionar el menú desplegable */
+}
+
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-link:hover {
+  background-color: #ffffff;
+  color: #35466e;
+  border-radius: 25px;
+}

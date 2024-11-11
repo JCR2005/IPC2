@@ -1,0 +1,45 @@
+<h1 class="marcaAgua1">Reportes</h1>
+<h1 class="marcaAgua2">Ten el control de tus revistas!!</h1>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<button class="botonOpciones" (click)=" abrirPanel()">
+  <span class="material-icons">more_vert</span>
+</button>
+
+<div class="difuminado" *ngIf="panelOpciones"></div>
+<div class="panelOpciones" *ngIf="panelOpciones">
+
+
+<a class="navbar-link"(click)="abrirPanelReportesComentarios()" >Reporte de comentarios</a>
+<br><br>
+<a class="navbar-link"(click)="abrirPanelReportesSusucripciones()" >Reporte de suscripciones</a>
+<br><br>
+<a class="navbar-link"(click)="abrirPanelReportesRevistasMasGustadas()" >Reportende 5 revistas mas gustada</a>
+<br><br>
+<a class="navbar-link"(click)="abrirPanelReportesPagos()" >Reporte de pagos </a>
+
+
+</div>
+<!-- Panel que cambia entre normal y grande -->
+<!-- Panel que cambia entre normal y grande -->
+<app-reporte-de-comentarios
+  class="contenedorReportesComentarios"
+  [ngClass]="{'normal': !panelGrande, 'grande': panelGrande}"
+  *ngIf="panelReportesComentarios">
+</app-reporte-de-comentarios>
+<app-reporte-de-suscripciones
+  class="contenedorReportesComentarios"
+  [ngClass]="{'normal': !panelGrande, 'grande': panelGrande}"
+  *ngIf="panelReportesSuscripciones">
+</app-reporte-de-suscripciones>
+<app-reporte-de-pagos
+  class="contenedorReportesComentarios"
+  [ngClass]="{'normal': !panelGrande, 'grande': panelGrande}"
+  *ngIf="panelReportesPagos">
+</app-reporte-de-pagos>
+<app-reporte-de-revistas-mas-gustadas
+  class="contenedorReportesComentarios"
+  [ngClass]="{'normal': !panelGrande, 'grande': panelGrande}"
+  *ngIf="panelReportesRevistasMasGustadas">
+</app-reporte-de-revistas-mas-gustadas>

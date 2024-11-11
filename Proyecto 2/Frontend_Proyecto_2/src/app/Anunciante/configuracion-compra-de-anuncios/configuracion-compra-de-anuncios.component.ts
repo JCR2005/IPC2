@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
-
 import jwtDecode from 'jwt-decode'; // Asegúrate de tener instalada esta librería
 
 import { CompraAnuncioService } from '../../services/servicioCompraAnuncio/compra-anuncio.service';
+import { Vigencia } from './../../models/vigencia.model';
 
+/**
+ * Componente para la configuración de compra de anuncios.
+ * Permite calcular el precio de un anuncio en función de su tipo y vigencia.
+ */
 @Component({
   selector: 'app-configuracion-compra-de-anuncios',
   standalone: true,
@@ -15,138 +19,190 @@ import { CompraAnuncioService } from '../../services/servicioCompraAnuncio/compr
   templateUrl: './configuracion-compra-de-anuncios.component.html',
   styleUrls: ['./configuracion-compra-de-anuncios.component.css'],
 })
-export class ConfiguracionCompraDeAnunciosComponent {
-  tipoAnuncio: string = '';
-  vigencia: string = '';
-  anuncioTexto: string = '';
-  anuncioVideo: string = '';
-  fechaPublicacion: string = "";
-  precio: number = 0;
-  errorMessage: string = '';
-  mensajeExito: boolean = false;
-  saldo: number = 500;
-  creditoDisponible: number = 500;
-  seleccionoTipoAnuncio = false;
-  seleccionoVigencia = false;
-  imagenSeleccionada: File | null = null; // Variable para almacenar la imagen seleccionada
+export class ConfiguracionCompraDeAnunciosComponent implements OnInit {
+
+  // Propiedades relacionadas con los precios y cálculos
+  precioTexto: number = 0;
+  precioImagen: number = 0;
+  precioVideo: number = 0;
+  precioTotal: number = 0;  // Precio total calculado basado en la selección
+  multiplicador: number = 0; // Multiplicador basado en la vigencia seleccionada
+
+  // Variables para verificar si el tipo y la vigencia están seleccionados
+  seleccionoTipoAnuncio: boolean = false;
+  seleccionoVigencia: boolean = false;
+  vigencias: Vigencia[] = []; // Lista de opciones de vigencia
+  tipoAnuncio: string = ''; // Tipo de anuncio (texto, imagen, video)
+  vigencia: string = ''; // Vigencia seleccionada
+  anuncioTexto: string = ''; // Texto del anuncio
+  anuncioVideo: string = ''; // Video del anuncio
+  fechaPublicacion: string = ''; // Fecha de publicación
+  precio: number = 0; // Precio total de la compra
+  errorMessage: string = ''; // Mensaje de error
+  mensajeExito: boolean = false; // Mensaje de éxito
+  saldo: number = 500; // Saldo disponible del usuario
+  creditoDisponible: number = 500; // Crédito disponible para realizar la compra
+
+  // Variables para manejar la imagen seleccionada
+  imagenSeleccionada: File | null = null;
   imagenVisualizacion: string = '';
+
+  // Variable para almacenar el usuario actual
+  usuario: string = '';
 
   constructor(
     private sanitizer: DomSanitizer,
     private compraAnuncioService: CompraAnuncioService
   ) {}
 
-  actualizarPrecio() {
-    const precioBase = this.getPrecioBase(this.tipoAnuncio);
-    const multiplicador = this.getMultiplicador(this.vigencia);
-    this.precio = precioBase * multiplicador;
+  /**
+   * ngOnInit se ejecuta al inicializar el componente.
+   * Aquí se cargan los precios de los anuncios y las vigencias desde el servicio.
+   */
+  ngOnInit(): void {
+    this.compraAnuncioService.obtenerPrecios().subscribe(
+      (response: any) => {
+        // Asigna los precios y las vigencias recibidas desde el backend
+        this.vigencias = response.vigencia;
+        this.precioTexto = response.precioTexto;
+        this.precioVideo = response.preciovideoo;
+        this.precioImagen = response.precioImagen;
+      },
+      (error) => {
+        console.error('Error al cargar los precios:', error);
+        alert('Error al cargar los datos de precios.');
+      }
+    );
+  }
 
-    if (this.precio > this.creditoDisponible) {
-      this.errorMessage = 'Crédito insuficiente para realizar la compra.';
+  /**
+   * Calcula el precio total del anuncio en base al tipo y vigencia seleccionados.
+   */
+  calcularPrecio() {
+    if (this.tipoAnuncio && this.vigencia) {
+      let precioBase = 0;
+
+      // Determina el precio base según el tipo de anuncio
+      switch (this.tipoAnuncio) {
+        case 'texto':
+          precioBase = this.precioTexto;
+          break;
+        case 'imagen':
+          precioBase = this.precioImagen;
+          break;
+        case 'video':
+          precioBase = this.precioVideo;
+          break;
+        default:
+          precioBase = 0;
+          break;
+      }
+
+      // Obtiene el multiplicador de la vigencia seleccionada
+      switch (this.vigencia) {
+        case '1':
+          this.multiplicador = this.vigencias[0].vigencia;
+          break;
+        case '2':
+          this.multiplicador = this.vigencias[1].vigencia;
+          break;
+        case '3':
+          this.multiplicador = this.vigencias[2].vigencia;
+          break;
+        case '4':
+          this.multiplicador = this.vigencias[3].vigencia;
+          break;
+        default:
+          this.multiplicador = 0;
+          break;
+      }
+
+      // Calcula el precio total
+      this.precioTotal = precioBase * this.multiplicador;
     } else {
-      this.errorMessage = '';
-    }
-
-    this.cambiar();
-    this.cambiarLabelVigencia();
-  }
-
-  cambiar() {
-    this.seleccionoTipoAnuncio = true;
-    this.imagenSeleccionada = null;
-    this.imagenVisualizacion="";
-    this.anuncioTexto = '';
-    this.anuncioVideo = '';
-
-    this.precio = 0;
-  }
-
-  cambiarLabelVigencia() {
-    this.seleccionoVigencia = true;
-  }
-
-  getPrecioBase(tipo: string): number {
-    switch (tipo) {
-      case 'texto':
-        return 10;
-      case 'imagen':
-        return 100;
-      case 'video':
-        return 150;
-      default:
-        return 0;
+      this.precioTotal = 0; // Si no hay selección de tipo o vigencia, el precio será 0
     }
   }
 
-  getMultiplicador(vigencia: string): number {
-    switch (vigencia) {
-      case '1':
-        return 1;
-      case '3':
-        return 3;
-      case '14':
-        return 14;
-      case '28':
-        return 28;
-      default:
-        return 1;
-    }
-  }
-
+  /**
+   * Resetea los campos del formulario, limpiando las selecciones y entradas.
+   */
   reiniciarCampos() {
     this.imagenSeleccionada = null;
-    this.imagenVisualizacion="";
+    this.imagenVisualizacion = '';
     this.anuncioTexto = '';
     this.anuncioVideo = '';
     this.tipoAnuncio = '';
     this.vigencia = '';
-    this.fechaPublicacion="";
+    this.fechaPublicacion = '';
   }
 
-  usuario:string="";
+  /**
+   * Al seleccionar un tipo de anuncio, actualiza el estado de la selección.
+   */
+  cambiar() {
+    this.seleccionoTipoAnuncio = true;
+    this.imagenSeleccionada = null;
+    this.imagenVisualizacion = '';
+    this.anuncioTexto = '';
+    this.anuncioVideo = '';
+    this.precio = 0;
+  }
 
+  /**
+   * Al seleccionar una vigencia, actualiza el estado de la selección.
+   */
+  cambiarLabelVigencia() {
+    this.seleccionoVigencia = true;
+  }
+
+  /**
+   * Realiza la compra del anuncio. Valida el saldo disponible y envía los datos al backend.
+   */
   onSubmit() {
+    // Valida si el crédito disponible es suficiente para realizar la compra
     if (this.precio > this.creditoDisponible) {
       this.errorMessage = 'Crédito insuficiente para realizar la compra.';
       return;
     }
 
-
+    // Obtiene el token de sesión y decodifica la información del usuario
     const token = sessionStorage.getItem('token');
-
     if (token) {
       try {
         const payload = this.parseJwt(token);
-        // Verifica si el tipo de cuenta es 'Administrador'
-        this.usuario=payload.usuario;
+        this.usuario = payload.usuario;
       } catch (error) {
-
+        console.error('Error al decodificar el token JWT:', error);
       }
     }
+
+    // Crea el objeto con los detalles del anuncio
     const anuncio = {
-      usuario:this.usuario,
+      usuario: this.usuario,
       tipoAnuncio: this.tipoAnuncio,
-      vigencia: this.vigencia,
-      precio: this.precio,
-      fechaPublicacionTexto:this.fechaPublicacion  ,
+      vigencia: this.multiplicador,
+      precio: this.precioTotal,
+      fechaPublicacionTexto: this.fechaPublicacion,
       anuncioTexto: this.anuncioTexto,
       anuncioVideo: this.anuncioVideo,
     };
 
-    // Crear un FormData para enviar los datos
+    // Crea un FormData para enviar los datos
     const formData = new FormData();
     formData.append('anuncio', JSON.stringify(anuncio));
 
-    // Agregar la imagen seleccionada al FormData
+    // Agrega la imagen seleccionada al FormData
     if (this.imagenSeleccionada) {
-      formData.append('imagen', this.imagenSeleccionada); // Añadir la imagen seleccionada
+      formData.append('imagen', this.imagenSeleccionada);
     }
 
     // Enviar la solicitud HTTP al backend
     this.compraAnuncioService.realizarCompra(formData).subscribe(
       (response: any) => {
-        alert('Enviado correctamente: ' + response.message);
+        // Resetea los campos y muestra un mensaje de éxito
         this.reiniciarCampos();
+        alert('Compra realizada con éxito');
       },
       (error) => {
         console.error('Error al enviar los datos:', error);
@@ -155,10 +211,17 @@ export class ConfiguracionCompraDeAnunciosComponent {
     );
   }
 
+  /**
+   * Regresa a la página anterior en el historial del navegador.
+   */
   goBack() {
     window.history.back();
   }
 
+  /**
+   * Maneja el cambio de archivos seleccionados, en este caso imágenes.
+   * Convierte la imagen seleccionada a una cadena base64 para vista previa.
+   */
   public archivos: any = [];
 
   onFileChange(event: any) {
@@ -167,12 +230,16 @@ export class ConfiguracionCompraDeAnunciosComponent {
     // Almacena la imagen seleccionada en la variable
     this.imagenSeleccionada = imagen;
 
+    // Convierte la imagen a base64 para vista previa
     this.extraerBase64(imagen).then((imagenb: any) => {
       this.imagenVisualizacion = imagenb.base;
     });
     this.archivos.push(imagen);
   }
 
+  /**
+   * Convierte un archivo en base64 para vista previa.
+   */
   extraerBase64 = ($event: any) => new Promise((resolve, reject) => {
     try {
       const unsafeImg = window.URL.createObjectURL($event);
@@ -190,7 +257,9 @@ export class ConfiguracionCompraDeAnunciosComponent {
     }
   });
 
-
+  /**
+   * Decodifica el token JWT para obtener la información del usuario.
+   */
   private parseJwt(token: string): any {
     try {
       const base64Url = token.split('.')[1];

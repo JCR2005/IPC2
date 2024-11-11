@@ -109,7 +109,7 @@ body {
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 4px 8px #00000070;
-  width: 200%; /* Ajusta el ancho al valor deseado */
+  width: 150%; /* Ajusta el ancho al valor deseado */
   position: relative;
   left: 50%;
   transform: translateX(-50%); /* Centra horizontalmente */
@@ -187,10 +187,32 @@ h4 {
 }
 
 span {
-  flex: 0.15; /* Hace que cada columna ocupe el mismo espacio */
-  color: #555; /* Color para los datos */
-  text-align: center; /* Centra el texto en cada celda */
+  flex: 0.11; /* Tamaño fijo del span */
+  color: #555;
+  text-align: center;
+  white-space: nowrap; /* Evita que el texto haga un salto de línea */
+  overflow: hidden; /* Oculta el texto que se desborda */
+  text-overflow: ellipsis; /* Muestra "..." si el texto es muy largo */
+  max-width: 100%; /* Asegura que no crezca más allá del espacio asignado */
+  box-sizing: border-box; /* Considera padding y borde dentro del ancho */
 }
+.panelCosto {
+  position: absolute;
+  width: 50%;
+  height: 8%;
+  left: 25%;
+  top: 25%;
+  background-color: #fff; /* Azul claro */
+  border-radius: 25px;
+
+  border: 2px solid #162c5e;
+
+  color: #162c5e; /* Texto azul oscuro */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 
 .activate-btn {
   background-color: #162c5e;

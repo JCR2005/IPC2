@@ -111,7 +111,7 @@ h1{
 .panelRevistas{
   top: 20%;
   position: absolute;
-  left: 25%;
+  left: 24%;
   padding: 1% 1%;
   border-radius: 25px;
   border: 2px solid #162c5e;
@@ -139,7 +139,7 @@ h1{
   border-radius: 25px;
   border: 2px solid #fff;
   background-color: #162c5e;
-  height: 30%;
+  height: 50%;
   width: 97%;
 
 }
@@ -164,7 +164,7 @@ h1{
 .autor{
   position: absolute;
 
-  bottom: 30%;
+  bottom: 50%;
   padding: 1% 1%;
   color: #162c5e;
   font-size: 100%;
@@ -181,7 +181,24 @@ h1{
 }
 .fecha{
   position: absolute;
-  bottom: 5%;
+  bottom: 33%;
+  padding: 1% 1%;
+  color: #162c5e;
+  font-size: 100%;
+  font-weight: bolder;
+  font-style: italic;
+  display: flex;
+  justify-content: center;     /* Centrar horizontalmente */
+  align-items: center;
+  border-radius: 25px;
+  border: 2px solid #162c5e;
+  background-color: #ffffff83;
+  height: 5%;
+  width: 25%;
+}
+.categoria{
+  position: absolute;
+  bottom: 15%;
   padding: 1% 1%;
   color: #162c5e;
   font-size: 100%;
@@ -373,4 +390,141 @@ h1{
   color: #ee2a07; /* Color verde */
   font-size: 500%;
   margin-right: 0;
+}
+.barraBusqueda {
+  position: absolute;
+  top: 10%;
+  left: 24%;
+  width: 40%;
+  padding: 10px;
+  height: 8%;
+  border-radius: 25px;
+  font-size: 16px;
+  border: 3px solid #162c5e;
+
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+.botonOpciones {
+  position: absolute;
+  top: 10%;
+  right:24%;
+  border-radius: 50%;
+  width:4%;
+  height: 8%;
+  background-color: #162c5e;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1001;
+}
+.material-icons {
+  color: white; /* Color del ícono */
+  font-size: 240%; /* Tamaño del ícono */
+}
+
+
+.filtros {
+  position: absolute;
+  top: 11.5%;
+  right:28%;
+  border-radius: 25px;
+  width:8%;
+  height: 5%;
+  background-color: #162c5e;
+  border: none;
+  display: flex;
+  color: #162c5e;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1001;
+}
+.filtros:hover {
+  width:8%;
+
+  height: 8%;
+  top: 10%;
+}
+
+
+.filtro-icono {
+  font-size: 25px; /* Tamaño del ícono */
+  color: #ffffff; /* Color inicial del ícono (blanco) */
+}
+
+.panelAnuncioTexto {
+  bottom: 2%;
+  position: absolute;
+  left: 24%;
+  padding: 1% 1%;
+  border-radius: 25px;
+  border: 2px solid #162c5e;
+  background-color: #ffffff;
+  height: 5%;
+  width: 50%;
+
+
+  /* Centrado de todo lo que esté dentro del contenedor */
+  display: flex;
+  justify-content: center; /* Centrado horizontal */
+  align-items: center;     /* Centrado vertical */
+  text-align: center;      /* Centrado de texto */
+}
+.panelAnuncioVideo {
+  top: 30%;
+  position: absolute;
+  left: 1%;
+  padding: 1%;
+  border-radius: 25px;
+  border: 2px solid #162c5e;
+  background-color: #ffffff;
+  height: 30%;
+  width: 20%;
+
+  /* Centrado del contenido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  /* Limita el contenido al tamaño del contenedor */
+  overflow: hidden; /* También puedes probar con overflow: auto si deseas barras de desplazamiento */
+}
+
+/* Limita el tamaño de los elementos internos */
+.panelAnuncioVideo * {
+  max-width: 100%;
+  max-height: 100%;
+  box-sizing: border-box; /* Asegura que padding y border no agranden el elemento */
+}
+
+
+.panelAnuncioImagen {
+  top: 30%;
+  position: absolute;
+  right: 1%;
+  padding: 1%;
+  border-radius: 25px;
+  border: 2px solid #162c5e;
+  background-color: #ffffff;
+  height: 30%;
+  width: 20%;
+
+  /* Centrado del contenido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  /* Limita el contenido al tamaño del contenedor */
+  overflow: hidden; /* También puedes probar con overflow: auto si deseas barras de desplazamiento */
+}
+/* Limita el tamaño de los elementos internos */
+.panelAnuncioImagen * {
+  max-width: 100%;
+  max-height: 100%;
+  box-sizing: border-box; /* Asegura que padding y border no agranden el elemento */
 }

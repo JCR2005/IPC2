@@ -27,7 +27,7 @@ public class RestArticulo {
     @Produces(MediaType.APPLICATION_JSON)
     public Response registrarCompra(@FormDataParam("articulo") String anuncioJson,
             @FormDataParam("imagen") InputStream imagenInputStream,@FormDataParam("pdf") InputStream pdfInputStream) throws Exception {
-        System.out.println("sssssssssssssssssssssssssssssssss");
+       
      respuesta = configuracionArticulo.proceso(imagenInputStream,pdfInputStream, anuncioJson);
 
         return Response.ok(respuesta).build();

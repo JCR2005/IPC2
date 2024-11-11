@@ -1,9 +1,11 @@
+import { Revista } from './../../models/revista.model';
 import { CrearArticuloService } from './../../services/serviciosEditor/servicioCrearArticulo/crear-articulo.service';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { token } from '../../token';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SuscripcionesService } from '../../services/serviciosEditor/serviciosReportesEditor/reporteSuscripciones/suscripciones.service';
 
 
 @Component({
@@ -14,7 +16,10 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./crearArticulo.component.css']
 })
 export class CrearArticuloComponent implements OnInit {
-  idRevista:string="0000000000000000";
+  idRevista:string="";
+  procesoExitoso=false;
+  Revistas:Revista[]=[];
+  panelMensaje: boolean = false;
   imagenSeleccionada: File | null = null; // Variable para almacenar la imagen seleccionada
   imagenVisualizacion: string = '';
   selectedFile: File | null = null;
@@ -23,17 +28,39 @@ export class CrearArticuloComponent implements OnInit {
   descripcion: string = "";
   categoria: string = "";
   fecha: string = "";
+  mensaje:string="";
   etiquetas: string[] = []; // Aquí se almacenarán las etiquetas seleccionadas
   etiquetasSeleccionadas: { [key: string]: boolean } = {}; // Objeto para almacenar el estado de los checkboxes
   cargando: boolean = false;
-  constructor(  private sanitizer: DomSanitizer,private crearArticulo: CrearArticuloService, private token: token) {}
+  constructor( private SuscripcionesService:SuscripcionesService, private sanitizer: DomSanitizer,private crearArticulo: CrearArticuloService, private token: token) {}
 
   ngOnInit() {
+    const formData = new FormData();
+    formData.append('idUsuario', this.token.obtenerUsuario());
+    this.SuscripcionesService.obtenerRevistas(formData).subscribe(
+      (response: any) => {
+
+
+        this.Revistas=response.revistas;
+
+
+
+      },
+      (error) => {
+        console.error('Error al enviar los datos:', error);
+      }
+    );
 
   }
 
 
 
+  cerrarPanelMensaje(){
+    this.panelMensaje=false;
+    if(this.procesoExitoso){
+      this.reiniciarDatos();
+    }
+  }
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files) {
@@ -46,7 +73,7 @@ export class CrearArticuloComponent implements OnInit {
     this.descripcion = "";
     this.etiquetas = [];
     this.fecha = "";
-
+    this.imagenSeleccionada=null;
     // Desmarcar todos los checkboxes
     for (const etiqueta in this.etiquetasSeleccionadas) {
       this.etiquetasSeleccionadas[etiqueta] = false;
@@ -57,7 +84,6 @@ export class CrearArticuloComponent implements OnInit {
   onSubmit(event: Event) {
     this.cargando = true;
     event.preventDefault(); // Previene el envío por defecto del formulario
-
 
 
     const articulo = {
@@ -84,7 +110,14 @@ export class CrearArticuloComponent implements OnInit {
       (response: any) => {
          // Iniciar la carga
         // Añadimos un pequeño retraso antes de ocultar el panel de carga
-       alert(response.mensaje)
+        this.mensaje=response.mensaje;
+        this.panelMensaje=true;
+        this.procesoExitoso=response.procesoExitoso;
+        if(this.procesoExitoso){
+          this.reiniciarDatos();
+        }
+       this.cargando = false;
+
       },
       (error) => {
         console.error('Error al enviar los datos:', error);

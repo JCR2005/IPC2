@@ -2,6 +2,7 @@ package Backend.anuncios;
 
 import JPA.Anuncio;
 import JPA.Controladora;
+import JPA.Ingreso;
 import com.google.gson.Gson;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,12 +10,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 
 import java.time.LocalDate;
 
 import java.time.format.DateTimeFormatter;
 
-import java.util.Date;
+
 
 /**
  *
@@ -24,6 +28,8 @@ public class CompraAnuncio {
 
     Controladora controladora = new Controladora();
     private String mensaje = "";
+    private Anuncio anunicoEnProceso;
+    private Date fechaInicio;
 
     public String proceso(InputStream imagen, String anuncio) throws IOException, Exception {
         InputStream imagenInputStream = null;
@@ -36,6 +42,7 @@ public class CompraAnuncio {
         String respuesta = "";
         Anuncio anuncioObjeto = new Anuncio();
         anuncioObjeto = ObtenerAnuncioObjeto(anuncio);
+        System.out.println(anuncioObjeto.getPrecio()+"_________________________________________________rtgkgjbwnegbsjedvs graveeeeeeeeeeeeeeeeeeeeeeeeeeeer");
 
         if (!validarTipoAnuncio(anuncioObjeto)) {
             this.mensaje = "No selecciono el tipo de anuncio";
@@ -79,15 +86,42 @@ public class CompraAnuncio {
 
     private void guardarAnuncio(Anuncio anuncio) throws Exception {
 
+        this.anunicoEnProceso=anuncio;
+        this.fechaInicio=anuncio.getFechaPublicacion();
         anuncio.setEstado(true);
         generarFechaPublicacion(anuncio);
         generarFechaFinalizacion(anuncio);
         cobro(anuncio.getPrecio(), controladora.obtenerCartera(anuncio.getUsuario()));
+           guardarRegistroPago();
+           
         controladora.crearAnuncio(anuncio);
         imprimir(anuncio);
 
     }
+    
+    private void guardarRegistroPago() {
+        try {
+            double monto = this.anunicoEnProceso.getPrecio();
+            Ingreso ingreso = new Ingreso(monto, convertStringToSqlDate(this.anunicoEnProceso.getFechaPublicacionTexto()), this.anunicoEnProceso.getUsuario(), "Adquisicion de espacio publicitario",this.anunicoEnProceso.getIdAnuncio());
+            this.controladora.crearIngreso(ingreso);
+        } catch (Exception e) {
+        }
 
+    }
+
+  public  Date convertStringToSqlDate(String dateString) {
+        try {
+            // Especifica el formato de fecha que se espera en el String
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            // Convierte el String a un java.util.Date
+            java.util.Date utilDate = format.parse(dateString);
+            // Convierte el java.util.Date a java.sql.Date
+            return new Date(utilDate.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null; // Manejo básico de error
+        }
+    }
     private void cobro(double precio, String id) throws Exception {
 
         double cobro = controladora.obtenerSaldo(id) - precio;
@@ -325,7 +359,7 @@ public class CompraAnuncio {
 
         anuncio.setPrecio(obtenerPrecio(anuncio.getTipoAnuncio(), anuncio.getVigencia()));
         if (saldo >= anuncio.getPrecio()) {
-
+            System.out.println(anuncio.getPrecio()+"_________________________________________preciooooooooooooooooooooooooooooooooo");
             return true;
 
         }

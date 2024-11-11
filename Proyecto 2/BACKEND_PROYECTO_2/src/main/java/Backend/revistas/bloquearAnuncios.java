@@ -1,17 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Backend.revistas;
 
-import JPA.Cartera;
 import JPA.Controladora;
+import JPA.Ingreso;
 import JPA.Revista;
 import JPA.bloqueoAddsRevista;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,46 +46,55 @@ public class bloquearAnuncios {
         return response;
     }
 
-    private void obtenerRevistas(String usuario) {
+ private void obtenerRevistas(String usuario) {
 
-        this.revistas = this.controladora.obtenerRevistas().stream()
-                .filter(revista -> revista.getAutor().endsWith(usuario))
-                .filter(revista -> revista.isAprobacion())
-                .filter(revista -> {
-                    bloqueoAddsRevista revistaEnProceso = this.controladora.obetenerRevistaEnProcesos(revista.getIdRevista());
-                    return revistaEnProceso.isBloqueoAddsRevista();
-                })
-                .collect(Collectors.toList());
-    }
+    this.revistas = this.controladora.obtenerRevistas().stream()
+            .filter(revista -> revista.getAutor().endsWith(usuario))
+            .filter(revista -> revista.isAprobacion())
+            .filter(revista -> {
+                bloqueoAddsRevista revistaEnProceso = this.controladora.obetenerRevistaEnProcesos(revista.getIdRevista());
+                return revistaEnProceso != null && revistaEnProceso.isBloqueoAddsRevista();
+            })
+            .collect(Collectors.toList());
+}
+ 
 
-    public void verificarVencimiento() throws Exception {
+   public void verificarVencimiento() throws Exception {
 
-        List<bloqueoAddsRevista> lista = this.controladora.obtenerListaBloqueoAnuncios();
+    List<bloqueoAddsRevista> lista = this.controladora.obtenerListaBloqueoAnuncios();
 
-        for (int i = 0; i < lista.size(); i++) {
+    for (int i = 0; i < lista.size(); i++) {
 
+        // Obtener la fecha de bloqueo
+        Date fechaBloqueo = lista.get(i).getFechaBloqueo();
+
+        if (fechaBloqueo != null) {
             // Convertir java.sql.Date a LocalDate
-            LocalDate fechaLocal = lista.get(i).getFechaBloqueo().toLocalDate();
+            LocalDate fechaLocal = fechaBloqueo.toLocalDate();
 
             // Calcular la fecha de vencimiento sumando los días de vigencia
             LocalDate fechaVencimiento = fechaLocal.plusDays(lista.get(i).getVigencia());
 
             // Comparar la fecha actual con la fecha de vencimiento
             if (LocalDate.now().isAfter(fechaVencimiento)) {
-                lista.get(i).setBloqueoAddsRevista(true); // Cambiar el estado a falso si ha vencido
+                lista.get(i).setBloqueoAddsRevista(true); // Cambiar el estado a verdadero si ha vencido
             } else {
-                 lista.get(i).setBloqueoAddsRevista(false);// Mantener bloqueado si no ha vencido
+                lista.get(i).setBloqueoAddsRevista(false); // Mantener bloqueado si no ha vencido
             }
-            
-            actualizar(lista.get(i));
-        }
 
+            actualizar(lista.get(i));
+        } else {
+            System.out.println("Fecha de bloqueo es null para el elemento en el índice: " + i);
+            // Puedes realizar alguna acción adicional aquí si deseas manejar específicamente los nulos
+        }
     }
+}
+
     
-    private void actualizar(bloqueoAddsRevista bloqueoAddsRevista) throws Exception{
-          this.controladora.bloquearAdds(bloqueoAddsRevista);
+
+    private void actualizar(bloqueoAddsRevista bloqueoAddsRevista) throws Exception {
+        this.controladora.bloquearAdds(bloqueoAddsRevista);
     }
-    
 
     //__________________________________________________________________________________________________
     //proceso bloqueo de adds________________________________________________________________________________
@@ -164,10 +168,21 @@ public class bloquearAnuncios {
         return this.saldo >= (revistaEnProceso.getCostoOcultacion() * this.vigencia);
     }
 
+    private void guardarRegistroPago() {
+        try {
+            double monto = this.revistaEnProceso.getCostoOcultacion() * this.vigencia;
+            Ingreso ingreso = new Ingreso(monto, this.fechaBloqueo, this.usuario, "Bloqueo de anuncios",this.revistaEnProceso.getIdRevista());
+            this.controladora.crearIngreso(ingreso);
+        } catch (Exception e) {
+        }
+
+    }
+
     private boolean bloquearAdds() {
         try {
             guardarCambios();
             descontarSaldo();
+            guardarRegistroPago();
             respuesta.setProcesoExitoso(true);
             respuesta.setMensaje("Tus suscriptores disfrutarán de " + revistaEnProceso.getTitulo() + " sin anuncios!!!");
             return true;
@@ -195,7 +210,7 @@ public class bloquearAnuncios {
 
     private void descontarSaldo() throws Exception {
         double nuevoSaldo = (this.saldo - (revistaEnProceso.getCostoOcultacion() * this.vigencia));
-     
+
         this.controladora.actualizarCartera(this.controladora.obtenerCartera(this.usuario), nuevoSaldo);
     }
 

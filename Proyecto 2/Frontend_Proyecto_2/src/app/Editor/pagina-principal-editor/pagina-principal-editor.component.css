@@ -94,6 +94,72 @@ h1{
 
   color: rgb(221, 221, 206);
   font-size: 400%;
+}
+/* Fondo oscuro y modal centrado */
+.confirm-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
+/* Estilo del cuadro de confirmación */
+.confirm-box {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
 
+/* Título */
+.confirm-box h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #162c5e;
+}
+
+/* Botones */
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 45%;
+}
+/* Estilo del ícono de la pregunta */
+.question-icon {
+  font-size: 100px;
+  color: #162c5e;  /* Color azul */
+  margin-bottom: 20px;
+}
+.btn-confirm {
+  background-color: #162c5e;
+  color: #fff;
+}
+
+.btn-confirm:hover {
+  background-color: #0d1f3d;
+}
+
+.btn-cancel {
+  background-color: #f0f0f0;
+  color: #162c5e;
+}
+
+.btn-cancel:hover {
+  background-color: #ddd;
 }

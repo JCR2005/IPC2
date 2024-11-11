@@ -1,0 +1,73 @@
+
+<div class="titulo">Reportes de suscripciones</div>
+
+<div class="panel-fechas">
+  <h3>Generar Reporte de suscripciones</h3>
+
+  <form (submit)="obtenerReporteGenerar()">
+    <!-- Campo de fecha de inicio -->
+    <label for="fechaInicio">*Fecha de Inicio:</label>
+    <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio" name="fechaInicio" required>
+
+    <!-- Campo de fecha de fin -->
+    <label for="fechaFin">*Fecha de Fin:</label>
+    <input type="date" id="fechaFin" [(ngModel)]="fechaFin" name="fechaFin" required>
+
+    <label for="revista">Revista (opcional):</label>
+    <ng-container *ngIf="Revistas.length > 0">
+
+      <select id="revista" [(ngModel)]="revistaSeleccionada" name="revista">
+        <option value="" disabled selected>seleccione una revista</option>
+        <option *ngFor="let revista of Revistas" [value]="revista.idRevista">
+          {{ revista.titulo }}
+        </option>
+      </select>
+    </ng-container>
+
+
+    <!-- Botón para generar el reporte -->
+    <button type="submit" class="btn-generar">Generar Reporte</button>
+  </form>
+</div>
+
+<div class="panelRespote"  *ngIf="panelReporte">
+  <table>
+    <tr>
+        <th>ID SUSCRIPCIÔN</th>
+        <th>REVISTA ASOCIADA</th>
+        <th>USUARIO</th>
+        <th>PUBLICACIÒN</th>
+    </tr>
+    <ng-container *ngIf="suscripciones.length > 0; else noComentario">
+      <tr  *ngFor="let suscripcion of suscripciones" >
+        <td>{{suscripcion.idSuscripcion}}</td>
+        <td>{{suscripcion.idRevista}} </td>
+        <td>{{suscripcion.idUsuario}} </td>
+        <td> {{ obtenerFechaLegible(suscripcion.fechaSuscricion) }}</td>
+
+    </tr>
+
+    </ng-container>
+
+      <ng-template #noComentario>
+        <p>Se el primero en comentar!!!</p>
+      </ng-template>
+
+
+
+
+</table>
+
+</div>
+
+<a
+[href]="pdfVisualizacion"
+[download]="nombreReporte"
+target="_blank"
+class="btn-descargar"
+*ngIf="panelReporte" >  <i class="fas fa-download"></i>
+   Exportar reporte
+</a>
+<button class="botonOpciones" (click)="abrirPanelFiltro()">
+  <span class="material-icons">search</span> <!-- Icono de lupa/búsqueda -->
+</button>

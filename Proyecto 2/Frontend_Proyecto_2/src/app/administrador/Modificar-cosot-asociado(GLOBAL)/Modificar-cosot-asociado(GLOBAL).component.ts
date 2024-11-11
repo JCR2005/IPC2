@@ -46,7 +46,7 @@ export class classModificarCosotAsociadoGLOBALComponent {
 
   racargarCartera(){
     const formData: FormData = new FormData();
-   
+
     formData.append('costoAsociado', this.costoNuevo.toString());
 
     this.RevistasService.actualizacionCostoAsociadoGlobal(formData).subscribe(

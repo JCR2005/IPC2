@@ -1,37 +1,53 @@
+
+
+<nav class="navbar">
+  <div class="navbar-container">
+    <a class="navbar-logo" >Estado de Adds</a>
+    <ul class="navbar-menu">
+
+      <li class="navbar-item">
+        <a class="navbar-link" href="/paginaprincipalanunciante">Pagina principal</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+
+
 <div class="registro-container">
   <div class="registro-box">
     <h2>Adquiere tu Anuncio</h2>
     <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
 
       <div class="form-group">
-
-        <select id="tipo_anuncio" required  [(ngModel)]="tipoAnuncio" (change)="actualizarPrecio()" name="tipo_anuncio">
+        <select id="tipo_anuncio" required [(ngModel)]="tipoAnuncio" name="tipo_anuncio" (change)="calcularPrecio()">
           <option value="" disabled selected hidden></option>
-          <option value="texto" data-precio="10">Texto</option>
-          <option value="imagen" data-precio="100">Imagen</option>
-          <option value="video" data-precio="150">Video</option>
+          <option value="texto" data-precio="precioTexto">Texto</option>
+          <option value="imagen" data-precio="precioImagen">Imagen</option>
+          <option value="video" data-precio="precioVideo">Video</option>
         </select>
-        <label  for="tipo_anuncio" *ngIf="!seleccionoTipoAnuncio" >Tipo de anuncio:</label>
-
-        <label  class="selects"  for="tipo_anuncio" *ngIf="seleccionoTipoAnuncio">Tipo de anuncio:</label>
-
-
+        <label for="tipo_anuncio" *ngIf="!seleccionoTipoAnuncio">Tipo de anuncio:</label>
+        <label class="selects" for="tipo_anuncio" *ngIf="seleccionoTipoAnuncio">Tipo de anuncio:</label>
       </div>
 
       <div class="form-group">
-        <select id="vigencia" class="select_vigencia" [(ngModel)]="vigencia" (change)="actualizarPrecio()" name="vigencia">
+        <select id="vigencia" class="select_vigencia" [(ngModel)]="vigencia" name="vigencia" (change)="calcularPrecio()">
           <option value="" disabled selected hidden></option>
-          <option value="1" data-multiplicador="1">1 Días</option>
-          <option value="4" data-multiplicador="4">4 Días</option>
-          <option value="14" data-multiplicador="14">7 Días</option>
-          <option value="28" data-multiplicador="28">14 Días</option>
+          <option value="1" data-multiplicador="vigencias[0]">{{vigencias[0].vigencia}} Días</option>
+          <option value="2" data-multiplicador="vigencias[1]">{{vigencias[1].vigencia}} Días</option>
+          <option value="3" data-multiplicador="vigencias[2]">{{vigencias[2].vigencia}} Días</option>
+          <option value="4" data-multiplicador="vigencias[3]">{{vigencias[3].vigencia}} Días</option>
         </select>
-        <label  for="vigencia" *ngIf="!seleccionoVigencia" >vigencia de anuncio:</label>
-
-        <label  class="selects"  for="vigencia" *ngIf="seleccionoVigencia">vigencia de anuncio:</label>
-
-
+        <label for="vigencia" *ngIf="!seleccionoVigencia">Vigencia de anuncio:</label>
+        <label class="selects" for="vigencia" *ngIf="seleccionoVigencia">Vigencia de anuncio:</label>
       </div>
+
+      <!-- Mostrar el precio calculado -->
+
+
+
+
 
       <div class="form-group">
 
@@ -70,17 +86,26 @@
       <button id="boton_comprar" type="submit" class="boton_comprar" value="comprar">comprar</button>
 
 
-      <div class="form-group">
-        <p id="precio" class="precio">Precio: {{ precio | currency:'Q' }}</p>
-        <input type="hidden" id="precioInput" name="precio" [value]="precio">
-        <p id="error_message" class="error">{{ errorMessage }}</p>
-      </div>
-
-
-
        </form>
   </div>
 
 
 
+</div>
+
+<div class="panelPrecios">
+  <br>
+<h3>Precio de anuncio texto: {{precioTexto}}.00Q</h3>
+  <br> <br>
+  <br>
+<h3>Precio de anuncio imagen:  {{precioImagen}}.00Q</h3>
+  <br> <br>
+  <br>
+<h3>Precio de anuncio video: {{precioVideo}}.00Q</h3>
+<div *ngIf="precioTotal > 0">
+
+  <br> <br>
+  <br>
+  <p>Precio total: {{ precioTotal | currency }}</p>
+</div>
 </div>

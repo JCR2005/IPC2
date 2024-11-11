@@ -60,7 +60,7 @@ procesoExitoso:boolean=false;
     }
 
     const Usuario = {
-      usuario: "prueba 0.7"
+      usuario: this.usuario
     };
 
     this.ServicioPerfilService.obtenerPerfil(Usuario).subscribe(

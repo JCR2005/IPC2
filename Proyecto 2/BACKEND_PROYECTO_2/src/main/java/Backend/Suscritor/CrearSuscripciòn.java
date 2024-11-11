@@ -12,114 +12,134 @@ import java.util.List;
 import respuetas.Suscriptor.RespuetaSuscripciòn;
 
 /**
- *
+ * Clase encargada de manejar las operaciones relacionadas con la suscripción de un usuario a revistas.
+ * Incluye la obtención de revistas disponibles y la creación de nuevas suscripciones.
+ * 
  * @author carlosrodriguez
  */
 public class CrearSuscripciòn {
 
-    private Controladora controladora = new Controladora();
+    private Controladora controladora = new Controladora();  // Instancia de la controladora para interactuar con la base de datos
+    private RespuetaSuscripciòn respuesta = new RespuetaSuscripciòn();  // Objeto que guarda la respuesta de las operaciones
 
-    private RespuetaSuscripciòn respuesta = new RespuetaSuscripciòn();
-
+    /**
+     * Obtiene la lista de revistas disponibles para un usuario, excluyendo las que ya están suscritas.
+     * 
+     * @param usuario El ID del usuario que quiere obtener las revistas.
+     * @return Una respuesta con la lista de revistas disponibles para suscripción.
+     */
     public RespuetaSuscripciòn obtenerListaDeRevistas(String usuario) {
         try {
-            
-            obtenerRevistas(usuario);
-            
+            obtenerRevistas(usuario);  // Obtiene las revistas que están disponibles para el usuario
         } catch (Exception e) {
-            this.respuesta.setMensaje("Algo salio mal intenta mas tarde");
+            this.respuesta.setMensaje("Algo salió mal, intenta más tarde.");
             this.respuesta.setProcesoExitoso(false);
         }
-
         return this.respuesta;
     }
 
+    /**
+     * Filtra las revistas aprobadas que aún no están suscritas por el usuario.
+     * 
+     * @param usuario El ID del usuario para verificar si ya está suscrito.
+     */
     private void obtenerRevistas(String usuario) {
-        
-         List<Revista> revistasAprobadas=this.controladora.obtenerRevistas();
-         List<Suscripciòn> suscripciòns=this.controladora.obtenerSuscripciones();
-        
-        for (int i = 0; i <revistasAprobadas.size() ; i++) {
-              boolean suscrito=false;
-            for (int j = 0; j < suscripciòns.size(); j++) {
-                     System.out.println("entro");
-                     
-                     System.out.println(suscripciòns.get(j).getIdRevista()+"|"+revistasAprobadas.get(i).getIdRevista());
-                     System.out.println(suscripciòns.get(j).getIdUsuario()+"|"+usuario);
-                     
-                if (suscripciòns.get(j).getIdRevista().equals(revistasAprobadas.get(i).getIdRevista()) &&suscripciòns.get(j).getIdUsuario().equals(usuario)) {
-                    suscrito=true;
-                 
+        List<Revista> revistasAprobadas = this.controladora.obtenerRevistas();
+        List<Suscripciòn> suscripciòns = this.controladora.obtenerSuscripciones();
+
+        for (Revista revista : revistasAprobadas) {
+            boolean suscrito = false;
+
+            // Comprobamos si el usuario ya está suscrito a la revista
+            for (Suscripciòn suscripcion : suscripciòns) {
+                if (suscripcion.getIdRevista().equals(revista.getIdRevista()) && suscripcion.getIdUsuario().equals(usuario)) {
+                    suscrito = true;
+                    break;  // Ya está suscrito, no necesitamos seguir buscando
                 }
-              
             }
-            if (!suscrito &&revistasAprobadas.get(i).isAprobacion() ) {
-                   this.respuesta.getRevistas().add(revistasAprobadas.get(i));
+
+            // Si el usuario no está suscrito y la revista está aprobada, la añadimos a la lista de revistas disponibles
+            if (!suscrito && revista.isAprobacion()) {
+                this.respuesta.getRevistas().add(revista);
             }
-            
-        }
-        
-        for (int i = 0; i <     this.respuesta.getRevistas().size(); i++) {
-            System.out.println(    this.respuesta.getRevistas().get(i).getIdRevista());
         }
 
-        if (this.respuesta.getRevistas() == null) {
-            this.respuesta.setMensaje("Algo salio mal intenta mas tarde");
+        // Si no hay revistas disponibles para suscripción
+        if (this.respuesta.getRevistas().isEmpty()) {
+            this.respuesta.setMensaje("No hay revistas disponibles para suscripción.");
             this.respuesta.setProcesoExitoso(false);
         }
-        
     }
 
+    /**
+     * Realiza la suscripción a una revista.
+     * 
+     * @param suscripciòn El objeto Suscripciòn que contiene la información del usuario y la revista.
+     * @return Respuesta con el resultado de la operación de suscripción.
+     */
     public RespuetaSuscripciòn suscribirRevista(Suscripciòn suscripciòn) {
-
         try {
-
+            // Validamos que el usuario exista en la base de datos
             if (!validarExistenciaUsuario(suscripciòn.getIdUsuario())) {
                 this.respuesta.setProcesoExitoso(false);
-                this.respuesta.setMensaje("No se encontro el usuario");
-                return this.respuesta;
-            }
-            if (!generarFechaPublicacion(suscripciòn)) {
-                this.respuesta.setProcesoExitoso(false);
-                this.respuesta.setMensaje("Ingrese una fecha valida");
+                this.respuesta.setMensaje("No se encontró el usuario.");
                 return this.respuesta;
             }
 
+            // Generamos la fecha de suscripción en el formato adecuado
+            if (!generarFechaPublicacion(suscripciòn)) {
+                this.respuesta.setProcesoExitoso(false);
+                this.respuesta.setMensaje("Fecha de suscripción no válida.");
+                return this.respuesta;
+            }
+
+            // Registramos la suscripción en la base de datos
             this.controladora.crearSuscripciòn(suscripciòn);
-            this.respuesta.setMensaje("Te has suscrito a esta revista exitosamente");
+            this.respuesta.setMensaje("Te has suscrito a la revista exitosamente.");
+            this.respuesta.setProcesoExitoso(true);
             return this.respuesta;
 
         } catch (Exception e) {
-             this.respuesta.setProcesoExitoso(false);
-                this.respuesta.setMensaje("Ociurrio algo inesperado, contacta a soporte si el problem persiste");
+            this.respuesta.setProcesoExitoso(false);
+            this.respuesta.setMensaje("Ocurrió un error inesperado, por favor contacta a soporte.");
             return this.respuesta;
         }
-
     }
 
-    private boolean generarFechaPublicacion(Suscripciòn suscripción) {
-
+    /**
+     * Genera la fecha de suscripción en el formato adecuado y la asigna a la suscripción.
+     * Convierte la fecha en formato ISO 8601 a un objeto Date de SQL para su almacenamiento.
+     * 
+     * @param suscripciòn El objeto Suscripciòn que contiene la fecha de suscripción.
+     * @return true si la fecha fue generada correctamente, false en caso de error.
+     */
+    private boolean generarFechaPublicacion(Suscripciòn suscripciòn) {
         try {
-            // Ajuste para manejar el formato con zona horaria
+            // Utilizamos el formato de fecha ISO 8601 con zona horaria
             DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
-            OffsetDateTime fechaOffsetDateTime = OffsetDateTime.parse(suscripción.getFechaSuscripcionTexto(), formato);
+            OffsetDateTime fechaOffsetDateTime = OffsetDateTime.parse(suscripciòn.getFechaSuscripcionTexto(), formato);
 
-            // Convertir OffsetDateTime a LocalDate
+            // Convertimos a LocalDate (solo la parte de la fecha, sin hora)
             LocalDate fechaLocalDate = fechaOffsetDateTime.toLocalDate();
 
-            // Convertir LocalDate a Date para MySQL
+            // Convertimos a java.sql.Date para su almacenamiento en la base de datos
             Date fechaPublicacion = java.sql.Date.valueOf(fechaLocalDate);
-            suscripción.setFechaSuscricion((java.sql.Date) fechaPublicacion);
+            suscripciòn.setFechaSuscricion(fechaPublicacion);  // Asignamos la fecha generada
 
             return true;
         } catch (Exception e) {
-            return false;
+            return false;  // En caso de error al generar la fecha
         }
-
     }
 
+    /**
+     * Valida si un usuario existe en la base de datos.
+     * 
+     * @param idUsuario El ID del usuario que se va a verificar.
+     * @return true si el usuario existe, false si no.
+     * @throws Exception si ocurre un error en la consulta.
+     */
     private boolean validarExistenciaUsuario(String idUsuario) throws Exception {
         return this.controladora.buscarUsuarios(idUsuario);
     }
-
 }

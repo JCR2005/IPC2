@@ -8,6 +8,9 @@
   padding: 20px;
   max-width: 100%; /* Ahora ocupa el 100% del ancho */
   width: 79%; /* Se adapta al ancho completo */
+  max-height: 90vh;                     /* Limita la altura del contenedor */
+  overflow-y: auto;                     /* Habilita el scroll vertical cuando sea necesario */
+  box-sizing: border-box;
 }
 
 h1 {
@@ -166,4 +169,106 @@ textarea:not(:placeholder-shown) + label {
   top: -20px;
   font-size: 12px;
   color: #162c5e;
+}
+.panelMensaje {
+  padding: 0px 5%;
+  align-items: center; /* Centra horizontalmente */
+  border-radius: 15px;
+  position: absolute; /* Fija el panel en la pantalla */
+  top: 25%; /* Empieza desde la parte superior */
+  left: 27.5%; /* Empieza desde la izquierda */
+  width: 35%; /* Cubre todo el ancho de la pantalla */
+  height: 40%; /* Cubre toda la altura de la pantalla */
+  background-color: #ffffff; /* Fondo semi-transparente */
+  display: flex; /* Usa flexbox para centrar el contenido */
+  flex-direction: column; /* Coloca los elementos en columna */
+  justify-content: center; /* Centra verticalmente */
+  box-shadow: 0 4px 8px #00000070;
+
+}
+.check-icon {
+  position: absolute;
+  top: 20%;
+  color: #162c5e; /* Color verde */
+  font-size: 500%;
+  margin-right: 0;
+}
+
+.error-icon {
+  position: absolute;
+  top: 20%;
+  color: #ee2a07; /* Color verde */
+  font-size: 500%;
+  margin-right: 0;
+}
+
+.cerrarPanelMensaje-btn {
+  position: absolute;
+
+  bottom:5%;
+  background-color: #162c5e;
+  color: #fff;
+  border: none;
+  width: 16%;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+/* Estilo para la barra de navegación */
+.navbar {
+  position: fixed;                     /* Fija la barra en la parte superior */
+  top: 0;                              /* Empieza desde el top */
+  left: 0%;                             /* Empieza desde la izquierda */
+  width: 98%;                           /* Ancho completo */
+  height: 5%;                           /* Altura de la barra */
+  background-color: #162c5e;            /* Fondo azul oscuro */
+  padding: 10px 20px;                   /* Relleno interno */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  z-index: 1000;                        /* Asegura que la barra esté por encima de otros elementos */
+}
+
+/* Contenedor para los elementos dentro de la barra de navegación */
+.navbar-container {
+  display: flex;                        /* Usa flexbox para organizar los elementos */
+  justify-content: space-between;       /* Espacio entre el logo y el menú */
+  align-items: center;                  /* Centra los elementos verticalmente */
+}
+
+/* Logo de la barra de navegación */
+.navbar-logo {
+  font-weight: bold;                    /* Texto en negrita */
+  color: white;                         /* Texto blanco */
+  font-size: 24px;                      /* Tamaño de la fuente */
+  text-decoration: none;                /* Elimina subrayado */
+}
+
+/* Estilo para el menú de navegación */
+.navbar-menu {
+  list-style: none;                     /* Elimina los puntos de la lista */
+  display: flex;                        /* Organiza los elementos en línea */
+  margin: 0;                             /* Elimina el margen por defecto */
+  padding: 0;                            /* Elimina el padding por defecto */
+}
+
+/* Estilo de los elementos del menú de navegación */
+.navbar-item {
+  margin-left: 20px;                    /* Espacio entre los elementos del menú */
+  position: relative;                   /* Necesario para posicionar el submenú */
+}
+
+/* Enlace de los elementos del menú */
+.navbar-link {
+  color: white;                         /* Texto blanco */
+  text-decoration: none;                /* Elimina subrayado */
+  font-weight: bold;                    /* Texto en negrita */
+  padding: 10px 15px;                   /* Relleno interno */
+  transition: background-color 0.3s ease; /* Transición suave al cambiar el fondo */
+}
+
+/* Estilo al pasar el ratón sobre los enlaces del menú */
+.navbar-link:hover {
+  background-color: #ffffff;            /* Fondo blanco */
+  color: #35466e;                       /* Color de texto azul oscuro */
+  border-radius: 25px;                  /* Bordes redondeados */
 }

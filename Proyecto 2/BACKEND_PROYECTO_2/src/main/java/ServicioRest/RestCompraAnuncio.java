@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import respuetas.Anunciantes.RespuestaAnuncios;
 
 /**
  *
@@ -26,6 +27,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 public class RestCompraAnuncio {
 
     CompraAnuncio compraanuncio = new CompraAnuncio();
+    RespuestaAnuncios respuesta=new RespuestaAnuncios();
     ListaDeAnuncios listaDeAnuncios = new ListaDeAnuncios();
 
     @GET
@@ -71,5 +73,16 @@ public class RestCompraAnuncio {
         
         String jsonResponse =listaDeAnuncios.procesoCambioDeEstado(idAnuncio, estado);
         return Response.ok(jsonResponse).build();
+    }
+    
+    
+       @GET
+    @Path("preciosAnuncios")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response obtenerPreciosAnuncioos() throws Exception {
+        
+        respuesta =listaDeAnuncios.procesoCambioDeEstado();
+        return Response.ok(respuesta).build();
     }
 }

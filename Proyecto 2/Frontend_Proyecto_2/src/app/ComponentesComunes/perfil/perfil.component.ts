@@ -4,6 +4,7 @@ import { ServicioPerfilService } from './../../services/serviciosComunes/servici
 import { token } from '../../token';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { RouterModule } from '@angular/router';
 export class PerfilComponent implements OnInit {
   panelMensaje: boolean = false;
   mensaje: string = "";
-
+  panelLogout: boolean = false;
   nombre: string = "";
   usuario: string = "";
   tipoCuenta: string = "";
@@ -31,7 +32,7 @@ export class PerfilComponent implements OnInit {
 
   constructor(
     private ServicioPerfilService: ServicioPerfilService,
-    private token: token
+    private token: token,private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +41,25 @@ export class PerfilComponent implements OnInit {
 
   cerrarPanelMensaje(){
     this.panelMensaje=false;
+  }
+  confirmLogout() {
+    // Eliminar el token del sessionStorage
+
+
+    // Redirigir al usuario a la página de inicio de sesión
+    this.router.navigate(['/logout']);
+
+  }
+
+  // Si el usuario cancela, regresa a la página anterior
+  cancelLogout() {
+    // Regresar a la página de donde vino el usuario
+    this.panelLogout=false;// Redirige a la página anterior o al home si no hay historial
+  }
+
+  CerrarSesionComponent(){
+    this.panelLogout=true;
+
   }
   cargarPerfil() {
     this.cargando = true;
@@ -55,8 +75,10 @@ export class PerfilComponent implements OnInit {
     }
 
     const Usuario = {
-      usuario: "prueba 0.7"
+      usuario: this.usuario
     };
+
+
 
     this.ServicioPerfilService.obtenerPerfil(Usuario).subscribe(
       (response: any) => {

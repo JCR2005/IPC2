@@ -12,7 +12,9 @@ import { token } from '../../token';
   styleUrls: ['./crearRevista.component.css']
 })
 export class CrearRevistaComponent implements OnInit {
-
+  panelMensaje: boolean = false;
+  procesoExitoso=false;
+  mensaje="";
   nombreRevista: string = "";
   autor: string = "";
   descripcion: string = "";
@@ -71,15 +73,16 @@ export class CrearRevistaComponent implements OnInit {
 
     this.crearRevistaService.crearRevista(nuevaRevista).subscribe(
       (response: any) => {
-         // Iniciar la carga
-        // Añadimos un pequeño retraso antes de ocultar el panel de carga
-        setTimeout(() => {
-          this.cargando = false; // Terminar la carga después de 500ms
-        }, 1000);
+        this.procesoExitoso=response.procesoExitoso;
+        this.mensaje=response.mensaje;
 
-        if (response.verificacion === "true" || response.verificacion === true) {
-          this.reiniciarDatos();
-        }
+
+          this.cargando = false; // Terminar la carga después de 500ms
+          this.panelMensaje=true;
+
+
+
+
       },
       (error) => {
         console.error('Error al enviar los datos:', error);
@@ -88,6 +91,12 @@ export class CrearRevistaComponent implements OnInit {
     );
   }
 
+  cerrarPanelMensaje(){
+    this.panelMensaje=false;
+    if(this.procesoExitoso){
+      this.reiniciarDatos();
+    }
+  }
   // Método para actualizar las etiquetas seleccionadas
   toggleEtiqueta(etiqueta: string, event: Event) {
     const checkbox = event.target as HTMLInputElement; // Casting aquí

@@ -1,0 +1,70 @@
+
+<div class="titulo">Reporte de revistas top5</div>
+
+<div class="panel-fechas">
+  <h3>Generar Reporte de revistas top5</h3>
+
+  <form (submit)="obtenerReporteGenerar()">
+    <!-- Campo de fecha de inicio -->
+    <label for="fechaInicio">*Fecha de Inicio:</label>
+    <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio" name="fechaInicio" required>
+
+    <!-- Campo de fecha de fin -->
+    <label for="fechaFin">*Fecha de Fin:</label>
+    <input type="date" id="fechaFin" [(ngModel)]="fechaFin" name="fechaFin" required>
+
+    <label for="revista">Revista (opcional):</label>
+    <ng-container *ngIf="Revistas.length > 0">
+
+      <select id="revista" [(ngModel)]="revistaSeleccionada" name="revista">
+        <option value="" disabled selected>seleccione una revista</option>
+        <option *ngFor="let revista of Revistas" [value]="revista.idRevista">
+          {{ revista.titulo }}
+        </option>
+      </select>
+    </ng-container>
+
+
+    <!-- Botón para generar el reporte -->
+    <button type="submit" class="btn-generar">Generar Reporte</button>
+  </form>
+</div>
+
+<div class="panelRespote" *ngIf="panelReporte">
+  <ng-container *ngIf="titulos.length > 0 ">
+    <div *ngFor="let titulo of titulos,let i=index">
+    <h2 >{{titulo}}</h2>
+    <table>
+      <tr>
+          <th>ID</th>
+          <th>USUARIO</th>
+          <th>REVISTA ASOCIADA</th>
+
+          <th>FECHA DE ME GUSTA</th>
+      </tr>
+      <ng-container *ngIf="comentarios.length > 0; else noComentario">
+        <tr  *ngFor="let comentario of comentarios[i]" >
+          <td>{{comentario.idMeGusta}}</td>
+          <td>{{comentario.idUsuario}} </td>
+          <td>{{comentario.idRevista}} </td>
+          <td>{{ obtenerFechaLegible(comentario.fecha) }}</td>
+      </tr>
+      </ng-container>
+        <ng-template #noComentario>
+          <p>No se encontraron registros</p>
+        </ng-template>
+    </table>
+    </div>
+</ng-container>
+</div>
+<a
+[href]="pdfVisualizacion"
+[download]="nombreReporte"
+target="_blank"
+class="btn-descargar"
+*ngIf="panelReporte" >  <i class="fas fa-download"></i>
+   Exportar reporte
+</a>
+<button class="botonOpciones" (click)="abrirPanelFiltro()">
+  <span class="material-icons">search</span> <!-- Icono de lupa/búsqueda -->
+</button>

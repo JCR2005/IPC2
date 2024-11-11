@@ -29,11 +29,28 @@ export class ModificarCostoAsociadoComponent {
   aprobacionExitosa=true;
   costoAsociadoActual:number=0;
   mensaje:string="";
-
+  costoGlobalAsociado: number= 0.00;
   ngOnInit(): void {
     this.cargarDatos();
+    this.obtenerDatos();
   }
 
+  obtenerDatos(){
+
+    this.RevistasService.obtenerCostoAsociadoGlobal().subscribe(
+      (response: any) => {
+
+        this.costoGlobalAsociado=response.costosGlobales.costo;
+        this.costoAsociado=this.costoGlobalAsociado;
+
+      },
+      (error) => {
+        console.error('Error al enviar los datos:', error);
+        alert('Error al registrar: ' + error.message);
+      }
+    );
+
+  }
   cargarDatos() {
     this.cargando = true; // Iniciar la carga
 

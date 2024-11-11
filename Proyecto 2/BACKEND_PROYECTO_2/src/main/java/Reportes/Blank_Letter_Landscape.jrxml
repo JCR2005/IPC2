@@ -1,0 +1,104 @@
+<!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
+<jasperReport name="Blank_Letter_Landscape" language="java" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6b1823f5-3ad8-47b0-90d4-d26fb7f0bc1c">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<scriptlet name="Scriptlet_1" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
+	<query language="sql"><![CDATA[]]></query>
+	<field name="idIngerso" class="java.lang.Long"/>
+	<field name="monto" class="java.lang.Double"/>
+	<field name="tipoAnuncio" class="java.lang.String"/>
+	<field name="proposito" class="java.lang.String"/>
+	<field name="fecha" class="java.sql.Date"/>
+	<field name="idUsuario" class="java.lang.String"/>
+	<field name="ingresoTotal" class="java.lang.Double"/>
+	<group name="UsuarioGroup">
+		<expression><![CDATA[$F{idUsuario}]]></expression>
+		<groupHeader>
+			<band height="72">
+				<element kind="textField" uuid="bc37d0f2-ec65-470a-8fef-266724eb3ae5" x="150" y="8" width="100" height="20" evaluationTime="Group" evaluationGroup="UsuarioGroup" blankWhenNull="true" bold="true" italic="true" vTextAlign="Middle">
+					<expression><![CDATA[ $F{idUsuario}
+]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a7c3fa2d-e606-4f5c-b233-dd12020f0f99"/>
+				</element>
+				<element kind="textField" uuid="333ec86e-2596-435c-ba7c-1920e3a3090a" x="19" y="8" width="100" height="20" bold="true" italic="true" vTextAlign="Middle">
+					<expression><![CDATA[$F{ingresoTotal}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4de443d5-13d8-4ca0-9ccd-f4551e80599c"/>
+				</element>
+			</band>
+		</groupHeader>
+	</group>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="staticText" uuid="0135acce-f989-451a-be10-45c932180df8" x="180" y="40" width="400" height="34" forecolor="#231C66" fontName="Bebas Neue" fontSize="26.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Reportes de ingresos por anunciantes]]></text>
+		</element>
+		<element kind="staticText" uuid="b55ddf34-d697-4ea2-95e0-c83f71db4207" x="592" y="0" width="50" height="12" forecolor="#121966" markup="styled" fontName="Bebas Neue" fontSize="10.0" bold="true" italic="true" hTextAlign="Left" vTextAlign="Middle">
+			<text><![CDATA[Generado eN]]></text>
+		</element>
+		<element kind="textField" uuid="ddcb7fab-9673-45d9-aefe-8174a5284b81" x="641" y="0" width="110" height="12" forecolor="#102A75" fontName="Bebas Neue" pattern="MMMMM dd, yyyy" bold="true" italic="true">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+	</title>
+	<pageHeader height="52" splitType="Stretch">
+		<element kind="staticText" uuid="3eddab70-5934-4152-8af1-3d9596703217" mode="Opaque" x="-20" y="2" width="792" height="50" backcolor="#172169">
+			<text><![CDATA[]]></text>
+		</element>
+	</pageHeader>
+	<columnHeader height="61" splitType="Stretch">
+		<element kind="staticText" uuid="2e0af817-171a-47af-aacf-ffc64aab69c1" mode="Opaque" x="-1" y="11" width="111" height="30" forecolor="#FFFFFF" backcolor="#162C5E" fontName="Arial Black" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[ID PAGO	]]></text>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="staticText" uuid="485464cb-b8d3-447e-acc7-3cba4c19277f" mode="Opaque" x="110" y="11" width="110" height="30" forecolor="#FFFFFF" backcolor="#162C5E" fontName="Arial Black" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[MONTO	]]></text>
+		</element>
+		<element kind="staticText" uuid="4487372f-4f31-4054-bd5f-1e8ee6dcd412" mode="Opaque" x="220" y="11" width="170" height="30" forecolor="#FFFFFF" backcolor="#162C5E" fontName="Arial Black" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[TIPO ANUNCIO]]></text>
+		</element>
+		<element kind="staticText" uuid="493a42c1-03f8-4202-9d3f-a11a5233f28f" mode="Opaque" x="390" y="11" width="240" height="30" forecolor="#FFFFFF" backcolor="#162C5E" fontName="Arial Black" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[PROPOSITO		]]></text>
+		</element>
+		<element kind="staticText" uuid="c0762aa8-adb3-4434-9d4f-35f0129712d3" mode="Opaque" x="630" y="11" width="122" height="30" forecolor="#FFFFFF" backcolor="#162C5E" fontName="Arial Black" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[FECHA]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<element kind="textField" uuid="4b7a52de-fc2a-48a6-936d-5530228a39bd" x="0" y="3" width="110" height="20" fontSize="11.0" printWhenDetailOverflows="true" bold="true" italic="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{idIngerso}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40b9d18e-c3c9-4e31-9bf4-9c26b992def5"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="2.75" lineStyle="Solid" lineColor="#162C5E"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="c5055088-90ce-4a44-853a-15a09ebe8c03" x="110" y="3" width="110" height="20" fontSize="11.0" bold="true" italic="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{monto}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd691dbd-7afe-4d21-b9e4-571f64ec1c04"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="2.75" lineStyle="Solid" lineColor="#162C5E"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="f7d92a0f-1a85-453e-b4cc-330dd0534507" x="220" y="3" width="170" height="20" fontSize="11.0" bold="true" italic="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{tipoAnuncio}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="db0f2bc1-dd96-4c99-ba29-910aa0e35529"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="2.75" lineStyle="Solid" lineColor="#162C5E"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="8f030b93-2dcb-4706-9693-547e4babca17" x="390" y="3" width="240" height="20" fontSize="11.0" bold="true" italic="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{proposito}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="51ea828c-ed7f-49c3-88eb-21ea7cc3bec0"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="2.75" lineStyle="Solid" lineColor="#162C5E"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="24cc8960-8182-4444-a2e4-0f95bc9c9559" x="630" y="3" width="120" height="20" fontSize="11.0" bold="true" italic="true" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{fecha}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a4f96a9d-66fd-4533-841c-9d29eda23dd1"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="2.75" lineStyle="Solid" lineColor="#162C5E"/>
+				</box>
+			</element>
+		</band>
+	</detail>
+	<pageFooter height="54" splitType="Stretch"/>
+</jasperReport>

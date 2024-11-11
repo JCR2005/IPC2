@@ -13,6 +13,8 @@ import { RegistroService } from '../services/servicioRegistro/registro.service';
 })
 export class RegistroComponent {
   showPassword = false;
+  intereses: string[] = []; // Array para almacenar los intereses seleccionados
+  seleccionoIntereses: boolean = false;
   password: string = "";
   usuario: string = "";
   tipoCuenta: string = "";
@@ -26,9 +28,32 @@ export class RegistroComponent {
   nombreValido = true;
   edadValida = true;
   descripcionValida = true;
+  etiquetas: string[] = []; // Aquí se almacenarán las etiquetas seleccionadas
+  etiquetasSeleccionadas: { [key: string]: boolean } = {};
 
+  cambiarInteres() {
+    // Actualiza el estado de "seleccionoIntereses" según si el usuario ha seleccionado algo
+    if (this.intereses.length > 0) {
+      this.seleccionoIntereses = true;
+    } else {
+      this.seleccionoIntereses = false;
+    }
+  }
   constructor(private registroService: RegistroService) {}
+// Método para actualizar las etiquetas seleccionadas
+toggleEtiqueta(etiqueta: string, event: Event) {
+  const checkbox = event.target as HTMLInputElement; // Casting aquí
+  const checked = checkbox.checked;
 
+  this.etiquetasSeleccionadas[etiqueta] = checked; // Actualiza el estado del checkbox
+
+  if (checked) {
+    this.etiquetas.push(etiqueta); // Añadir la etiqueta si está marcada
+  } else {
+    this.etiquetas = this.etiquetas.filter(e => e !== etiqueta); // Quitar la etiqueta si está desmarcada
+  }
+  console.log(`Etiquetas seleccionadas:`, this.etiquetas);
+}
   cambiar() {
     this.seleccionoTipoCuenta = true;
   }
@@ -37,19 +62,22 @@ export class RegistroComponent {
 
   reiniciarDatos() {
     this.showPassword = false;
-    this.password = "";
+    this.password = ""; 
     this.usuario = "";
     this.tipoCuenta = "";
     this.nombre = "";
     this.edad = 18;
     this.descripcion = "";
-    this.urlFoto = "src/main/webapp/img/user.png";
+    this.urlFoto = "/home/carlosrodriguez/Documentos/Proyecto 2/Proyecto 2/BACKEND_PROYECTO_2/src/main/webapp/img/user.png";
     this.seleccionoTipoCuenta = false;
     this.usuarioExiste = false;
     this.passwordValida = true;
     this.nombreValido = true;
     this.edadValida = true;
     this.descripcionValida = true;
+    for (const etiqueta in this.etiquetasSeleccionadas) {
+      this.etiquetasSeleccionadas[etiqueta] = false;
+    }
   }
 
   onSubmit() {

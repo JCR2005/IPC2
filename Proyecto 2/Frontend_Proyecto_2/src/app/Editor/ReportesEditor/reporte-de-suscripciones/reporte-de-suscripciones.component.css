@@ -1,0 +1,158 @@
+.panelRespote {
+  position: absolute;
+  overflow-y: auto;    /* Scroll vertical */
+  top:15%;
+  height: 79%;
+  right: 10%;
+  width: 80%;
+  border: 2px solid #162c5e;
+  border-radius: 10px;
+  background-color:#fff; /* Fondo semitransparente */
+  backdrop-filter: blur(8px); /* Ajusta el valor de blur según sea necesario */
+}
+.botonOpciones {
+  position: absolute;
+  top: 2%;
+  right:1%;
+  border-radius: 50%;
+  width: 5%;
+  height: 10%;
+  background-color: #162c5e;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1001;
+}
+.material-icons {
+  color: white; /* Color del ícono */
+  font-size: 240%; /* Tamaño del ícono */
+}
+
+.titulo{
+  position: absolute;
+  background-color: #162c5e;
+padding: 0% 1%;
+width: 50%;
+top: 6%;
+left: 24%;
+  font-weight: bold;
+  font-style: oblique;
+  font-size: 300%;
+  text-align: center;
+  position: absolute;
+  color: #fff;
+  border-radius: 25px;
+  z-index: 1001;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border: 2px solid #162c5e;
+  padding: 8px;
+  text-align: center;
+}
+th {
+  background-color: #f2f2f2;
+}
+
+td.u {
+  word-wrap: break-word; /* Permite que el texto se ajuste a la celda */
+  word-break: break-all; /* Fuerza el corte de palabras si es necesario */
+}
+.panel-fechas {
+  position: absolute;
+  top: 25%;
+  left: 38%;
+  width: 20%;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.panel-fechas h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #35466e;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.btn-generar {
+  width: 100%;
+  padding: 10px;
+  background-color: #35466e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-generar:hover {
+  background-color: #283a6c;
+}
+/* Estiliza el select para que coincida con el diseño del formulario */
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;  /* Fondo blanco */
+  appearance: none;        /* Elimina el estilo nativo del select */
+  -webkit-appearance: none; /* Para navegadores webkit */
+  -moz-appearance: none;    /* Para navegadores Mozilla */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%27http%3A//www.w3.org/2000/svg%27 width%3D%2710%27 height%3D%2710%27 viewBox%3D%270 0 4 5%27%3E%3Cpath fill%3D%27%2335466e%27 d%3D%27M2 0L0 2h4z%27/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  cursor: pointer;
+}
+
+select:focus {
+  outline: none;
+  border-color: #35466e; /* Color del borde al enfocar */
+  box-shadow: 0 0 5px rgba(53, 70, 110, 0.5);
+}
+
+.btn-descargar {
+  font-weight: bolder;
+  font-style: italic;
+  position: absolute;
+  text-align: center;
+  top: 92%;
+  width:20%;
+  left: 40%;
+  margin-top: 10px;
+  padding: 4px 0px;
+  background-color: #162c5e;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.btn-descargar:hover {
+  left: 35%;
+  width:30%;
+  padding: 6px 0px;
+}

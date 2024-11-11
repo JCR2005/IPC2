@@ -1,0 +1,116 @@
+
+
+.marcaAgua1{
+
+  color: rgb(240, 240, 232);
+  font-size: 700%;
+}
+
+.marcaAgua2{
+
+  color: rgb(221, 221, 206);
+  font-size: 300%;
+}
+
+.botonOpciones {
+  position: absolute;
+  top: 2%;
+  left: 1%;
+  border-radius: 50%;
+  width: 5%;
+  height: 10%;
+  background-color: #162c5e;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1005;
+}
+
+.botonOpciones:hover {
+  background-color: #1d3a7a; /* Efecto de hover */
+}
+
+.material-icons {
+  color: white; /* Color del ícono */
+  font-size: 240%; /* Tamaño del ícono */
+}
+
+.difuminado {
+
+  position: absolute;
+  top:0%;
+  height: 100%;
+  right: 0%;
+  width: 75%;
+  background-color: rgba(22, 44, 94, 0.80); /* Fondo semitransparente */
+  backdrop-filter: blur(8px); /* Ajusta el valor de blur según sea necesario */
+  z-index: 1001;
+}
+/* Tamaño normal del panel */
+.contenedorReportesComentarios.normal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 75%;
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+  backdrop-filter: blur(8px); /* Ajusta el valor de blur según sea necesario */
+  transition: width 0.5s ease; /* Transición suave cuando se cambia el tamaño */
+}
+
+/* Tamaño grande del panel */
+.contenedorReportesComentarios.grande {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+  backdrop-filter: blur(8px); /* Ajusta el valor de blur según sea necesario */
+  transition: width 0.5s ease; /* Transición suave cuando se cambia el tamaño */
+  width: 100%; /* Aumenta el ancho a 85% */
+}
+
+.panelOpciones {
+
+  position: absolute;
+  top:0%;
+  padding-top: 10%;
+  height: 85%;
+  left: 0%;
+  width: 25%;
+  background-color: rgba(255, 255, 255, 0.61); /* Fondo semitransparente */
+  backdrop-filter: blur(8px); /* Ajusta el valor de blur según sea necesario */
+  z-index: 1001;
+}
+
+.navbar-link {
+  color: #fff;
+  text-decoration: none;
+  background-color: #162c5e;
+  border-radius: 25px;
+  font-weight: bold;
+  padding: 10px 15px;
+  width: 80%; /* Ajusta el ancho al 100% para ocupar todo el espacio disponible */
+  display: inline-block; /* Cambia el comportamiento a bloque en línea */
+  transition: background-color 0.3s ease, left 0.3s ease; /* Añade la transición para left */
+  text-align: center; /* Centra el texto dentro del enlace */
+  position: relative; /* Cambia la posición a relativa */
+}
+
+.navbar-link:hover {
+  left: 5%; /* Esto ahora funcionará */
+  width: 100%;
+  background-color: #35466e;
+  color: #fff;
+  border-radius: 25px;
+}
+
+
+
+
+
+
+

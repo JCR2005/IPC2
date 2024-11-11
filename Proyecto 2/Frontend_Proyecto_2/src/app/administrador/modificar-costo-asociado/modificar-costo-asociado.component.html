@@ -72,8 +72,13 @@
 
     </div>
     <br><br><br>
+    <div class="panelCosto">
+      <label class="label_costo"  for="costo">Costo asociado (GLOBAL) recomendado: {{costoGlobalAsociado}}.00Q </label>
+  </div>
+
+    <br><br><br>
     <div class="section">
-      <label >Costo ocultaciòn(Q)</label>
+      <label >Costo Asociado(Q)</label>
       <input type="number"   [(ngModel)]="costoAsociado" name="costoOcultacion" placeholder="0" min="0" />
 
         <label  *ngIf="mensajeErrorcostoAsociado" class="mensajeError" >Ingrese un costo de ocultacion valido</label>

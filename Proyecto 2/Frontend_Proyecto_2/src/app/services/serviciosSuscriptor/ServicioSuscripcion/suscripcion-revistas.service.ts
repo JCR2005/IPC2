@@ -10,6 +10,8 @@ export class SuscripcionRevistasService {
 
   private apiUrl = 'http://localhost:8080/BACKEND_PROYECTO_2/resources/Suscripciones/listaRevistas';
   private apiUrl1 = 'http://localhost:8080/BACKEND_PROYECTO_2/resources/Suscripciones/suscripcion';
+  private apiUrl2 = 'http://localhost:8080/BACKEND_PROYECTO_2/resources/Busqueda/busqueda';
+
 
 
   constructor(private http: HttpClient) {}
@@ -20,6 +22,10 @@ export class SuscripcionRevistasService {
 
   suscribirRevista(formData: any): Observable<any> {
     return this.http.post(this.apiUrl1, formData);
+  }
+
+  suscribirRevistafiltradas(formData: any): Observable<any> {
+    return this.http.post(this.apiUrl2, formData);
   }
 
 }

@@ -15,8 +15,29 @@ public class RespuestaVisualizaciòn {
     private List<Revista> revistas = new ArrayList();
      private List<Articulo> articulos = new ArrayList();
      private Articulo articulo;
+     private Revista revista;
     private String mensaje;
+    private boolean anuncios;
 
+    public boolean isAnuncios() {
+        return anuncios;
+    }
+
+    public void setAnuncios(boolean anuncios) {
+        this.anuncios = anuncios;
+    }
+    
+    
+
+    public Revista getRevista() {
+        return revista;
+    }
+
+    public void setRevista(Revista revista) {
+        this.revista = revista;
+    }
+
+   
     public RespuestaVisualizaciòn() {
         this.procesoExitoso = true;
     }

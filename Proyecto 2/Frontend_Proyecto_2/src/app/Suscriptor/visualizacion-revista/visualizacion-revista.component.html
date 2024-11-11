@@ -2,9 +2,20 @@
 
 
 <div class="contenedor">
+  <app-anuncio-texto   *ngIf="!perimisoAdds" class="panelAnuncioTexto">
 
-  <div  class="panelRevistas"  *ngIf="panelArticulos" >
-    <ng-container *ngIf="articulos.length > 0; else noRevistas">
+  </app-anuncio-texto>
+  <app-anuncio-video  *ngIf="!perimisoAdds"class="panelAnuncioVideo">
+
+  </app-anuncio-video>
+  <app-anuncio-imagen   *ngIf="!perimisoAdds" class="panelAnuncioImagen">
+
+  </app-anuncio-imagen>
+  <router-outlet></router-outlet>
+
+
+  <div  *ngIf="articulos && articulos.length > 0 && panelArticulos" class="panelRevistas"    >
+    <ng-container *ngIf="articulos.length > 0">
       <div *ngFor="let articulo of articulos; let i = index" class="panelSuscripcion">
         <div class="panelRevista">
           <div class="panelImagen"></div>
@@ -15,10 +26,7 @@
         <div class="fecha">publicada: {{ obtenerFechaLegible(articulo.fecha) }}</div>
      <!-- Asegúrate de tener el enlace a Font Awesome en tu HTML -->
 
-        <!-- Botón con ícono de descarga -->
-        <button class="descargar">
-          <i class="fas fa-download"></i>
-        </button>
+
 
         <button (click)="visualisarArticulo(articulo.idArticulo)" class="visualizar">
           <i class="fas fa-download"></i> Leer articulo
@@ -32,21 +40,95 @@
 
 
 
-    <ng-template #noRevistas>
-      <p>No hay revistas por suscribirse</p>
-    </ng-template>
 
   </div>
 
-  <div class="panelInformacionRevista"></div>
-
-  <div class="panelAnuncios"></div>
+  <div class="panelInformacionRevista">
 
 
+      <label class="labelTitulo">Nombre:</label>
+      <label class="labelCategoria">Categoria:</label>
+      <label class="labelDescripcion">Descripciòn:</label>
+      <label class="labelFecha">publicado:</label>
+      <div class="fechaArticulo"> {{ obtenerFechaLegible(Revista.fechaPublicacion) }}</div>
+      <div class="categoria">{{ Revista.categoria }}</div>
+      <div class="descripciònArticulo">{{ Revista.descripcion }}</div>
+      <div class="tituloArticulo">{{ Revista.titulo }}</div>
+      <button class="btn-regresar" onclick="window.location.href='/misSuscripciones'">
+        <i class="fas fa-arrow-left"></i> Regresar
+    </button>
+
+    <button  class="comentarios" (click)="abrirPanelComentarios()">
+      <i class="fas fa-comments"></i>
+  </button>
+  <button class="likes" *ngIf="true" [disabled]="!Revista.likes" (click)="darMeGusta()">
+    <i class="fas fa-thumbs-up"></i>
+</button>
+
+
+  <label  class="labelikes"> {{ cantidadLikes }} likes</label>
+
+
+  </div>
+
+
+<div class="difuminado" *ngIf="panelComentarios"></div>
+  <div class="panelComentarios"  *ngIf="panelComentarios">
+    <div class="verComentarios">
+
+      <ng-container *ngIf="comentarios.length > 0; else noComentario">
+        <div class="comentario"  *ngFor="let comentario of comentarios" >
+          <label class="labelUsuario">{{comentario.idUsuario}} </label>
+          <br>
+          <label class="labelComentario">{{comentario.comentario}}  </label>
+        </div>
+
+      </ng-container>
+
+
+
+      <ng-template #noComentario>
+        <p>Se el primero en comentar!!!</p>
+      </ng-template>
+
+    </div>
+    <textarea *ngIf="Revista.comentarios" type="text" class="panelComentar"  [(ngModel)]="comentario"></textarea>
+    <button  *ngIf="Revista.comentarios" class="botonEnviarComentario" (click)="comentar()">
+      <i class="fas fa-paper-plane" ></i>
+  </button>
+
+  </div>
 </div>
 
-<!-- Mostrar el PDF en un iframe con un enlace para descargar -->
-<div class="pdf-viewer" *ngIf="pdfVisualizacion">
+
+
+
+<div class="panelInformacionArticulo" *ngIf="panelInformacionArticulo">
+
+<label class="labelTitulo">Nombre:</label>
+
+<label class="labelDescripcion">Descripciòn:</label>
+<label class="labelFecha">publicado:</label>
+<div class="fechaArticulo"> {{ obtenerFechaLegible(ArticuloEnProceso.fecha) }}</div>
+
+  <div class="descripciònArticulo">{{ ArticuloEnProceso.descripcion }}</div>
+   <div class="tituloArticulo">{{ ArticuloEnProceso.nombre }}</div>
+      <a
+       [href]="pdfVisualizacion"
+      download="articulo.pdf"
+      target="_blank"
+      class="btn-descargar"
+        >  <i class="fas fa-download"></i>
+          Descargar articulo
+     </a>
+ <button class="btn-regresar" >
+  <i class="fas fa-arrow-left" (click)="cerrarArticulo()"></i>
+</button>
+</div>
+
+
+
+<div class="pdf-viewer" *ngIf="panelVisualizarArticulo">
 
   <iframe
     [src]="pdfVisualizacion"
@@ -56,14 +138,7 @@
     allowfullscreen
   ></iframe>
   <!-- Enlace para abrir o descargar el PDF -->
-  <a
-    [href]="pdfVisualizacion"
-    download="articulo.pdf"
-    target="_blank"
-    class="btn-descargar"
-  >
-    Descargar PDF
-  </a>
+
 </div>
 
 

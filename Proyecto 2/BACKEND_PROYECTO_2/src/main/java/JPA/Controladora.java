@@ -69,6 +69,11 @@ public class Controladora {
 
     }
 
+        public Cartera obtenerCarteraCompleta(String usuario) {
+
+        return controladorPersistencia.obtenrCarteraCompleta(usuario);
+
+    }
     public double obtenerSaldo(String idCartera) {
         return controladorPersistencia.obtenerSaldo(idCartera);
     }
@@ -175,6 +180,75 @@ public class Controladora {
     public Articulo obtenerArticulo(Long idArticulo) {
         return  this.controladorPersistencia.obtenerArticulo(idArticulo);
     }
+
+    public void crearComentario(Comentario comentario) {
+        this.controladorPersistencia.crearComentario(comentario);
+    }
+
+    public List<Comentario> obtenerListaComentarios() {
+       return this.controladorPersistencia.obtenerListaComentarios();
+    }
+
+    public void crearIngreso(Ingreso ingreso) {
+        this.controladorPersistencia.crearIngreso(ingreso);
+    }
+
+    public List<Ingreso> obtenerListapagos() {
+         return this.controladorPersistencia.obtenerListaPagos();
+    }
+
+    public List<Usuario> obtenerlistaUsuarios() {
+       return this.controladorPersistencia.obtenerListaUsuarios();
+    }
+
+    public List<MeGusta> obtenerLikes() {
+        return this.controladorPersistencia.obtenerLikesDeRevistas();
+    }
+
+    public void añadirMeGusta(MeGusta meGusta) throws Exception {
+         this.controladorPersistencia.añadirMeGusta(meGusta);
+    }
+
+    public void actualizarMeGusta(MeGusta meGusta) throws Exception {
+     this.controladorPersistencia.actualizarMeGusta(meGusta);
+    }
+
+    public List<MeGusta> obtenerListaMeGustas() {
+      return controladorPersistencia.obtenerMegustas();
+    }
+
+    public void actualizarAnuncio(Anuncio anuncio) throws Exception {
+      controladorPersistencia.actualizarAnuncio(anuncio);
+    }
+
+    public boolean actualizarCarteraCompleta(Cartera cartera) throws Exception {
+       return controladorPersistencia.actualizarCarteraCompleta(cartera);
+    }
+
+    public void actualizarBloqueoAdds(bloqueoAddsRevista bloqueo) throws Exception, Exception {
+        controladorPersistencia.actualizarBloqueoAdds(bloqueo);
+    }
+
+    public  List<CostoAnuncio> obtenerCostosAnuncios() {
+        
+        return controladorPersistencia.obtenerCostosAnuncios();
+    }
+
+    public List<vigenciaAnuncio> obtenerVigenciaAnuncios() {
+      return controladorPersistencia.obtenerVigenciaAnuncios();
+    }
+
+    public void crearRegistro(HistorialEfectividadAnuncios historialEfectividadAnuncio) {
+       controladorPersistencia.crearRegistro(historialEfectividadAnuncio);
+    }
+
+    public List<HistorialEfectividadAnuncios> obtenerHistorial() {
+       return controladorPersistencia.obtenerHistorial();
+    }
+
+  
+
+    
 
 
 }

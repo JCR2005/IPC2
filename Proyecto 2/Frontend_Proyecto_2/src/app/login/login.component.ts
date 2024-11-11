@@ -28,14 +28,14 @@ export class LoginComponent {
     this.loginService.iniciarSesion(credentials).subscribe(
       (response: any) => {
         console.log('JWT recibido:', response.token);
-        alert('tokend echo '+response.message);
+        alert(response.message);
         sessionStorage.setItem('token', response.token);
 
         // Decodificar el token
         const decodedToken: any = this.jwt_decode(response.token);
 
         // Verificar el tipo de cuenta y redirigir
-        
+
           this.router.navigate([response.ruta]);
 
         // Redirigir a la ruta correcta

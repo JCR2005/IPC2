@@ -1,0 +1,77 @@
+
+<div class="titulo">Reportes de anuncios comprados</div>
+
+<div class="panel-fechas">
+  <h3>Generar Reporte de Comentarios</h3>
+
+  <form (submit)="obtenerReporteGenerar()">
+    <!-- Campo de fecha de inicio -->
+    <label for="fechaInicio">*Fecha de Inicio:</label>
+    <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio" name="fechaInicio" required>
+
+    <!-- Campo de fecha de fin -->
+    <label for="fechaFin">*Fecha de Fin:</label>
+    <input type="date" id="fechaFin" [(ngModel)]="fechaFin" name="fechaFin" required>
+
+    <label for="revista">Revista (opcional):</label>
+
+      <select id="revista" [(ngModel)]="tipoAnucioSelecionado" name="revista">
+        <option value="" disabled selected>seleccione tipo de anuncio</option>
+        <option  value="texto">texto </option>
+        <option  value="imagen">imagen </option>
+        <option  value="video">video </option>
+      </select>
+
+
+
+    <!-- Botón para generar el reporte -->
+    <button type="submit" class="btn-generar">Generar Reporte</button>
+  </form>
+</div>
+
+<div class="panelRespote"  *ngIf="panelReporte">
+  <table>
+    <tr>
+        <th>ID PAGO</th>
+        <th>USUARIO</th>
+        <th>ID ASOCIADA</th>
+        <th>TIPO ANUNCIO</th>
+        <th>PROPOSITO</th>
+        <th>MONTO</th>
+        <th>FECHA</th>
+    </tr>
+    <ng-container *ngIf="pagos.length > 0; else noComentario">
+      <tr  *ngFor="let pago of pagos,let i=index" >
+        <td>{{pago.idIngerso}}</td>
+        <td>{{pago.idUsuario}} </td>
+        <td>{{pago.idVinculado}} </td>
+        <td>{{tipoAnuncios[i]}} </td>
+        <td class="u">{{pago.proposito}}</td>
+        <td> {{ pago.monto}}</td>
+        <td> {{ obtenerFechaLegible(pago.fecha) }}</td>
+
+    </tr>
+
+    </ng-container>
+
+      <ng-template #noComentario>
+        <p>Se el primero en comentar!!!</p>
+      </ng-template>
+
+
+
+
+</table>
+
+</div>
+<a
+[href]="pdfVisualizacion"
+[download]="nombreReporte"
+target="_blank"
+class="btn-descargar"
+*ngIf="panelReporte" >  <i class="fas fa-download"></i>
+   Exportar reporte
+</a>
+<button class="botonOpciones" (click)="abrirPanelFiltro()">
+  <span class="material-icons">search</span> <!-- Icono de lupa/búsqueda -->
+</button>

@@ -40,7 +40,7 @@ public class RestVusaulizaciòn {
     @Path("listaAticulos")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerListaDeArticulos(@FormDataParam("idRevista") String idRevista) {
+    public Response obtenerListaDeArticulos(@FormDataParam("idRevista") String idRevista) throws Exception {
 
         // Llamamos al método 'proceso' para obtener el Map con los anuncios filtrados
         this.respuesta = Visualizacion.obtenerListaDeArticulos(idRevista);

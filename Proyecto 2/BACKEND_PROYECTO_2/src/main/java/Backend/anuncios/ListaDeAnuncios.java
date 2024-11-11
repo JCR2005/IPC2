@@ -1,14 +1,15 @@
 package Backend.anuncios;
 
-import ControlPersistencia.exceptions.NonexistentEntityException;
 import JPA.Anuncio;
 import JPA.Controladora;
+import JPA.CostoAnuncio;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import java.util.stream.Collectors;
+import respuetas.Anunciantes.RespuestaAnuncios;
 
 /**
  *
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class ListaDeAnuncios {
 
     private Controladora controladora = new Controladora();
- 
+    RespuestaAnuncios respuesta = new RespuestaAnuncios();
     private List<Anuncio> anuncios = new ArrayList<>();
 
     public Map<String, List<?>> procesoLista(String usuario) {
@@ -27,7 +28,7 @@ public class ListaDeAnuncios {
         // Usamos un Map para enviar múltiples arreglos
         Map<String, List<?>> response = new HashMap<>();
 
-        response.put("listaAnuncios",this. anuncios);
+        response.put("listaAnuncios", this.anuncios);
 
         return response;
     }
@@ -59,27 +60,41 @@ public class ListaDeAnuncios {
 
             // Cambiar el estado del anuncio
             boolean cambio = Boolean.parseBoolean(estado);
-         
+
             if (cambio) {
-                  anuncio.setEstado(false);
-                       mensaje = "Se desactivo el anuncio " ;
-            }else  {
+                anuncio.setEstado(false);
+                mensaje = "Se desactivo el anuncio ";
+            } else {
                 anuncio.setEstado(true);
-                    mensaje = "Se activo el anuncio " ;
-                   
-              
+                mensaje = "Se activo el anuncio ";
+
             }
-          
+
             this.controladora.editarAnuncio(anuncio);
 
             // Crear mensaje de éxito
-          
         } catch (Exception e) {
             mensaje = "Ha ocurrido un error: " + e.getMessage(); // Incluir el mensaje del error
         }
-        
-        
+
         return "{\"message\":\"" + mensaje + "\"}";
     }
 
+    public RespuestaAnuncios procesoCambioDeEstado() {
+        
+        respuesta.setVigencia(this.controladora.obtenerVigenciaAnuncios());
+        List<CostoAnuncio> costos = this.controladora.obtenerCostosAnuncios();
+        for (int i = 0; i < costos.size(); i++) {
+            if (costos.get(i).getId_Add().endsWith("add_imagen")) {
+                respuesta.setPrecioImagen(costos.get(i).getCosto_Add());
+            } else if (costos.get(i).getId_Add().endsWith("add_texto")) {
+                respuesta.setPrecioTexto(costos.get(i).getCosto_Add());
+            }if (costos.get(i).getId_Add().endsWith("add_video")) {
+                respuesta.setPreciovideoo(costos.get(i).getCosto_Add());
+            }
+         
+         
+        }
+          return respuesta;
+    }
 }

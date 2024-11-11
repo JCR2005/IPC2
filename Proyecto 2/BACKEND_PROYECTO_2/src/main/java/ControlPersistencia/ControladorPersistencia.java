@@ -1,11 +1,17 @@
 package ControlPersistencia;
 
+import ControlPersistencia.ComentarioJpaController;
 import ControlPersistencia.exceptions.NonexistentEntityException;
 import JPA.Anuncio;
 import JPA.Articulo;
 import JPA.Cartera;
+import JPA.Comentario;
 import JPA.CostoAnuncio;
 import JPA.CostosGlobales;
+import JPA.HistorialEfectividadAnuncios;
+import JPA.Ingreso;
+
+import JPA.MeGusta;
 import JPA.Revista;
 import JPA.Suscripciòn;
 import JPA.Usuario;
@@ -34,6 +40,11 @@ public class ControladorPersistencia {
     private CostosGlobalesJpaController costosGlobalesJpaController = new CostosGlobalesJpaController();
     private SuscripciònJpaController suscripciònJpaController = new SuscripciònJpaController();
     private ArticuloJpaController articuloJpaController = new ArticuloJpaController();
+    private ComentarioJpaController comentarioJpaController=new ComentarioJpaController();
+    private IngresosJpaController ingresosJpaController=new IngresosJpaController();
+    private MeGustaJpaController likeJpaController=new MeGustaJpaController();
+    private HistorialEfectividadAnunciosJpaController historialEfectividadAnunciosJpaController=new HistorialEfectividadAnunciosJpaController();
+    
 
     public void crearUsuario(Usuario usuario) throws Exception {
 
@@ -139,6 +150,13 @@ public class ControladorPersistencia {
         Usuario usuario = this.usuario.findUsuario(IdUsuario);
 
         return usuario.getIdCartera();
+    }
+    
+     public Cartera obtenrCarteraCompleta(String idCartera) {
+
+        Cartera cartera = this.carteraJpaController.findCartera(idCartera);
+
+        return cartera;
     }
 
     public double obtenerSaldo(String idCartera) {
@@ -270,5 +288,80 @@ public class ControladorPersistencia {
     public Articulo obtenerArticulo(Long idArticulo) {
         return this.articuloJpaController.findArticulo(idArticulo);
     }
+
+    public void crearComentario(Comentario comentario) {
+       this.comentarioJpaController.create(comentario);
+    }
+
+    public List<Comentario> obtenerListaComentarios() {
+       return this.comentarioJpaController.findComentarioEntities();
+    }
+
+    public void crearIngreso(Ingreso ingreso) {
+      this.ingresosJpaController.create(ingreso);
+    }
+
+    public List<Ingreso> obtenerListaPagos() {
+      return this.ingresosJpaController.findIngresosEntities();
+    }
+
+    public List<Usuario> obtenerListaUsuarios() {
+       return  this.usuario.findUsuarioEntities();
+    }
+
+    public List<MeGusta> obtenerLikesDeRevistas() {
+        return  this.likeJpaController.findMeGustaEntities();
+    }
+
+    public void añadirMeGusta(MeGusta meGusta) throws Exception {
+        this.likeJpaController.create(meGusta);
+    }
+
+    public void actualizarMeGusta(MeGusta meGusta) throws Exception {
+        this.likeJpaController.edit(meGusta);
+    }
+
+    public List<MeGusta>  obtenerMegustas() {
+        return likeJpaController.findMeGustaEntities();
+    }
+
+    public void actualizarAnuncio(Anuncio anuncio) throws Exception {
+      anuncioJpaController.edit(anuncio);
+    }
+
+    public boolean actualizarCarteraCompleta(Cartera cartera) throws Exception {
+        boolean carteraActualizada = false;
+
+        try {
+            this.carteraJpaController.edit(cartera);
+            carteraActualizada = true;
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladorPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return carteraActualizada;
+    }
+
+    public void actualizarBloqueoAdds(bloqueoAddsRevista bloqueo) throws Exception {
+       this.bloqueoAddsRevistas.edit(bloqueo);
+    }
+
+    public  List<CostoAnuncio> obtenerCostosAnuncios() {
+        return costoAnuncio.findCostoAnuncioEntities();
+    }
+
+    public List<vigenciaAnuncio> obtenerVigenciaAnuncios() {
+       return vigenciaAnuncioJpaController.findvigenciaAnuncioEntities();
+    }
+
+    public void crearRegistro(HistorialEfectividadAnuncios historialEfectividadAnuncio) {
+       historialEfectividadAnunciosJpaController.create(historialEfectividadAnuncio);
+    }
+
+    public List<HistorialEfectividadAnuncios> obtenerHistorial() {
+        return historialEfectividadAnunciosJpaController.findHistorialEfectividadAnunciosEntities();
+    }
+
+  
 
 }

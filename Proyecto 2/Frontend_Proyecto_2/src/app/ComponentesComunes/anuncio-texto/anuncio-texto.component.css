@@ -1,0 +1,7 @@
+p {
+  font-size: 1.2rem; /* Tamaño de texto */
+  font-weight: bold; /* Pone el texto en negrita */
+  color: #162c5e; /* Color de texto */
+  margin: 0; /* Elimina el margen por defecto del párrafo */
+  padding: 0; /* Elimina el relleno por defecto del párrafo */
+}

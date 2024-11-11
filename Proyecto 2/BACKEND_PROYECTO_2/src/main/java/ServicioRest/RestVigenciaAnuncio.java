@@ -1,7 +1,7 @@
 package ServicioRest;
 
-import Backend.ConfigurarPrecioAnuncio;
-import Backend.ConfigurarVigenciaDeAnuncio;
+import Backend.administracion.ConfigurarPrecioAnuncio;
+import Backend.administracion.ConfigurarVigenciaDeAnuncio;
 import JPA.vigenciaAnuncio;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;

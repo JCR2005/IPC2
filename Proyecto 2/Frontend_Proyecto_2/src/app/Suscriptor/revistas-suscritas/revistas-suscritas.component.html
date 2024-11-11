@@ -5,12 +5,16 @@
       <!-- Configuración de precios de anuncios con menú desplegable -->
 
       <li class="navbar-item">
-        <a class="navbar-link" routerLink="/paginaPrincipalSuscritor">Pagina principal</a>
+        <a class="navbar-link" routerLink="/paginaPrincipalSuscriptor">Pagina principal</a>
       </li>
 
     </ul>
   </div>
 </nav>
+
+<app-anuncio-texto class="panelAnuncioTexto">
+
+</app-anuncio-texto>
 <div class="contenedor">
   <div  class="panelRevistas"  *ngIf="panelRevistas" >
     <ng-container *ngIf="revistas.length > 0; else noRevistas">
@@ -18,7 +22,7 @@
 
       <div   class="panelRevista">
         <button class="titulo"   (click)="abrirRevista(revista.idRevista)">{{ revista.titulo }}</button>
-        <button class="autor">Autor: {{ revista.autor}}</button>
+        <button class="autor" (click)="perfilDeAutor(revista.autor)">Autor: {{ revista.autor}}</button>
 
       </div>
 
@@ -56,5 +60,12 @@
 
 </div>
 
+
+<app-anuncio-video class="panelAnuncioVideo">
+
+</app-anuncio-video>
+<app-anuncio-imagen class="panelAnuncioImagen">
+
+</app-anuncio-imagen>
 <router-outlet></router-outlet>
 

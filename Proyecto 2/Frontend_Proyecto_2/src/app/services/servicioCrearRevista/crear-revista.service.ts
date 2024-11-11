@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CrearRevistaService {
-  private apiUrl = 'http://localhost:8080/BACKEND_PROYECTO_2/resources/revista/creacion';
+  private apiUrl = 'http://localhost:8080/BACKEND_PROYECTO_2/resources/RestCreaciònDeRevista/creacion';
 
   constructor(private http: HttpClient) {} // Asegúrate de que HttpClient se inyecta correctamente
 

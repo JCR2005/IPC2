@@ -1,3 +1,4 @@
+import { ComentarService } from './../../services/serviciosSuscriptor/servicioComentar/comentar.service';
 import { articulo } from './../../models/articulo.model';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -6,34 +7,58 @@ import { FormsModule } from '@angular/forms';
 import { VisualizacionRevistaService } from './../../services/serviciosSuscriptor/ServicioVisualizacionRevista/visualizacion-revista.service';
 import { RouterModule } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Revista } from '../../models/revista.model';
+import { token } from '../../token';
+import { Comentario } from '../../models/comentario.model';
+import { AnuncioVideoComponent } from '../../ComponentesComunes/anuncio-video/anuncio-video.component';
+import { AnuncioImagenComponent } from '../../ComponentesComunes/anuncio-Imagen/anuncio-imagen.component';
+import { AnuncioTextoComponent } from '../../ComponentesComunes/anuncio-texto/anuncio-texto.component';
 
 
 @Component({
   selector: 'app-visualizacion-revista',
   standalone: true,
-  imports: [CommonModule,FormsModule,RouterModule],
+  imports: [CommonModule,AnuncioVideoComponent,AnuncioImagenComponent,AnuncioTextoComponent,FormsModule, FormsModule, RouterModule],
   templateUrl: './visualizacion-revista.component.html',
-  styleUrl: './visualizacion-revista.component.css'
+  styleUrls: ['./visualizacion-revista.component.css'] // Corregido de 'styleUrl' a 'styleUrls'
 })
 
-export class VisualizacionRevistaComponent {
-  panelArticulos:boolean=false;
+export class VisualizacionRevistaComponent implements OnInit {
+  // Paneles
+  perimisoAdds=false;
+  permisoLikes=false;
+  panelComentarios: boolean = false;
+  panelArticulos: boolean = false;
+  panelInformacionArticulo: boolean = false;
+  panelVisualizarArticulo: boolean = false;
+  panelSuscripcion: boolean = false;
+  panelMensaje: boolean = false;
 
-  fotoBase64: string | undefined; // Para almacenar la cadena base64
-  ArticuloEnProceso:articulo={} as articulo;
+  // Datos del artículo y la revista
+  fotoBase64: string | undefined;
+  ArticuloEnProceso: articulo = {} as articulo;
+  Revista: Revista = {} as Revista;
+
+  // Otras variables
+  cantidadLikes=0;
   mensajeRecibido: string = '';
-  cargando:boolean=false;
+  cargando: boolean = false;
   pdfVisualizacion: SafeResourceUrl | undefined;
-
   articulos: articulo[] = [];
-  panelSuscripcion:boolean=false;
-  panelMensaje:boolean=false;
-  procesoExitoso:boolean=false;
-  mensaje:string="";
+  comentarios: Comentario[] = [];
+  procesoExitoso: boolean = false;
+  mensaje: string = '';
+  fechaSuscripcion: string = '';
+  usuario: string = '';
+  comentario:string="";
 
-  fechaSuscripcion:string="";
-  usuario:string="";
-  constructor(private sanitizer: DomSanitizer,private route: ActivatedRoute,private VisualizacionRevistaService:VisualizacionRevistaService) {}
+  constructor(
+    private sanitizer: DomSanitizer,
+    private route: ActivatedRoute,
+    private VisualizacionRevistaService: VisualizacionRevistaService,
+    private token:token,
+    private ComentarService:ComentarService
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
@@ -48,16 +73,32 @@ export class VisualizacionRevistaComponent {
     return fecha.toLocaleDateString();
   }
 
-  cargarDatos() {
+  cerrarArticulo() {
+    this.panelVisualizarArticulo = false;
+    this.panelArticulos = true;
+    this.panelInformacionArticulo = false;
+  }
 
+  abrirPanelComentarios() {
+
+    this.panelComentarios = !this.panelComentarios;
+  }
+
+  cargarDatos() {
     const formData = new FormData();
-    formData.append('idRevista',this.mensajeRecibido );
-    this.cargando=true;
+    formData.append('idRevista', this.mensajeRecibido);
+
+    this.cargando = true;
     this.VisualizacionRevistaService.listarArticulos(formData).subscribe(
       (response: any) => {
+        this.Revista = response.revista;
         this.articulos = response.articulos;
-        this.cargando=false;
-        this.panelArticulos=true;
+        this.cargando = false;
+        this.panelArticulos = true;
+        this.perimisoAdds=response.anuncios;
+        this.permisoLikes=this.Revista.likes
+        this.verComentarios();
+        this.obtenerLikes();
       },
       (error) => {
         console.error('Error al enviar los datos:', error);
@@ -65,17 +106,16 @@ export class VisualizacionRevistaComponent {
     );
   }
 
-
-  visualisarArticulo(idArticulo:number){
-
+  visualisarArticulo(idArticulo: number) {
     const formData = new FormData();
-    formData.append('idArticulo',idArticulo.toString());
-    this.cargando=true;
+    formData.append('idArticulo', idArticulo.toString());
+
+    this.cargando = true;
     this.VisualizacionRevistaService.traerArtiiculo(formData).subscribe(
       (response: any) => {
-
-        this.cargando=false;
-        this.panelArticulos=false;
+        this.cargando = false;
+        this.panelArticulos = false;
+        this.panelInformacionArticulo = true;
         this.asignarDatos(response);
       },
       (error) => {
@@ -83,20 +123,92 @@ export class VisualizacionRevistaComponent {
       }
     );
   }
+
   asignarDatos(response: any) {
     this.ArticuloEnProceso = response.articulo;
-    // Convertir Base64 a datos URL para mostrar
+
     if (response.articulo && response.articulo.pdf) {
-      // Sanea el URL antes de asignarlo
+      this.panelVisualizarArticulo = true;
       this.pdfVisualizacion = this.sanitizer.bypassSecurityTrustResourceUrl(
         `data:application/pdf;base64,${response.articulo.pdf}`
       );
     }
   }
 
-  // Convertir Base64 a datos URL para mostrar
+
+obtenerLikes(){
+  const formData = new FormData();
+  formData.append('idRevista', this.mensajeRecibido);
+
+  this.cargando = true;
+  this.VisualizacionRevistaService.obtenerLikesRevista(formData).subscribe(
+    (response: any) => {
+    this.cantidadLikes=response.cantidadLikes;
+    },
+    (error) => {
+      console.error('Error al enviar los datos:', error);
+    }
+  );
+
+}
+
+  comentar(){
+    this.token.obtenerUsuario();
+
+    const comentario={
+      idRevista:this.mensajeRecibido,
+      idUsuario: this.token.obtenerUsuario(),
+      comentario:this.comentario
+    }
+
+    this.ComentarService.comentar(comentario).subscribe(
+      (response: any) => {
+        this.verComentarios();
+        this.comentario="";
+      },
+      (error) => {
+        console.error('Error al enviar los datos:', error);
+
+      }
+    );
+
+  }
+
+  darMeGusta(){
+    this.token.obtenerUsuario();
+
+    const MeGusta={
+      idRevista:this.mensajeRecibido,
+      idUsuario: this.token.obtenerUsuario()
+    }
+
+    this.VisualizacionRevistaService.darMeGusta(MeGusta).subscribe(
+      (response: any) => {
+
+        this.obtenerLikes();
+      },
+      (error) => {
+        console.error('Error al enviar los datos:', error);
+
+      }
+    );
+
+  }
+    verComentarios(){
+      this.token.obtenerUsuario();
+      const formData = new FormData();
+      formData.append('idRevista', this.mensajeRecibido);
+      this.ComentarService.comentariosRevista(formData).subscribe(
+        (response: any) => {
+         this.comentarios=response.comentarios;
+
+        },
+        (error) => {
+          console.error('Error al enviar los datos:', error);
+
+        }
+      );
 
 
-
-
+  }
 }

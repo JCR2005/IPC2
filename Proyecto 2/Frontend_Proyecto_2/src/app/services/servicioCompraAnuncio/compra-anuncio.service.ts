@@ -23,4 +23,9 @@ export class CompraAnuncioService {
   cambiarEstado(idAnuncio: any): Observable<any> {
     return this.http.post(this.apiUrl3, idAnuncio);  // Enviar el JSON directamente
   }
+
+  private apiUrl4 = 'http://localhost:8080/BACKEND_PROYECTO_2/resources/compraAnuncio/preciosAnuncios';
+  obtenerPrecios(): Observable<any> {
+    return this.http.get(this.apiUrl4);  // Enviar el JSON directamente
+  }
 }

@@ -1,0 +1,51 @@
+<h1 class="marcaAgua1">Reportes</h1>
+<h1 class="marcaAgua2">Ten el control de tus revistas!!</h1>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<button class="botonOpciones" (click)=" abrirPanel()">
+  <span class="material-icons">more_vert</span>
+</button>
+
+<div class="difuminado" *ngIf="panelOpciones"></div>
+<div class="panelOpciones" *ngIf="panelOpciones">
+
+
+
+
+<a class="navbar-link"(click)="abrirPanelReportesComentarios()" >Reporte de anuncios comprados</a>
+<br><br>
+<a class="navbar-link"(click)="abrirPanelReportesGananciasAnunciantes()" >Reportes de ganancias por anunciantes</a>
+<br><br>
+<a class="navbar-link"(click)="abrirPanelpanelReportesRevistasMasComentadas()" >Reporte Top5 comentarios </a>
+<br><br>
+<a class="navbar-link"(click)="abrirPanelReportesRevistasMasGustadas()" >Reporte Top5 suscripciones </a>
+
+
+
+</div>
+<!-- Panel que cambia entre normal y grande -->
+<!-- Panel que cambia entre normal y grande -->
+<app-reporte-de-ReporteDeAnunciosCompradosComponent
+  class="contenedorReportesComentarios"
+  [ngClass]="{'normal': !panelGrande, 'grande': panelGrande}"
+  *ngIf="panelReportesAnunciosComprados">
+</app-reporte-de-ReporteDeAnunciosCompradosComponent>
+
+<app-reporte-de-ReporteDeGananciasAnunciantesComponent
+  class="contenedorReportesComentarios"
+  [ngClass]="{'normal': !panelGrande, 'grande': panelGrande}"
+  *ngIf="panelReportesGananciasAnunciantes">
+</app-reporte-de-ReporteDeGananciasAnunciantesComponent>
+
+<app-reporte-de-ReporteDeRevistasMasComentadassComponent
+  class="contenedorReportesComentarios"
+  [ngClass]="{'normal': !panelGrande, 'grande': panelGrande}"
+  *ngIf="panelReportesRevistasMasComentadas">
+</app-reporte-de-ReporteDeRevistasMasComentadassComponent>
+
+<app-reporte-de-ReporteDeRevistasMasSuscritasComponent
+  class="contenedorReportesComentarios"
+  [ngClass]="{'normal': !panelGrande, 'grande': panelGrande}"
+  *ngIf="panelReportesRevistasMasGustadas">
+</app-reporte-de-ReporteDeRevistasMasSuscritasComponent>

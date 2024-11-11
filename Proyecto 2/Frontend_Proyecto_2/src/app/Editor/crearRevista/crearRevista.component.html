@@ -1,4 +1,20 @@
-<div class="form-container">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+<nav class="navbar">
+  <div class="navbar-container">
+    <a class="navbar-logo" >Creaciòn de recvistas</a>
+    <ul class="navbar-menu">
+
+      <li class="navbar-item">
+        <a class="navbar-link" href="/paginaPrincipalEditor">Pagina principal</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="form-container"   *ngIf="!panelMensaje">
   <h1>Crear Nueva Revista</h1>
   <div *ngIf="cargando"  class="loading-overlay">
     <div class="loading-spinner"></div>
@@ -67,4 +83,14 @@
 
     <button class="btn submit" type="submit">Crear Revista</button>
   </form>
+</div>
+
+<div   *ngIf="panelMensaje"  class="panelMensaje">
+  <i *ngIf="procesoExitoso"  class="fas fa-check-circle  check-icon"></i>
+  <i *ngIf="!procesoExitoso" class="fas fa-times-circle error-icon"></i>
+  <br> <br> <br> <br> 
+
+  <h4>{{mensaje}}</h4>
+
+  <button class="cerrarPanelMensaje-btn"  (click)="cerrarPanelMensaje()" >continuar</button>
 </div>

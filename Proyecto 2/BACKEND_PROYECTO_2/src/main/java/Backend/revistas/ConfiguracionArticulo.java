@@ -2,8 +2,9 @@ package Backend.revistas;
 
 import JPA.Articulo;
 import JPA.Controladora;
-import java.io.ByteArrayInputStream;
 import com.google.gson.Gson;
+import respuetas.Editor.RespuestaArticulo;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,54 +13,78 @@ import java.io.InputStream;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import respuetas.Editor.RespuestaArticulo;
 
 /**
- *
+ * Clase que maneja la configuración y procesamiento de un artículo.
+ * 
+ * Esta clase incluye funcionalidades para procesar un artículo, validarlo, 
+ * guardar los archivos asociados (imagen y PDF), y gestionar su almacenamiento 
+ * en el sistema de archivos y en la base de datos.
+ * 
  * @author carlosrodriguez
  */
 public class ConfiguracionArticulo {
 
-    RespuestaArticulo respuesta = new RespuestaArticulo();
-    Controladora controladora = new Controladora();
+    private RespuestaArticulo respuesta = new RespuestaArticulo();
+    private Controladora controladora = new Controladora();
 
+    /**
+     * Proceso principal para manejar un artículo.
+     * 
+     * Este método valida la información del artículo, guarda los archivos asociados
+     * (imagen y PDF) y almacena los datos en la base de datos.
+     * 
+     * @param imagen InputStream que contiene la imagen del artículo (puede ser null).
+     * @param pdf InputStream que contiene el PDF del artículo (no puede ser null).
+     * @param Articulo String JSON que representa el artículo a procesar.
+     * @return RespuestaArticulo objeto que contiene el resultado del procesamiento.
+     * @throws IOException si ocurre un error de entrada/salida durante el proceso.
+     * @throws Exception si ocurre algún error no esperado.
+     */
     public RespuestaArticulo proceso(InputStream imagen, InputStream pdf, String Articulo) throws IOException, Exception {
 
         try {
-            Articulo articulo = new Articulo();
-            articulo = ObtenerArticuloObjeto(Articulo);
+            // Convertir el JSON del artículo a un objeto Articulo
+            Articulo articulo = ObtenerArticuloObjeto(Articulo);
             byte[] imagenBytes = null;
             byte[] pdfBytes = null;
 
+            // Convertir los InputStream a byte arrays
             if (imagen != null) {
-                imagenBytes = convertirInputStreamAByteArray(imagen); // Convertir InputStream a byte array
+                imagenBytes = convertirInputStreamAByteArray(imagen);
             }
             if (pdf != null) {
-                pdfBytes = convertirInputStreamAByteArray(pdf); // Convertir InputStream a byte array
+                pdfBytes = convertirInputStreamAByteArray(pdf);
             } else {
-                this.respuesta.setMensaje("Seleccione un archivo valido");
-                this.respuesta.setProcesoExitoso(false);
+                respuesta.setMensaje("Seleccione un archivo válido");
+                respuesta.setProcesoExitoso(false);
                 return respuesta;
             }
 
+            // Validaciones del artículo
             if (!validarNombre(articulo)) {
-                this.respuesta.setMensaje("Ingrese un nombre mayor a 2 caracteres y menor a 32 caracteres");
-                this.respuesta.setProcesoExitoso(false);
+                respuesta.setMensaje("Ingrese un nombre mayor a 2 caracteres y menor a 32 caracteres");
+                respuesta.setProcesoExitoso(false);
                 return respuesta;
             } else if (!validarDescripcion(articulo)) {
-                this.respuesta.setMensaje("Ingrese una descripcion mayor a 5 caracteres y menor a 1500 caracteres");
-                this.respuesta.setProcesoExitoso(false);
+                respuesta.setMensaje("Ingrese una descripción mayor a 5 caracteres y menor a 1500 caracteres");
+                respuesta.setProcesoExitoso(false);
                 return respuesta;
             } else if (!validarFecha(articulo)) {
-                this.respuesta.setMensaje("Ingrese una fecha valida");
-                this.respuesta.setProcesoExitoso(false);
+                respuesta.setMensaje("Ingrese una fecha válida");
+                respuesta.setProcesoExitoso(false);
                 return respuesta;
             } else if (pdfBytes == null) {
-                this.respuesta.setMensaje("carge el articulo por favor");
-                this.respuesta.setProcesoExitoso(false);
+                respuesta.setMensaje("Cargue el artículo por favor");
+                respuesta.setProcesoExitoso(false);
+                return respuesta;
+            } else if (!validarRevista(articulo)) {
+                respuesta.setMensaje("Seleccione una revista válida");
+                respuesta.setProcesoExitoso(false);
                 return respuesta;
             }
 
+            // Guardar los archivos asociados (imagen y PDF)
             if (imagenBytes != null) {
                 guardarArchivo(new ByteArrayInputStream(imagenBytes), articulo, "imagen");
             }
@@ -68,17 +93,28 @@ public class ConfiguracionArticulo {
                 guardarArchivo(new ByteArrayInputStream(pdfBytes), articulo, "pdf");
             }
 
+            // Guardar el artículo en la base de datos
             guardarArticulo(articulo);
-            this.respuesta.setMensaje("articulo Subido con Exito");
+            respuesta.setMensaje("Artículo subido con éxito");
             return respuesta;
 
         } catch (Exception e) {
-            this.respuesta.setMensaje("oops! ocurrio un error");
+            respuesta.setMensaje("¡Oops! Ocurrió un error");
             return respuesta;
         }
-
     }
 
+    /**
+     * Guarda un archivo en el sistema de archivos.
+     * 
+     * Este método guarda una imagen o un PDF relacionado con el artículo
+     * en una ubicación determinada, creando un nombre único si el archivo ya existe.
+     * 
+     * @param archivo InputStream que representa el archivo a guardar.
+     * @param articulo El artículo relacionado con el archivo.
+     * @param tipoArchivo Tipo de archivo ("imagen" o "pdf").
+     * @return true si el archivo fue guardado correctamente, false si hubo un error.
+     */
     public boolean guardarArchivo(InputStream archivo, Articulo articulo, String tipoArchivo) {
         String nombreArchivo = articulo.getNombre() + articulo.getIdRevista();
         FileOutputStream fos = null;
@@ -136,7 +172,14 @@ public class ConfiguracionArticulo {
             }
         }
     }
-    
+
+    /**
+     * Convierte un arreglo de bytes (PDF) en un archivo físico.
+     * 
+     * @param pdfBytes El arreglo de bytes que representa el archivo PDF.
+     * @param outputPath La ruta donde se guardará el archivo PDF.
+     * @throws IOException si ocurre un error durante la escritura del archivo.
+     */
     public static void convertirByteArrayAPdf(byte[] pdfBytes, String outputPath) throws IOException {
         try (FileOutputStream fos = new FileOutputStream(outputPath)) {
             fos.write(pdfBytes);
@@ -146,6 +189,13 @@ public class ConfiguracionArticulo {
         }
     }
 
+    /**
+     * Convierte un InputStream a un arreglo de bytes.
+     * 
+     * @param inputStream El InputStream a convertir.
+     * @return El arreglo de bytes resultante.
+     * @throws IOException si ocurre un error durante la conversión.
+     */
     private byte[] convertirInputStreamAByteArray(InputStream inputStream) throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         byte[] data = new byte[1024];
@@ -156,65 +206,80 @@ public class ConfiguracionArticulo {
         return buffer.toByteArray();
     }
 
+    /**
+     * Convierte un string JSON a un objeto Articulo.
+     * 
+     * @param articulo El string JSON que representa un artículo.
+     * @return El objeto Articulo convertido.
+     * @throws IOException si ocurre un error durante la conversión.
+     */
     public Articulo ObtenerArticuloObjeto(String articulo) throws IOException {
         Gson gson = new Gson();
-
-        // Convertir el JSON a un objeto de la clase Anuncio
-        Articulo anuncioObjeto = gson.fromJson(articulo, Articulo.class);
-
-        return anuncioObjeto;
-
+        return gson.fromJson(articulo, Articulo.class);
     }
 
+    /**
+     * Valida que el nombre del artículo tenga entre 2 y 32 caracteres.
+     * 
+     * @param articulo El artículo cuyo nombre se valida.
+     * @return true si el nombre es válido, false si no lo es.
+     */
     private boolean validarNombre(Articulo articulo) {
-
         String nombre = articulo.getNombre();
-
-        if (nombre != null && nombre.length() > 2 && nombre.length() < 32) {
-            return true; // El nombre es válido
-        } else {
-            return false; // El nombre no es válido
-        }
+        return nombre != null && nombre.length() > 2 && nombre.length() < 32;
     }
 
+    /**
+     * Valida que la descripción del artículo tenga entre 5 y 1500 caracteres.
+     * 
+     * @param articulo El artículo cuya descripción se valida.
+     * @return true si la descripción es válida, false si no lo es.
+     */
     private boolean validarDescripcion(Articulo articulo) {
-
         String descripcion = articulo.getDescripcion();
-
-        if (descripcion != null && descripcion.length() > 10 && descripcion.length() < 1500) {
-            return true; // El nombre es válido
-        } else {
-            return false; // El nombre no es válido
-        }
+        return descripcion != null && descripcion.length() > 5 && descripcion.length() < 1500;
     }
 
+    /**
+     * Valida que la fecha de creación del artículo tenga el formato correcto (yyyy-MM-dd).
+     * 
+     * @param articulo El artículo cuya fecha de creación se valida.
+     * @return true si la fecha es válida, false si no lo es.
+     */
     private boolean validarFecha(Articulo articulo) {
-        boolean tipoFechaValido = false;
-        System.out.println(articulo.getFechaCreacionTexto());
-        if (!articulo.getFechaCreacionTexto().isEmpty() && articulo.getFechaCreacionTexto().matches("\\d{4}-\\d{2}-\\d{2}")) {
-
-            tipoFechaValido = true;
-
-        }
-
-        return tipoFechaValido;
+        return articulo.getFechaCreacionTexto() != null && 
+               articulo.getFechaCreacionTexto().matches("\\d{4}-\\d{2}-\\d{2}");
     }
 
+    /**
+     * Guarda el artículo en la base de datos.
+     * 
+     * @param articulo El artículo a guardar en la base de datos.
+     */
     private void guardarArticulo(Articulo articulo) {
         generarFechaPublicacion(articulo);
-        this.controladora.guardarArticulo(articulo);
-
+        controladora.guardarArticulo(articulo);
     }
 
+    /**
+     * Genera la fecha de publicación para el artículo a partir de su fecha de creación.
+     * 
+     * @param articulo El artículo al que se le asignará la fecha de publicación.
+     */
     private void generarFechaPublicacion(Articulo articulo) {
-
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Corrige mm a MM
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate fechaLocalDate = LocalDate.parse(articulo.getFechaCreacionTexto(), formato);
-
-        // Convertir LocalDate a Date
         Date fechaPublicacion = java.sql.Date.valueOf(fechaLocalDate);
-        articulo.setFecha((java.sql.Date) fechaPublicacion);
-
+        articulo.setFecha(fechaPublicacion);
     }
 
+    /**
+     * Valida que el artículo esté asociado a una revista existente.
+     * 
+     * @param articulo El artículo cuyo ID de revista se valida.
+     * @return true si la revista existe, false si no existe.
+     */
+    private boolean validarRevista(Articulo articulo) {
+        return controladora.buscarRevista(articulo.getIdRevista());
+    }
 }

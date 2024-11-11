@@ -57,9 +57,9 @@
 
 /*Panel de revistas_____________________________________________________________________________*/
 .panelRevistas{
-  top: 20%;
+  top: 15%;
   position: absolute;
-  left: 25%;
+  left: 24%;
   padding: 1% 1%;
   border-radius: 25px;
   border: 2px solid #162c5e;
@@ -333,4 +333,77 @@
   color: #ee2a07; /* Color verde */
   font-size: 500%;
   margin-right: 0;
+}
+.panelAnuncioTexto {
+  bottom: 2%;
+  position: absolute;
+  left: 24%;
+  padding: 1% 1%;
+  border-radius: 25px;
+  border: 2px solid #162c5e;
+  background-color: #ffffff;
+  height: 5%;
+  width: 50%;
+
+
+  /* Centrado de todo lo que esté dentro del contenedor */
+  display: flex;
+  justify-content: center; /* Centrado horizontal */
+  align-items: center;     /* Centrado vertical */
+  text-align: center;      /* Centrado de texto */
+}
+.panelAnuncioVideo {
+  top: 30%;
+  position: absolute;
+  left: 1%;
+  padding: 1%;
+  border-radius: 25px;
+  border: 2px solid #162c5e;
+  background-color: #ffffff;
+  height: 30%;
+  width: 20%;
+
+  /* Centrado del contenido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  /* Limita el contenido al tamaño del contenedor */
+  overflow: hidden; /* También puedes probar con overflow: auto si deseas barras de desplazamiento */
+}
+
+/* Limita el tamaño de los elementos internos */
+.panelAnuncioVideo * {
+  max-width: 100%;
+  max-height: 100%;
+  box-sizing: border-box; /* Asegura que padding y border no agranden el elemento */
+}
+
+
+.panelAnuncioImagen {
+  top: 30%;
+  position: absolute;
+  right: 1%;
+  padding: 1%;
+  border-radius: 25px;
+  border: 2px solid #162c5e;
+  background-color: #ffffff;
+  height: 30%;
+  width: 20%;
+
+  /* Centrado del contenido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  /* Limita el contenido al tamaño del contenedor */
+  overflow: hidden; /* También puedes probar con overflow: auto si deseas barras de desplazamiento */
+}
+/* Limita el tamaño de los elementos internos */
+.panelAnuncioImagen * {
+  max-width: 100%;
+  max-height: 100%;
+  box-sizing: border-box; /* Asegura que padding y border no agranden el elemento */
 }

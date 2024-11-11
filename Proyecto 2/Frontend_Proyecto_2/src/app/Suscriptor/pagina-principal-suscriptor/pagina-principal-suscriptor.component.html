@@ -11,32 +11,40 @@
         </li>
 
         <li class="navbar-item">
-          <a class="navbar-link" routerLink="/miPerfil">Mi perfil</a>
+          <a class="navbar-link" routerLink="/perfil">Mi perfil</a>
         </li>
         <li class="navbar-item">
-          <a class="navbar-link" href="/login">Cerrar sesión</a>
+          <a class="navbar-link" href="/logout">Cerrar sesión</a>
         </li>
       </ul>
     </div>
   </nav>
 
 
+<app-anuncio-texto class="panelAnuncioTexto">
 
+</app-anuncio-texto>
+<app-anuncio-video class="panelAnuncioVideo">
 
+</app-anuncio-video>
+<app-anuncio-imagen class="panelAnuncioImagen">
 
+</app-anuncio-imagen>
   <div class="contenedor">
 
     <div  class="panelRevistas"  *ngIf="panelRevistas" >
       <ng-container *ngIf="revistas.length > 0; else noRevistas">
         <div *ngFor="let revista of revistas" class="panelSuscripcion">
 
+
         <div   class="panelRevista">
           <div class="titulo">{{ revista.titulo }}</div>
           <div class="autor">Autor: {{ revista.autor}}</div>
+          <div class="categoria"> {{ revista.categoria}}</div>
           <div class="fecha">Creada: {{ obtenerFechaLegible(revista.fechaPublicacion) }}</div>
           <div class="descripciòn">{{ revista.descripcion}}</div>
         </div>
-        <button  class="botonSuscribirse" (click)="mostraPanelConfirmacionSuscripcion(revista)">Suscribirse</button>
+        <button  *ngIf="revista.suscripciones"  class="botonSuscribirse" (click)="mostraPanelConfirmacionSuscripcion(revista)">Suscribirse</button>
 
       </div>
 
@@ -79,6 +87,12 @@
 
     <button  class="cerrarPanelMensaje-btn" (click)="ocultarPanelConfirmacionSuscripcion()">Cancelar</button>
   </div>
-
+  <input class="barraBusqueda" type="text" [(ngModel)]="nombre" placeholder="Buscar revista..." />
+  <button class="botonOpciones"  (click)="buscar()" >
+    <span class="material-icons">search</span> <!-- Icono de lupa/búsqueda -->
+  </button>
+  <button class="filtros">
+    <i class="fas fa-filter filtro-icono"></i>
+  </button>
   <router-outlet></router-outlet>
 

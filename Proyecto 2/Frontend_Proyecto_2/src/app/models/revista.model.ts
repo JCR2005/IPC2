@@ -10,4 +10,6 @@ export interface Revista {
   likes: boolean;
   suscripciones: boolean;
   descripcion:string;
+  cantidadLikes:number;
+  categoria:string;
 }

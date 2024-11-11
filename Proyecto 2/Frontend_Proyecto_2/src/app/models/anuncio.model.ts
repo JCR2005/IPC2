@@ -5,4 +5,7 @@ export interface Anuncio {
   fechaPublicacion: string;
   fechaFinalizacion: string;
   estado: boolean;
+  anuncioTexto:string;
+  usuario:string;
+  anuncioVideo:string;
 }
